@@ -1,0 +1,89 @@
+#!/bin/sh
+set -eu
+
+usage() {
+    echo "Usage: apply-settings retention PRESERVE_FILES PRESERVE_HISTORY MAX_JOBS" >&2
+    echo "       apply-settings server WEB DEBUG REMOTE_ADMIN REMOTE_ANY SHARE USER_CANCEL_ANY" >&2
+    exit 64
+}
+
+[ "$#" -ge 1 ] || usage
+mode="$1"
+
+cupsctl_path="/usr/sbin/cupsctl"
+if [ ! -x "$cupsctl_path" ]; then
+    echo "cupsctl is not installed at /usr/sbin/cupsctl." >&2
+    exit 69
+fi
+
+if [ "$mode" = "retention" ]; then
+    [ "$#" -eq 4 ] || usage
+    preserve_files="$2"
+    preserve_history="$3"
+    max_jobs="$4"
+
+    case "$preserve_files" in
+        Yes) ;;
+        ''|*[!0-9]*) echo "PreserveJobFiles must be Yes or a positive integer." >&2; exit 64 ;;
+    esac
+    case "$preserve_history" in
+        Yes) ;;
+        ''|*[!0-9]*) echo "PreserveJobHistory must be Yes or a positive integer." >&2; exit 64 ;;
+    esac
+    case "$max_jobs" in
+        ''|*[!0-9]*) echo "MaxJobs must be a non-negative integer." >&2; exit 64 ;;
+    esac
+
+    if [ "$preserve_files" != "Yes" ] && \
+       { [ "$preserve_files" -lt 86400 ] || [ "$preserve_files" -gt 315360000 ]; }; then
+        echo "PreserveJobFiles is outside the supported range." >&2
+        exit 64
+    fi
+    if [ "$preserve_history" != "Yes" ] && \
+       { [ "$preserve_history" -lt 86400 ] || [ "$preserve_history" -gt 315360000 ]; }; then
+        echo "PreserveJobHistory is outside the supported range." >&2
+        exit 64
+    fi
+    if [ "$max_jobs" -gt 1000000 ]; then
+        echo "MaxJobs is outside the supported range." >&2
+        exit 64
+    fi
+
+    exec "$cupsctl_path" \
+        "PreserveJobFiles=$preserve_files" \
+        "PreserveJobHistory=$preserve_history" \
+        "MaxJobs=$max_jobs"
+fi
+
+if [ "$mode" = "server" ]; then
+    [ "$#" -eq 7 ] || usage
+    web_interface="$2"
+    debug_logging="$3"
+    remote_admin="$4"
+    remote_any="$5"
+    share_printers="$6"
+    user_cancel_any="$7"
+
+    for value in "$web_interface" "$debug_logging" "$remote_admin" \
+        "$remote_any" "$share_printers" "$user_cancel_any"; do
+        case "$value" in
+            yes|no) ;;
+            *) echo "Global CUPS switches must be yes or no." >&2; exit 64 ;;
+        esac
+    done
+
+    if [ "$web_interface" = "yes" ]; then
+        web_value="Yes"
+    else
+        web_value="No"
+    fi
+    set -- "$cupsctl_path" "WebInterface=$web_value"
+    if [ "$debug_logging" = "yes" ]; then set -- "$@" --debug-logging; else set -- "$@" --no-debug-logging; fi
+    if [ "$remote_admin" = "yes" ]; then set -- "$@" --remote-admin; else set -- "$@" --no-remote-admin; fi
+    if [ "$remote_any" = "yes" ]; then set -- "$@" --remote-any; else set -- "$@" --no-remote-any; fi
+    if [ "$share_printers" = "yes" ]; then set -- "$@" --share-printers; else set -- "$@" --no-share-printers; fi
+    if [ "$user_cancel_any" = "yes" ]; then set -- "$@" --user-cancel-any; else set -- "$@" --no-user-cancel-any; fi
+    exec "$@"
+fi
+
+usage

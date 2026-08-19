@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "version": "0.1.10",
+  "mandatory": false,
+  "released_at": "2026-08-19T16:45:49Z",
+  "summary": "A blocking CUPS restart dialog now verifies fresh IPP connections before the app resumes after global configuration changes.",
+  "changelog": [
+    "Shows a non-dismissible Restarting CUPS dialog after retention or global server settings are saved, including during onboarding.",
+    "Blocks every PyCUPS window and application action until fresh IPP connections answer consistently.",
+    "Pauses automatic job-history refresh and suppresses transient connection errors while the scheduler is restarting.",
+    "Replaces the pre-restart PyCUPS connection with the newly verified connection before reloading jobs and settings.",
+    "Keeps the application blocked and automatically starts another probe if CUPS remains unavailable; Try again and Close PyCUPS remain available.",
+    "Adds readiness, timeout, shutdown-cancellation, and application-wide blocking regression coverage."
+  ]
+}

@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+from print_archive.__main__ import main
+
+raise SystemExit(main())
+

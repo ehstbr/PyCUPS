@@ -1,0 +1,710 @@
+from __future__ import annotations
+
+from datetime import datetime
+from pathlib import Path
+
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Adw, Gio, GLib, Gtk
+
+from .. import APP_NAME
+from ..core.preview import render_pdf_page
+from ..models import PreparedJob, PrintJob, ReprintResult
+from ..util.async_runner import AsyncRunner
+from ..util.i18n import _
+from .about import show_about_dialog
+from .authentication import CupsAuthenticationDialog
+from .dialogs import confirm, show_message
+from .printer_filter import PrinterFilterMenu
+from .reprint_dialog import ReprintDialog
+from .settings import SettingsWindow
+
+
+FILTERS = ("All jobs", "Completed", "Active", "Canceled or aborted")
+
+
+def _translation_markers() -> tuple[str, ...]:
+    """Keep dynamic filter and IPP-state labels visible to xgettext."""
+    return (
+        _("All jobs"),
+        _("Completed"),
+        _("Active"),
+        _("Canceled or aborted"),
+        _("Waiting"),
+        _("Held"),
+        _("Printing"),
+        _("Stopped"),
+        _("Canceled"),
+        _("Aborted"),
+    )
+
+
+class MainWindow(Adw.ApplicationWindow):
+    def __init__(
+        self,
+        application: Gtk.Application,
+        service: object | None,
+        runner: AsyncRunner,
+        *,
+        startup_error: str | None = None,
+    ) -> None:
+        super().__init__(application=application, title=APP_NAME)
+        self.set_default_size(1120, 720)
+        self.service = service
+        self.runner = runner
+        self.settings_window: SettingsWindow | None = None
+        self.jobs: list[PrintJob] = []
+        self._row_jobs: dict[Gtk.Widget, PrintJob] = {}
+        self._prepared_cache: dict[int, PreparedJob] = {}
+        self.current_job: PrintJob | None = None
+        self.current_prepared: PreparedJob | None = None
+        self.current_page = 1
+        self._selection_generation = 0
+        self._refresh_in_progress = False
+        self._cups_restart_in_progress = False
+        self._refresh_timer: int | None = None
+        self.authentication: CupsAuthenticationDialog | None = None
+        if self.service is not None:
+            self.authentication = CupsAuthenticationDialog(self)
+            self.service.set_auth_provider(self.authentication.request_credentials)
+
+        self.toast_overlay = Adw.ToastOverlay()
+        toolbar = Adw.ToolbarView()
+        header = Adw.HeaderBar()
+        header.set_title_widget(Adw.WindowTitle(title=APP_NAME))
+        toolbar.add_top_bar(header)
+
+        refresh = Gtk.Button(
+            icon_name="view-refresh-symbolic",
+            tooltip_text=_("Refresh (Ctrl+R)"),
+        )
+        refresh.set_action_name("app.refresh")
+        header.pack_start(refresh)
+
+        menu_model = Gio.Menu()
+        menu_model.append(_("Settings"), "app.settings")
+        menu_model.append(_("Welcome and initial setup"), "app.onboarding")
+        menu_model.append(_("Check for updates"), "app.check-update")
+        menu_model.append(_("About {app_name}").format(app_name=APP_NAME), "app.about")
+        menu_model.append(_("Quit"), "app.quit")
+        menu = Gtk.MenuButton(
+            icon_name="open-menu-symbolic",
+            tooltip_text=_("Main menu"),
+            menu_model=menu_model,
+        )
+        header.pack_end(menu)
+
+        toolbar.set_content(self._build_content())
+        self.toast_overlay.set_child(toolbar)
+        self.set_content(self.toast_overlay)
+
+        if startup_error:
+            self._show_startup_error(startup_error)
+        else:
+            self.refresh()
+            self._refresh_timer = GLib.timeout_add_seconds(10, self._auto_refresh)
+            self.connect("close-request", self._closing)
+
+    def _build_content(self) -> Gtk.Widget:
+        root = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        filters = Gtk.Box(spacing=8)
+        filters.set_margin_top(12)
+        filters.set_margin_bottom(12)
+        filters.set_margin_start(12)
+        filters.set_margin_end(12)
+        self.search = Gtk.SearchEntry(
+            hexpand=True,
+            placeholder_text=_("Search by name, user, printer, or job number"),
+        )
+        self.search.connect("search-changed", self._filters_changed)
+        filters.append(self.search)
+
+        self.printer_filter = PrinterFilterMenu(self._filters_changed)
+        filters.append(self.printer_filter.button)
+
+        self.filter_dropdown = Gtk.DropDown.new_from_strings([_(label) for label in FILTERS])
+        self.filter_dropdown.set_tooltip_text(_("Filter by job state"))
+        self.filter_dropdown.connect(
+            "notify::selected", self._filters_changed
+        )
+        filters.append(self.filter_dropdown)
+        root.append(filters)
+
+        paned = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL, wide_handle=True)
+        paned.set_position(430)
+        paned.set_resize_start_child(True)
+        paned.set_shrink_start_child(False)
+        paned.set_resize_end_child(True)
+        paned.set_shrink_end_child(False)
+        paned.set_start_child(self._build_job_browser())
+        paned.set_end_child(self._build_details())
+        root.append(paned)
+        paned.set_vexpand(True)
+        return root
+
+    def _build_job_browser(self) -> Gtk.Widget:
+        self.list_stack = Gtk.Stack()
+        self.list_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        self.job_list = Gtk.ListBox(
+            selection_mode=Gtk.SelectionMode.SINGLE,
+            css_classes=["boxed-list"],
+        )
+        self.job_list.set_filter_func(self._filter_job_row)
+        self.job_list.connect("row-selected", self._job_selected)
+        scroller = Gtk.ScrolledWindow(vexpand=True, hscrollbar_policy=Gtk.PolicyType.NEVER)
+        scroller.set_margin_start(12)
+        scroller.set_margin_end(6)
+        scroller.set_margin_bottom(12)
+        scroller.set_child(self.job_list)
+        self.list_stack.add_named(scroller, "jobs")
+
+        loading_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        loading_box.set_valign(Gtk.Align.CENTER)
+        spinner = Gtk.Spinner(spinning=True, width_request=32, height_request=32)
+        spinner.set_halign(Gtk.Align.CENTER)
+        loading_box.append(spinner)
+        loading_box.append(Gtk.Label(label=_("Loading print history…"), css_classes=["dim-label"]))
+        self.list_stack.add_named(loading_box, "loading")
+
+        self.empty_page = Adw.StatusPage(
+            icon_name="printer-symbolic",
+            title=_("No print jobs"),
+            description=_("Jobs retained by the local CUPS service will appear here."),
+        )
+        self.list_stack.add_named(self.empty_page, "empty")
+        return self.list_stack
+
+    def _build_details(self) -> Gtk.Widget:
+        self.detail_stack = Gtk.Stack()
+        self.detail_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        welcome = Adw.StatusPage(
+            icon_name="document-print-preview-symbolic",
+            title=_("Select a print job"),
+            description=_("Preview its retained file, export it, or reprint all or selected PDF pages."),
+        )
+        self.detail_stack.add_named(welcome, "welcome")
+
+        self.detail_error = Adw.StatusPage(
+            icon_name="dialog-error-symbolic",
+            title=_("Print service unavailable"),
+        )
+        self.detail_stack.add_named(self.detail_error, "error")
+
+        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        content.set_margin_top(12)
+        content.set_margin_bottom(12)
+        content.set_margin_start(12)
+        content.set_margin_end(12)
+
+        self.detail_title = Gtk.Label(
+            xalign=0,
+            ellipsize=3,
+            selectable=True,
+            css_classes=["title-2"],
+        )
+        content.append(self.detail_title)
+        self.detail_meta = Gtk.Label(xalign=0, wrap=True, selectable=True, css_classes=["dim-label"])
+        content.append(self.detail_meta)
+
+        self.preview_stack = Gtk.Stack(vexpand=True, hexpand=True)
+        self.preview_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        preview_loading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        preview_loading.set_valign(Gtk.Align.CENTER)
+        preview_spinner = Gtk.Spinner(spinning=True, width_request=32, height_request=32)
+        preview_spinner.set_halign(Gtk.Align.CENTER)
+        preview_loading.append(preview_spinner)
+        preview_loading.append(Gtk.Label(label=_("Retrieving the retained file…"), css_classes=["dim-label"]))
+        self.preview_stack.add_named(preview_loading, "loading")
+
+        self.preview_picture = Gtk.Picture(
+            can_shrink=True,
+            content_fit=Gtk.ContentFit.CONTAIN,
+            alternative_text=_("Print job preview"),
+        )
+        picture_scroller = Gtk.ScrolledWindow(vexpand=True, hexpand=True)
+        picture_scroller.set_child(self.preview_picture)
+        self.preview_stack.add_named(picture_scroller, "picture")
+
+        self.text_buffer = Gtk.TextBuffer()
+        text_view = Gtk.TextView(
+            buffer=self.text_buffer,
+            editable=False,
+            cursor_visible=False,
+            monospace=True,
+            wrap_mode=Gtk.WrapMode.WORD_CHAR,
+            left_margin=12,
+            right_margin=12,
+            top_margin=12,
+            bottom_margin=12,
+        )
+        text_scroller = Gtk.ScrolledWindow(vexpand=True, hexpand=True)
+        text_scroller.set_child(text_view)
+        self.preview_stack.add_named(text_scroller, "text")
+
+        self.preview_status = Adw.StatusPage(
+            icon_name="document-print-symbolic",
+            title=_("Preview unavailable"),
+        )
+        self.preview_stack.add_named(self.preview_status, "status")
+        content.append(self.preview_stack)
+
+        self.page_controls = Gtk.Box(spacing=8, halign=Gtk.Align.CENTER)
+        self.previous_page = Gtk.Button(icon_name="go-previous-symbolic", tooltip_text=_("Previous page"))
+        self.previous_page.connect("clicked", lambda _button: self._show_pdf_page(self.current_page - 1))
+        self.page_controls.append(self.previous_page)
+        self.page_label = Gtk.Label(label=_("Page 1 of 1"))
+        self.page_controls.append(self.page_label)
+        self.next_page = Gtk.Button(icon_name="go-next-symbolic", tooltip_text=_("Next page"))
+        self.next_page.connect("clicked", lambda _button: self._show_pdf_page(self.current_page + 1))
+        self.page_controls.append(self.next_page)
+        self.page_controls.set_visible(False)
+        content.append(self.page_controls)
+
+        actions = Gtk.Box(spacing=8, halign=Gtk.Align.END)
+        self.delete_button = Gtk.Button(
+            icon_name="user-trash-symbolic",
+            tooltip_text=_("Permanently delete this retained job"),
+            css_classes=["destructive-action"],
+        )
+        self.delete_button.connect("clicked", self._confirm_delete)
+        actions.append(self.delete_button)
+        self.export_button = Gtk.Button(label=_("Export original…"), sensitive=False)
+        self.export_button.connect("clicked", self._export)
+        actions.append(self.export_button)
+        self.reprint_button = Gtk.Button(
+            label=_("Reprint…"),
+            sensitive=False,
+            css_classes=["suggested-action"],
+        )
+        self.reprint_button.connect("clicked", self._open_reprint)
+        actions.append(self.reprint_button)
+        content.append(actions)
+
+        self.detail_stack.add_named(content, "details")
+        self.detail_stack.set_visible_child_name("welcome")
+        return self.detail_stack
+
+    def refresh(self) -> None:
+        if (
+            self.service is None
+            or self._refresh_in_progress
+            or self._cups_restart_in_progress
+        ):
+            return
+        self._refresh_in_progress = True
+        if not self.jobs:
+            self.list_stack.set_visible_child_name("loading")
+        self.runner.submit(self.service.list_jobs, self._jobs_loaded, self._jobs_failed)
+
+    def _jobs_loaded(self, jobs: list[PrintJob]) -> None:
+        self._refresh_in_progress = False
+        if self._cups_restart_in_progress:
+            return
+        selected_job_id = self.current_job.job_id if self.current_job else None
+        self.jobs = jobs
+        # Update the checklist before rows are added. Gtk.ListBox evaluates its
+        # filter as each row enters the model; on the first load the printer
+        # selection is still empty until this call populates "All printers".
+        self.printer_filter.update_printers([job.printer for job in jobs])
+        self._row_jobs.clear()
+        while child := self.job_list.get_first_child():
+            self.job_list.remove(child)
+        for job in jobs:
+            row = self._job_row(job)
+            self._row_jobs[row] = job
+            self.job_list.append(row)
+        # Re-evaluate explicitly as a guard for GTK versions that cache the
+        # visibility decided while rebuilding the list.
+        self.job_list.invalidate_filter()
+        self.list_stack.set_visible_child_name("jobs" if jobs else "empty")
+        if jobs:
+            if selected_job_id is None or not self._select_job(selected_job_id):
+                self._select_first_visible_job()
+
+    def _jobs_failed(self, error: BaseException) -> None:
+        self._refresh_in_progress = False
+        if self._cups_restart_in_progress:
+            return
+        self.empty_page.set_title(_("Could not load print history"))
+        self.empty_page.set_description(str(error))
+        self.empty_page.set_icon_name("dialog-error-symbolic")
+        self.list_stack.set_visible_child_name("empty")
+        self.detail_error.set_description(str(error))
+        self.detail_stack.set_visible_child_name("error")
+
+    def _show_startup_error(self, error: str) -> None:
+        self.empty_page.set_title(_("Print service unavailable"))
+        self.empty_page.set_description(error)
+        self.empty_page.set_icon_name("dialog-error-symbolic")
+        self.list_stack.set_visible_child_name("empty")
+        self.detail_error.set_description(error)
+        self.detail_stack.set_visible_child_name("error")
+
+    def _job_row(self, job: PrintJob) -> Adw.ActionRow:
+        date = _format_date(job.date)
+        pages = (
+            _("{count} pages").format(count=job.pages)
+            if job.pages is not None
+            else _("page count unknown")
+        )
+        row = Adw.ActionRow(
+            title=job.title,
+            subtitle=f"#{job.job_id} · {date}\n{job.printer} · {job.user} · {pages}",
+            icon_name="document-print-symbolic",
+        )
+        status = Gtk.Label(label=_(job.state_label), valign=Gtk.Align.CENTER, css_classes=["caption"])
+        row.add_suffix(status)
+        return row
+
+    def _filter_job_row(self, row: Gtk.ListBoxRow) -> bool:
+        job = self._row_jobs.get(row)
+        if job is None:
+            return True
+        query = self.search.get_text().strip().casefold()
+        haystack = " ".join(
+            (str(job.job_id), job.title, job.user, job.printer, job.state_label)
+        ).casefold()
+        if query and query not in haystack:
+            return False
+        if not self.printer_filter.matches(job.printer):
+            return False
+        selected_filter = self.filter_dropdown.get_selected()
+        if selected_filter == 1:
+            return job.state == 9
+        if selected_filter == 2:
+            return job.state in {3, 4, 5, 6}
+        if selected_filter == 3:
+            return job.state in {7, 8}
+        return True
+
+    def _filters_changed(self, *_args: object) -> None:
+        self.job_list.invalidate_filter()
+        selected = self.job_list.get_selected_row()
+        if selected is None or not self._filter_job_row(selected):
+            self._select_first_visible_job()
+
+    def _select_first_visible_job(self) -> None:
+        row = self.job_list.get_first_child()
+        while row is not None:
+            if self._filter_job_row(row):
+                self.job_list.select_row(row)
+                return
+            row = row.get_next_sibling()
+        self.job_list.unselect_all()
+
+    def _select_job(self, job_id: int) -> bool:
+        row = self.job_list.get_first_child()
+        while row is not None:
+            job = self._row_jobs.get(row)
+            if job and job.job_id == job_id and self._filter_job_row(row):
+                self.job_list.select_row(row)
+                return True
+            row = row.get_next_sibling()
+        return False
+
+    def _auto_refresh(self) -> bool:
+        if self.get_mapped():
+            self.refresh()
+        return GLib.SOURCE_CONTINUE
+
+    def _closing(self, _window: Gtk.Window) -> bool:
+        if self._refresh_timer is not None:
+            GLib.source_remove(self._refresh_timer)
+            self._refresh_timer = None
+        return False
+
+    def _job_selected(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow | None) -> None:
+        if row is None:
+            return
+        job = self._row_jobs.get(row)
+        if job is None:
+            return
+        if (
+            self.current_job is not None
+            and self.current_job.job_id == job.job_id
+            and self.current_job.state == job.state
+            and self.current_job.preserved == job.preserved
+            and self.current_prepared is not None
+            and self.current_prepared.preview_kind != "unavailable"
+        ):
+            self.current_job = job
+            return
+        self._selection_generation += 1
+        generation = self._selection_generation
+        self.current_job = job
+        self.current_prepared = None
+        self.current_page = 1
+        self.detail_title.set_text(job.title)
+        preserved = _("yes") if job.preserved is True else _("no") if job.preserved is False else _("unknown")
+        size = f"{job.size_kib} KiB" if job.size_kib is not None else _("unknown size")
+        self.detail_meta.set_text(
+            _("Job #{job_id} · {state} · {printer} · {user}\n"
+              "Created {created} · CUPS retention flag: {preserved} · {size}").format(
+                job_id=job.job_id,
+                state=_(job.state_label),
+                printer=job.printer,
+                user=job.user,
+                created=_format_date(job.created_at),
+                preserved=preserved,
+                size=size,
+            )
+        )
+        self.detail_stack.set_visible_child_name("details")
+        self.preview_stack.set_visible_child_name("loading")
+        self.page_controls.set_visible(False)
+        self.reprint_button.set_sensitive(False)
+        self.export_button.set_sensitive(False)
+        self.delete_button.set_sensitive(True)
+
+        cached = self._prepared_cache.get(job.job_id)
+        if cached is not None:
+            self._prepared(job, cached, generation)
+            return
+        self.runner.submit(
+            lambda: self.service.retrieve_job(job),
+            lambda prepared: self._prepared(job, prepared, generation),
+            lambda error: self._prepare_failed(job, error, generation),
+        )
+
+    def _prepared(self, job: PrintJob, prepared: PreparedJob, generation: int) -> None:
+        self._prepared_cache[job.job_id] = prepared
+        if generation != self._selection_generation or self.current_job != job:
+            return
+        self.current_prepared = prepared
+        self.reprint_button.set_sensitive(job.can_restart)
+        self.export_button.set_sensitive(prepared.printable_path is not None)
+        self._display_prepared(prepared)
+
+    def _prepare_failed(self, job: PrintJob, error: BaseException, generation: int) -> None:
+        unavailable = PreparedJob(job, (), None, None, "unavailable")
+        if generation != self._selection_generation or self.current_job != job:
+            return
+        self.current_prepared = unavailable
+        self.reprint_button.set_sensitive(job.can_restart)
+        self.preview_status.set_title(_("Could not access the retained file"))
+        self.preview_status.set_description(str(error))
+        self.preview_status.set_icon_name("dialog-warning-symbolic")
+        self.preview_stack.set_visible_child_name("status")
+
+    def _display_prepared(self, prepared: PreparedJob) -> None:
+        self.page_controls.set_visible(False)
+        if prepared.preview_kind == "pdf" and prepared.printable_path and prepared.total_pages:
+            self.page_controls.set_visible(True)
+            self._show_pdf_page(1)
+        elif prepared.preview_kind == "image" and prepared.printable_path:
+            self.preview_picture.set_filename(str(prepared.printable_path))
+            self.preview_stack.set_visible_child_name("picture")
+        elif prepared.preview_kind == "text" and prepared.printable_path:
+            data = prepared.printable_path.read_bytes()[:262_144]
+            text = data.decode("utf-8", errors="replace")
+            if prepared.printable_path.stat().st_size > len(data):
+                text += "\n\n[Preview truncated at 256 KiB]"
+            self.text_buffer.set_text(text)
+            self.preview_stack.set_visible_child_name("text")
+        else:
+            descriptions = {
+                "raw": _("The retained format can be reprinted, but this version cannot render it safely."),
+                "mixed": _("This multi-document job contains mixed formats and has no combined preview."),
+                "unavailable": _("CUPS no longer has the spool file. Metadata remains visible."),
+            }
+            self.preview_status.set_title(_("Preview unavailable"))
+            self.preview_status.set_description(
+                descriptions.get(prepared.preview_kind, _("No preview is available for this job."))
+            )
+            self.preview_status.set_icon_name("document-print-symbolic")
+            self.preview_stack.set_visible_child_name("status")
+
+    def _show_pdf_page(self, page: int) -> None:
+        prepared = self.current_prepared
+        if not prepared or not prepared.printable_path or not prepared.total_pages:
+            return
+        page = max(1, min(page, prepared.total_pages))
+        self.current_page = page
+        self.page_label.set_text(
+            _("Page {page} of {total}").format(page=page, total=prepared.total_pages)
+        )
+        self.previous_page.set_sensitive(page > 1)
+        self.next_page.set_sensitive(page < prepared.total_pages)
+        self.preview_stack.set_visible_child_name("loading")
+        generation = self._selection_generation
+        job_id = prepared.job.job_id
+        self.runner.submit(
+            lambda: render_pdf_page(prepared.printable_path, page, self.service.store),
+            lambda path: self._pdf_rendered(path, page, job_id, generation),
+            lambda error: self._pdf_render_failed(error, job_id, generation),
+        )
+
+    def _pdf_rendered(self, path: Path, page: int, job_id: int, generation: int) -> None:
+        if (
+            generation != self._selection_generation
+            or self.current_job is None
+            or self.current_job.job_id != job_id
+            or self.current_page != page
+        ):
+            return
+        self.preview_picture.set_filename(str(path))
+        self.preview_stack.set_visible_child_name("picture")
+
+    def _pdf_render_failed(self, error: BaseException, job_id: int, generation: int) -> None:
+        if (
+            generation != self._selection_generation
+            or self.current_job is None
+            or self.current_job.job_id != job_id
+        ):
+            return
+        self.preview_status.set_title(_("Could not render this PDF"))
+        self.preview_status.set_description(str(error))
+        self.preview_status.set_icon_name("dialog-warning-symbolic")
+        self.preview_stack.set_visible_child_name("status")
+
+    def _open_reprint(self, _button: Gtk.Button) -> None:
+        if self.current_prepared is None:
+            return
+        self.reprint_button.set_sensitive(False)
+        self.runner.submit(
+            self.service.list_reprint_destinations,
+            self._printers_loaded,
+            self._printers_failed,
+        )
+
+    def _printers_loaded(self, result: tuple[list[str], dict[str, object]]) -> None:
+        self.reprint_button.set_sensitive(True)
+        prepared = self.current_prepared
+        if prepared is None:
+            return
+        printers, capabilities = result
+        if prepared.job.printer not in printers:
+            printers.insert(0, prepared.job.printer)
+        dialog = ReprintDialog(
+            prepared,
+            printers,
+            capabilities,
+            self.service,
+            self.runner,
+            self._reprint_complete,
+        )
+        dialog.present(self)
+
+    def _printers_failed(self, error: BaseException) -> None:
+        self.reprint_button.set_sensitive(True)
+        show_message(self, _("Could not list printers"), str(error))
+
+    def _reprint_complete(self, result: ReprintResult) -> None:
+        if result.restarted_original:
+            message = _("Job #{job_id} was restarted with all pages.").format(job_id=result.job_id)
+        else:
+            message = _("New job #{job_id} was created for pages {pages}.").format(
+                job_id=result.job_id, pages=result.page_description
+            )
+        self.toast_overlay.add_toast(Adw.Toast(title=message, timeout=6))
+        self.refresh()
+
+    def _export(self, _button: Gtk.Button) -> None:
+        prepared = self.current_prepared
+        if not prepared or not prepared.printable_path:
+            return
+        source = prepared.printable_path
+        name = _safe_export_name(prepared.job.title, source.suffix)
+        dialog = Gtk.FileDialog(title=_("Export retained document"), initial_name=name)
+
+        def chosen(source_dialog: Gtk.FileDialog, result: Gio.AsyncResult) -> None:
+            try:
+                file = source_dialog.save_finish(result)
+            except Exception:
+                return
+            destination = Path(file.get_path())
+            self.runner.submit(
+                lambda: self.service.export_original(prepared, destination),
+                lambda path: self.toast_overlay.add_toast(
+                    Adw.Toast(title=_("Exported to {name}").format(name=path.name), timeout=5)
+                ),
+                lambda error: show_message(self, _("Could not export this job"), str(error)),
+            )
+
+        dialog.save(self, None, chosen)
+
+    def _confirm_delete(self, _button: Gtk.Button) -> None:
+        job = self.current_job
+        if job is None:
+            return
+        confirm(
+            self,
+            _("Delete job #{job_id}?").format(job_id=job.job_id),
+            _("The retained file and its history metadata will be permanently purged from CUPS."),
+            _("Delete"),
+            lambda: self._delete_job(job),
+        )
+
+    def _delete_job(self, job: PrintJob) -> None:
+        self.delete_button.set_sensitive(False)
+        self.runner.submit(
+            lambda: self.service.purge_job(job.job_id),
+            lambda _result: self._deleted(job),
+            lambda error: self._delete_failed(error),
+        )
+
+    def _deleted(self, job: PrintJob) -> None:
+        self._prepared_cache.pop(job.job_id, None)
+        self.toast_overlay.add_toast(
+            Adw.Toast(title=_("Job #{job_id} deleted").format(job_id=job.job_id), timeout=5)
+        )
+        self.detail_stack.set_visible_child_name("welcome")
+        self.refresh()
+
+    def _delete_failed(self, error: BaseException) -> None:
+        self.delete_button.set_sensitive(True)
+        show_message(self, _("Could not delete this job"), str(error))
+
+    def show_settings(self) -> None:
+        if self.service is None:
+            return
+        if self.settings_window is None:
+            application = self.get_application()
+            wait_for_cups_restart = getattr(
+                application,
+                "wait_for_cups_restart",
+            )
+            self.settings_window = SettingsWindow(
+                application,
+                self.service,
+                self.runner,
+                self.refresh,
+                wait_for_cups_restart,
+            )
+            self.settings_window.connect("close-request", self._settings_closed)
+        self.settings_window.present()
+
+    def set_cups_restart_in_progress(self, active: bool) -> None:
+        self._cups_restart_in_progress = active
+        if not active:
+            self.refresh()
+
+    def _settings_closed(self, _window: Gtk.Window) -> bool:
+        self.settings_window = None
+        return False
+
+    def show_about(self) -> None:
+        application = self.get_application()
+        check_for_updates = getattr(application, "check_for_updates", None)
+        show_about_dialog(self, check_for_updates, self.service)
+
+
+def _format_date(value: datetime | None) -> str:
+    if value is None:
+        return _("unknown date")
+    return value.strftime("%Y-%m-%d %H:%M")
+
+
+def _safe_export_name(title: str, suffix: str) -> str:
+    safe = "".join(character if character.isalnum() or character in " ._-" else "_" for character in title)
+    safe = safe.strip(" .") or "print-job"
+    if not suffix:
+        suffix = ".bin"
+    if not safe.lower().endswith(suffix.lower()):
+        safe += suffix
+    return safe

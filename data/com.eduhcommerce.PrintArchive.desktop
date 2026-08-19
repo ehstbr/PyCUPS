@@ -1,0 +1,16 @@
+[Desktop Entry]
+Name=PyCUPS
+Name[pt_BR]=PyCUPS
+GenericName=CUPS Archive
+GenericName[pt_BR]=CUPS Archive
+Comment=View and reprint retained CUPS jobs
+Comment[pt_BR]=Veja e reimprima trabalhos retidos pelo CUPS
+Exec=print-archive
+Icon=com.eduhcommerce.PrintArchive
+Terminal=false
+Type=Application
+Categories=GTK;GNOME;Utility;Settings;
+Keywords=print;printer;CUPS;history;archive;reprint;
+Keywords[pt_BR]=impressão;impressora;CUPS;histórico;arquivo;reimprimir;
+StartupNotify=true
+DBusActivatable=false

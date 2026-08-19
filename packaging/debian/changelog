@@ -1,0 +1,101 @@
+print-archive (0.1.10) stable; urgency=medium
+
+  * Block all PyCUPS actions while CUPS restarts after global changes.
+  * Verify multiple fresh IPP connections before resuming the interface.
+  * Pause history refresh and suppress transient restart errors.
+  * Keep timeout failures blocked with Try again or Close PyCUPS actions.
+  * Cover onboarding, Retention, and Server configuration flows.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 13:45:49 -0300
+
+print-archive (0.1.9) stable; urgency=medium
+
+  * Remove isolated internal scrolling from onboarding hero sections.
+  * Use compact responsive headers on the welcome and completion pages.
+  * Keep only one page-level scrolling fallback for short windows.
+  * Add regression coverage for the onboarding scrolling structure.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 12:27:00 -0300
+
+print-archive (0.1.8) stable; urgency=medium
+
+  * Add a three-step privacy-focused first-run welcome flow.
+  * Show live CUPS retention values before proposing changes.
+  * Suggest editable 30-day files, 90-day history, and unlimited MaxJobs.
+  * Require explicit Apply authorization or allow skipping without changes.
+  * Store only a local completion flag and allow reopening from the menu.
+  * Defer optional update notices until onboarding finishes.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 11:52:00 -0300
+
+print-archive (0.1.7) stable; urgency=medium
+
+  * Standardize PyCUPS as the user-facing application name.
+  * Retain CUPS Archive as the product description.
+  * Preserve technical identifiers for compatible upgrades.
+  * Distinguish the application from the PyCUPS Python bindings.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 11:20:00 -0300
+
+print-archive (0.1.6) stable; urgency=medium
+
+  * Keep Apply fixed below the scrolling Retention and Server forms.
+  * Remove redundant loaded-configuration cards.
+  * Move the reprint preview to the left of its options.
+  * Support PreserveJobFiles=Yes for unlimited file retention.
+  * Isolate spool copies by job ID and fix cached multi-page navigation.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 11:15:00 -0300
+
+print-archive (0.1.5) stable; urgency=medium
+
+  * Bound the Target paper selector so long media names cannot squeeze labels.
+  * Ellipsize the selected value while preserving full popup entries.
+  * Show the complete selected paper name in a tooltip.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 10:50:00 -0300
+
+print-archive (0.1.4) stable; urgency=medium
+
+  * Show history rows immediately after the first CUPS load.
+  * Populate printer selection before GTK evaluates row visibility.
+  * Re-evaluate the list filter after every history rebuild.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 10:30:00 -0300
+
+print-archive (0.1.3) stable; urgency=medium
+
+  * Select all, one, or multiple printers in the history filter.
+  * Preview selected PDF pages on destination paper before reprinting.
+  * Add destination media and print-scaling to flexible reprints.
+  * Add PyNextCloud-style GitHub version checks and an expanded About dialog.
+  * Split global CUPS settings into Retention, Server, and Maintenance pages.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 10:20:00 -0300
+
+print-archive (0.1.2) stable; urgency=medium
+
+  * Add all-printers or single-printer history filtering.
+  * Authenticate CUPS document retrieval and restart operations on demand.
+  * Try the protected operation instead of trusting job-preserved as final.
+  * Fix installed Brazilian Portuguese localization discovery.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 18:30:00 -0300
+
+print-archive (0.1.1) stable; urgency=medium
+
+  * Keep package installation and application startup completely non-mutating.
+  * Load retention controls from the current CUPS configuration.
+  * Remove the suggested 90-day and unlimited-jobs preset.
+  * Require an explicit edit and Apply action before changing CUPS.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 16:00:00 -0300
+
+print-archive (0.1.0) stable; urgency=medium
+
+  * Add the first GTK 4 and Libadwaita print-history browser.
+  * Preview, export, restart, and purge retained CUPS jobs.
+  * Extract selected PDF pages into a new print job.
+  * Configure CUPS file, history, and job-count retention with PolicyKit.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Wed, 19 Aug 2026 15:00:00 -0300

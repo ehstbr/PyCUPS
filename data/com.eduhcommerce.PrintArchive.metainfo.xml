@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.eduhcommerce.PrintArchive</id>
+  <name>PyCUPS</name>
+  <summary>CUPS Archive for retained print jobs</summary>
+  <summary xml:lang="pt-BR">CUPS Archive para trabalhos de impressão retidos</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="com.eduhcommerce">
+    <name>EduhCommerce</name>
+  </developer>
+  <description>
+    <p>
+      PyCUPS is a GNOME desktop application for viewing the local CUPS
+      job history, previewing retained documents, exporting originals, and
+      reprinting complete jobs or selected PDF pages.
+    </p>
+    <p xml:lang="pt-BR">
+      PyCUPS é um aplicativo GNOME para visualizar o histórico local do
+      CUPS, pré-visualizar documentos retidos, exportar originais e reimprimir
+      trabalhos completos ou páginas selecionadas de um PDF.
+    </p>
+    <p>
+      Flexible PDF reprints include a destination-paper preview based on IPP
+      dimensions, printable margins, and scaling. Settings cover only global
+      CUPS values after an explicit Apply action and administrator authorization.
+      Installation and startup never change them. A privacy-focused first-run
+      flow can compare live values with an editable retention suggestion. A
+      blocking readiness dialog verifies CUPS after global changes before the
+      interface resumes.
+    </p>
+    <p xml:lang="pt-BR">
+      A reimpressão flexível de PDF inclui preview do papel de destino com
+      dimensões, margens e escala informadas via IPP. As configurações tratam
+      somente de valores globais do CUPS e exigem Aplicar e autorização. A
+      instalação e a inicialização nunca alteram esses valores. Um assistente
+      inicial sobre privacidade compara os valores atuais com uma sugestão de
+      retenção editável. Um diálogo bloqueante confirma o retorno do CUPS após
+      mudanças globais antes de liberar novamente a interface.
+    </p>
+  </description>
+  <launchable type="desktop-id">com.eduhcommerce.PrintArchive.desktop</launchable>
+  <url type="homepage">https://github.com/ehstbr/PyCUPS</url>
+  <url type="bugtracker">https://github.com/ehstbr/PyCUPS/issues</url>
+  <url type="vcs-browser">https://github.com/ehstbr/PyCUPS</url>
+  <provides>
+    <binary>print-archive</binary>
+  </provides>
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <releases>
+    <release version="0.1.10" date="2026-08-19">
+      <description>
+        <p>Block the interface after global CUPS changes until fresh, stable IPP connections confirm the restarted scheduler is ready.</p>
+      </description>
+    </release>
+    <release version="0.1.9" date="2026-08-19">
+      <description>
+        <p>Make the onboarding welcome and completion pages responsive by removing isolated internal scrollbars and retaining only a page-level fallback for short windows.</p>
+      </description>
+    </release>
+    <release version="0.1.8" date="2026-08-19">
+      <description>
+        <p>Add a three-step privacy-focused welcome flow with live CUPS values, editable 30/90-day retention suggestions, explicit apply or skip, and a reusable menu entry.</p>
+      </description>
+    </release>
+    <release version="0.1.7" date="2026-08-19">
+      <description>
+        <p>Standardize the user-facing product name as PyCUPS while retaining CUPS Archive as its description and preserving technical compatibility.</p>
+      </description>
+    </release>
+    <release version="0.1.6" date="2026-08-19">
+      <description>
+        <p>Add fixed settings actions, left-side reprint preview, unlimited spool-file retention, and isolated per-job cached files.</p>
+      </description>
+    </release>
+    <release version="0.1.5" date="2026-08-19">
+      <description>
+        <p>Keep long destination-paper names inside a stable, ellipsized selector without compressing the row label.</p>
+      </description>
+    </release>
+    <release version="0.1.4" date="2026-08-19">
+      <description>
+        <p>Fix the blank startup history pane by synchronizing printer-filter initialization with job-row visibility.</p>
+      </description>
+    </release>
+    <release version="0.1.3" date="2026-08-19">
+      <description>
+        <p>Add multi-printer checkbox filtering, target-paper PDF reprint previews, GitHub update checks, and tabbed global CUPS settings.</p>
+      </description>
+    </release>
+    <release version="0.1.2" date="2026-08-19">
+      <description>
+        <p>Add on-demand CUPS authentication, printer filtering, and direct retained-file checks for every eligible job.</p>
+      </description>
+    </release>
+    <release version="0.1.1" date="2026-08-19">
+      <description>
+        <p>Load retention controls from live CUPS values and never change them during installation or startup.</p>
+      </description>
+    </release>
+    <release version="0.1.0" date="2026-08-19">
+      <description>
+        <p>Initial release with selected-page PDF reprinting and CUPS retention administration.</p>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1" />
+</component>

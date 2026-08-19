@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "print-archive"
+version = "0.1.10"
+description = "PyCUPS — CUPS Archive for retained print jobs"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "GPL-3.0-or-later"}
+authors = [{name = "EduhCommerce"}]
+keywords = ["cups", "printing", "history", "gtk4", "libadwaita", "gnome"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: X11 Applications :: GTK",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+print-archive = "print_archive.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/ehstbr/PyCUPS"
+Issues = "https://github.com/ehstbr/PyCUPS/issues"
+Changelog = "https://github.com/ehstbr/PyCUPS/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
