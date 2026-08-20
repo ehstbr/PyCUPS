@@ -1,3 +1,12 @@
+print-archive (0.1.14) stable; urgency=medium
+
+  * Anchor preview panning to the fixed scrolled viewport.
+  * Eliminate feedback between document movement and drag coordinates.
+  * Cancel queued preview recentering when manual panning begins.
+  * Add regression coverage for stable zoomed-document dragging.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Thu, 20 Aug 2026 11:44:00 -0300
+
 print-archive (0.1.13) stable; urgency=medium
 
   * Register the PyGObject Cairo converter required by the main preview.

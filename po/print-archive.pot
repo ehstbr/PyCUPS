@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PyCUPS 0.1.13\n"
+"Project-Id-Version: PyCUPS 0.1.14\n"
 "Report-Msgid-Bugs-To: eduhcommerce@users.noreply.github.com\n"
-"POT-Creation-Date: 2026-08-20 09:56-0300\n"
+"POT-Creation-Date: 2026-08-20 11:45-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,24 +293,40 @@ msgid "Languages"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:11
-msgid "Version 0.1.13"
+msgid "Version 0.1.14"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:13
-msgid "The main preview now loads the PyGObject Cairo integration explicitly."
+msgid "Panning a zoomed preview is now anchored to the fixed viewport."
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:14
+msgid "Document movement no longer feeds back into the mouse drag coordinates."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:15
+msgid "Queued preview recentering is canceled when manual panning begins."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:19
+msgid "Version 0.1.13"
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:21
+msgid "The main preview now loads the PyGObject Cairo integration explicitly."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:22
 msgid ""
 "The Debian package now installs the required Cairo bridge automatically."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:15
+#: src/print_archive/ui/about_content.py:23
 msgid ""
 "Job and update titles with markup characters are displayed as literal text."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:16
+#: src/print_archive/ui/about_content.py:24
 msgid "Preview and PDF page controls now share one compact horizontal toolbar."
 msgstr ""
 

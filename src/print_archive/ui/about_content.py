@@ -8,6 +8,14 @@ from ..util.i18n import _
 def release_notes_markup() -> str:
     sections = [
         (
+            _("Version 0.1.14"),
+            [
+                _("Panning a zoomed preview is now anchored to the fixed viewport."),
+                _("Document movement no longer feeds back into the mouse drag coordinates."),
+                _("Queued preview recentering is canceled when manual panning begins."),
+            ],
+        ),
+        (
             _("Version 0.1.13"),
             [
                 _("The main preview now loads the PyGObject Cairo integration explicitly."),

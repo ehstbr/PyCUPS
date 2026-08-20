@@ -13,7 +13,7 @@
     <a href="CHANGELOG.md">Histórico de alterações</a>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/versão-0.1.13-e95420?style=flat-square" alt="PyCUPS versão 0.1.13">
+    <img src="https://img.shields.io/badge/versão-0.1.14-e95420?style=flat-square" alt="PyCUPS versão 0.1.14">
     <img src="https://img.shields.io/badge/plataforma-Linux-f0c674?style=flat-square&logo=linux&logoColor=111" alt="Linux">
     <img src="https://img.shields.io/badge/desktop-GNOME-4a86cf?style=flat-square&logo=gnome&logoColor=white" alt="Desktop GNOME">
     <img src="https://img.shields.io/badge/GTK-4-4a86cf?style=flat-square&logo=gtk&logoColor=white" alt="GTK 4">
@@ -156,7 +156,7 @@ APT para resolver automaticamente as dependências do sistema:
 ```bash
 cd ~/Downloads
 sudo apt update
-sudo apt install ./print-archive_0.1.13_all.deb
+sudo apt install ./print-archive_0.1.14_all.deb
 ```
 
 Abra **PyCUPS** na grade de aplicativos ou execute:
@@ -185,8 +185,8 @@ sudo apt install \
 Depois, extraia e execute o pacote-fonte publicado no GitHub:
 
 ```bash
-unzip PyCUPS-0.1.13.zip
-cd PyCUPS-0.1.13
+unzip PyCUPS-0.1.14.zip
+cd PyCUPS-0.1.14
 ./run.sh
 ```
 

@@ -294,6 +294,25 @@ class PackagingContractTests(unittest.TestCase):
         self.assertNotIn("zoom-fit-best-symbolic", reprint)
         self.assertIn("src/print_archive/core/preview_view.py", meson)
 
+    def test_preview_drag_uses_the_fixed_viewport_coordinate_space(self) -> None:
+        source = (PROJECT_ROOT / "src/print_archive/ui/main_window.py").read_text(
+            encoding="utf-8"
+        )
+        drag_setup = source.split("        drag = Gtk.GestureDrag.new()", 1)[1].split(
+            "        preview_container = Gtk.Overlay", 1
+        )[0]
+        drag_begin = source.split("    def _preview_drag_begin(", 1)[1].split(
+            "    def _preview_drag_update(", 1
+        )[0]
+
+        self.assertIn("self.preview_scroller.add_controller(drag)", drag_setup)
+        self.assertNotIn("self.preview_picture.add_controller(drag)", drag_setup)
+        self.assertIn("self._cancel_preview_scroll_restore()", drag_begin)
+        self.assertIn(
+            'self.preview_scroller.set_cursor_from_name("grabbing")',
+            drag_begin,
+        )
+
     def test_primary_job_actions_have_icons_and_concise_labels(self) -> None:
         source = (PROJECT_ROOT / "src/print_archive/ui/main_window.py").read_text(
             encoding="utf-8"
@@ -349,6 +368,8 @@ class PackagingContractTests(unittest.TestCase):
         self.assertIn("## Em quais situações o PyCUPS pode ser útil", portuguese)
         self.assertIn("CONTRIBUTING.md#translations", english)
         self.assertIn("CONTRIBUTING.md#translations", portuguese)
+        self.assertNotIn("actions/workflows/ci.yml/badge.svg", english)
+        self.assertNotIn("actions/workflows/ci.yml/badge.svg", portuguese)
         for filename in screenshots:
             path = PROJECT_ROOT / "docs/screenshots" / filename
             self.assertTrue(path.is_file(), filename)

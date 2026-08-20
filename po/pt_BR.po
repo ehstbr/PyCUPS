@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PyCUPS 0.1.13\n"
+"Project-Id-Version: PyCUPS 0.1.14\n"
 "Report-Msgid-Bugs-To: eduhcommerce@users.noreply.github.com\n"
-"POT-Creation-Date: 2026-08-20 09:56-0300\n"
-"PO-Revision-Date: 2026-08-20 09:57-0300\n"
+"POT-Creation-Date: 2026-08-20 11:45-0300\n"
+"PO-Revision-Date: 2026-08-20 11:46-0300\n"
 "Last-Translator: EduhCommerce <eduhcommerce@users.noreply.github.com>\n"
 "Language-Team: Português do Brasil\n"
 "Language: pt_BR\n"
@@ -303,29 +303,51 @@ msgid "Languages"
 msgstr "Idiomas"
 
 #: src/print_archive/ui/about_content.py:11
+msgid "Version 0.1.14"
+msgstr "Versão 0.1.14"
+
+#: src/print_archive/ui/about_content.py:13
+msgid "Panning a zoomed preview is now anchored to the fixed viewport."
+msgstr ""
+"A navegação por arraste em um preview ampliado agora fica ancorada à área "
+"de visualização fixa."
+
+#: src/print_archive/ui/about_content.py:14
+msgid "Document movement no longer feeds back into the mouse drag coordinates."
+msgstr ""
+"O movimento do documento não interfere mais nas coordenadas de arraste do "
+"mouse."
+
+#: src/print_archive/ui/about_content.py:15
+msgid "Queued preview recentering is canceled when manual panning begins."
+msgstr ""
+"O recentramento pendente do preview é cancelado quando a navegação manual "
+"começa."
+
+#: src/print_archive/ui/about_content.py:19
 msgid "Version 0.1.13"
 msgstr "Versão 0.1.13"
 
-#: src/print_archive/ui/about_content.py:13
+#: src/print_archive/ui/about_content.py:21
 msgid "The main preview now loads the PyGObject Cairo integration explicitly."
 msgstr ""
 "O preview principal agora carrega explicitamente a integração Cairo do "
 "PyGObject."
 
-#: src/print_archive/ui/about_content.py:14
+#: src/print_archive/ui/about_content.py:22
 msgid ""
 "The Debian package now installs the required Cairo bridge automatically."
 msgstr ""
 "O pacote Debian agora instala automaticamente a ponte Cairo necessária."
 
-#: src/print_archive/ui/about_content.py:15
+#: src/print_archive/ui/about_content.py:23
 msgid ""
 "Job and update titles with markup characters are displayed as literal text."
 msgstr ""
 "Títulos de jobs e atualizações com caracteres de markup são exibidos como "
 "texto literal."
 
-#: src/print_archive/ui/about_content.py:16
+#: src/print_archive/ui/about_content.py:24
 msgid "Preview and PDF page controls now share one compact horizontal toolbar."
 msgstr ""
 "Os controles do preview e das páginas do PDF agora compartilham uma única "

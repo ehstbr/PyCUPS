@@ -72,6 +72,11 @@
     <display_length compare="ge">768</display_length>
   </requires>
   <releases>
+    <release version="0.1.14" date="2026-08-20">
+      <description>
+        <p>Keep zoomed-document panning stable by anchoring drag coordinates to the fixed preview viewport and canceling queued recentering when a drag begins.</p>
+      </description>
+    </release>
     <release version="0.1.13" date="2026-08-20">
       <description>
         <p>Load the required PyGObject Cairo bridge, render external CUPS text literally, and combine document controls into one compact line.</p>

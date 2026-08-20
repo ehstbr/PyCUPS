@@ -85,6 +85,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._preview_fit = True
         self._preview_zoom_updating = False
         self._preview_resize_source: int | None = None
+        self._preview_scroll_restore_source: int | None = None
         self._preview_viewport_size = (0, 0)
         self._preview_drag_start = (0.0, 0.0)
         self.authentication: CupsAuthenticationDialog | None = None
@@ -278,7 +279,10 @@ class MainWindow(Adw.ApplicationWindow):
         drag.connect("drag-begin", self._preview_drag_begin)
         drag.connect("drag-update", self._preview_drag_update)
         drag.connect("drag-end", self._preview_drag_end)
-        self.preview_picture.add_controller(drag)
+        # Keep drag coordinates relative to the fixed viewport. Attaching this
+        # gesture to the moving picture feeds each scroll adjustment back into
+        # Gtk.GestureDrag's offsets and makes the preview jitter.
+        self.preview_scroller.add_controller(drag)
 
         preview_container = Gtk.Overlay(vexpand=True, hexpand=True)
         preview_container.set_child(self.preview_scroller)
@@ -561,6 +565,10 @@ class MainWindow(Adw.ApplicationWindow):
         if self._refresh_timer is not None:
             GLib.source_remove(self._refresh_timer)
             self._refresh_timer = None
+        if self._preview_resize_source is not None:
+            GLib.source_remove(self._preview_resize_source)
+            self._preview_resize_source = None
+        self._cancel_preview_scroll_restore()
         return False
 
     def _job_selected(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow | None) -> None:
@@ -714,6 +722,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.preview_stack.set_visible_child_name("status")
 
     def _reset_preview_view(self) -> None:
+        self._cancel_preview_scroll_restore()
         self._preview_source_pixbuf = None
         self._preview_rotated_pixbuf = None
         self._preview_rotation = 0
@@ -778,7 +787,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.preview_picture.set_content_height(height)
         self.preview_picture.queue_draw()
         self._update_zoom_control(self._preview_zoom_percent)
-        GLib.idle_add(self._restore_preview_scroll_center, center)
+        self._queue_preview_scroll_center_restore(center)
         return GLib.SOURCE_REMOVE
 
     def _draw_preview(
@@ -881,7 +890,24 @@ class MainWindow(Adw.ApplicationWindow):
             / max(1.0, vertical.get_upper()),
         )
 
+    def _cancel_preview_scroll_restore(self) -> None:
+        if self._preview_scroll_restore_source is None:
+            return
+        GLib.source_remove(self._preview_scroll_restore_source)
+        self._preview_scroll_restore_source = None
+
+    def _queue_preview_scroll_center_restore(
+        self,
+        center: tuple[float, float],
+    ) -> None:
+        self._cancel_preview_scroll_restore()
+        self._preview_scroll_restore_source = GLib.idle_add(
+            self._restore_preview_scroll_center,
+            center,
+        )
+
     def _restore_preview_scroll_center(self, center: tuple[float, float]) -> bool:
+        self._preview_scroll_restore_source = None
         for adjustment, position in zip(
             (
                 self.preview_scroller.get_hadjustment(),
@@ -900,11 +926,14 @@ class MainWindow(Adw.ApplicationWindow):
         _start_x: float,
         _start_y: float,
     ) -> None:
+        # A queued zoom/rotation center restore must not compete with a drag
+        # the user has already started.
+        self._cancel_preview_scroll_restore()
         self._preview_drag_start = (
             self.preview_scroller.get_hadjustment().get_value(),
             self.preview_scroller.get_vadjustment().get_value(),
         )
-        self.preview_picture.set_cursor_from_name("grabbing")
+        self.preview_scroller.set_cursor_from_name("grabbing")
 
     def _preview_drag_update(
         self,
@@ -923,7 +952,7 @@ class MainWindow(Adw.ApplicationWindow):
         _offset_x: float,
         _offset_y: float,
     ) -> None:
-        self.preview_picture.set_cursor_from_name("grab")
+        self.preview_scroller.set_cursor_from_name("grab")
 
     def _open_reprint(self, _button: Gtk.Button) -> None:
         if self.current_prepared is None:

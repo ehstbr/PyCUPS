@@ -2,6 +2,21 @@
 
 All notable changes to PyCUPS are documented here.
 
+## 0.1.14 — 2026-08-20
+
+- Attach the preview's drag gesture to the stationary scrolled viewport rather
+  than to the document widget that moves as the scroll adjustments change.
+- Eliminate the widget-relative coordinate feedback loop that could make a
+  magnified document shake continuously during mouse panning, including while
+  the physical pointer was held still.
+- Keep only one queued zoom/rotation center restoration and cancel it as soon
+  as manual panning begins, preventing automatic positioning from competing
+  with the user's drag.
+- Preserve the visual-only zoom and rotation controls in the history viewer;
+  the reprint preview and retained source document remain unchanged.
+- Add a regression contract that requires the drag controller to remain bound
+  to the fixed viewport coordinate space.
+
 ## 0.1.13 — 2026-08-20
 
 - Register PyGObject's Cairo foreign-type converter before the main preview's
