@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PyCUPS 0.1.10\n"
+"Project-Id-Version: PyCUPS 0.1.11\n"
 "Report-Msgid-Bugs-To: https://github.com/ehstbr/PyCUPS/issues\n"
-"POT-Creation-Date: 2026-08-19 13:48-0300\n"
+"POT-Creation-Date: 2026-08-20 09:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/print_archive/application.py:339
+#: src/print_archive/application.py:361
 msgid "Checking for Updates"
 msgstr ""
 
-#: src/print_archive/application.py:340
+#: src/print_archive/application.py:362
 msgid "Contacting the GitHub version service…"
 msgstr ""
 
-#: src/print_archive/application.py:349
+#: src/print_archive/application.py:371
 msgid "Could Not Check for Updates"
 msgstr ""
 
-#: src/print_archive/application.py:351
+#: src/print_archive/application.py:373
 msgid ""
 "The version information could not be obtained. Check your connection and try "
 "again later."
 msgstr ""
 
-#: src/print_archive/application.py:364
+#: src/print_archive/application.py:386
 #, python-brace-format
 msgid "{app_name} Is Up to Date"
 msgstr ""
 
-#: src/print_archive/application.py:365
+#: src/print_archive/application.py:387
 msgid "You are already using the latest available version."
 msgstr ""
 
-#: src/print_archive/application.py:376 src/print_archive/ui/dialogs.py:14
+#: src/print_archive/application.py:398 src/print_archive/ui/dialogs.py:14
 msgid "Close"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgid "{message} Last connection error: {detail}"
 msgstr ""
 
 #: src/print_archive/core/cups_service.py:516
-#: src/print_archive/ui/main_window.py:443 src/print_archive/ui/settings.py:593
+#: src/print_archive/ui/main_window.py:577 src/print_archive/ui/settings.py:587
 msgid "unknown"
 msgstr ""
 
@@ -293,237 +293,267 @@ msgid "Languages"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:11
-msgid "Version 0.1.10"
+msgid "Version 0.1.11"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:13
+msgid ""
+"The main preview now supports zoom controls, mouse-wheel zoom, and drag-to-"
+"pan."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:14
+msgid ""
+"Pages can be rotated visually without changing the retained file or reprint "
+"orientation."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:15
+msgid "Primary actions now use symbolic icons and concise labels."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:16
+msgid "Apply and onboarding completion labels stay stable while CUPS restarts."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:17
+msgid ""
+"The GitHub source package now includes bilingual documentation and a "
+"complete screenshot gallery."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:21
+msgid "Version 0.1.10"
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:23
 msgid ""
 "A blocking progress dialog now waits for CUPS after global settings are "
 "saved."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:14
+#: src/print_archive/ui/about_content.py:24
 msgid "Fresh IPP connections must answer consistently before PyCUPS resumes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:15
+#: src/print_archive/ui/about_content.py:25
 msgid ""
 "History refresh is paused so a scheduler restart cannot appear as an "
 "application error."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:16
+#: src/print_archive/ui/about_content.py:26
 msgid ""
 "If CUPS stays unavailable, PyCUPS keeps retrying automatically while the app "
 "remains blocked."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:20
+#: src/print_archive/ui/about_content.py:30
 msgid "Version 0.1.9"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:22
+#: src/print_archive/ui/about_content.py:32
 msgid ""
 "Welcome and completion headers no longer create isolated internal scrollbars."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:23
+#: src/print_archive/ui/about_content.py:33
 msgid ""
 "More compact spacing keeps onboarding information visible in the standard "
 "window size."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:24
+#: src/print_archive/ui/about_content.py:34
 msgid ""
 "The longer retention form uses only one page-level scrolling fallback when "
 "needed."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:28
+#: src/print_archive/ui/about_content.py:38
 msgid "Version 0.1.8"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:30
+#: src/print_archive/ui/about_content.py:40
 msgid ""
 "A three-step welcome flow explains privacy, updates, and open-source access."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:31
+#: src/print_archive/ui/about_content.py:41
 msgid ""
 "Current CUPS retention values are shown beside an editable 30/90-day "
 "suggestion."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:32
+#: src/print_archive/ui/about_content.py:42
 msgid ""
 "The suggested job-count limit is unlimited so time-based retention is not "
 "shortened."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:33
+#: src/print_archive/ui/about_content.py:43
 msgid ""
 "Applying remains explicit and protected by administrator authorization; "
 "skipping changes nothing."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:34
+#: src/print_archive/ui/about_content.py:44
 msgid "The welcome setup can be reopened from the main menu."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:38
+#: src/print_archive/ui/about_content.py:48
 msgid "Version 0.1.7"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:40
+#: src/print_archive/ui/about_content.py:50
 msgid "PyCUPS is now the consistent application name throughout the interface."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:41
+#: src/print_archive/ui/about_content.py:51
 msgid "CUPS Archive is retained as the product description."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:42
+#: src/print_archive/ui/about_content.py:52
 msgid "Technical identifiers remain compatible with previous installations."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:46
+#: src/print_archive/ui/about_content.py:56
 msgid "Version 0.1.6"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:48
+#: src/print_archive/ui/about_content.py:58
 msgid "Apply stays fixed below the scrolling Retention and Server forms."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:49
+#: src/print_archive/ui/about_content.py:59
 msgid "Retained print files can now be kept without a time limit."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:50
+#: src/print_archive/ui/about_content.py:60
 msgid "The reprint preview is displayed on the left of its options."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:51
+#: src/print_archive/ui/about_content.py:61
 msgid "Per-job spool isolation fixes cached multi-page preview navigation."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:55
+#: src/print_archive/ui/about_content.py:65
 msgid "Version 0.1.5"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:57
+#: src/print_archive/ui/about_content.py:67
 msgid "Long destination-paper names no longer compress the Target paper row."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:58
+#: src/print_archive/ui/about_content.py:68
 msgid ""
 "The selected paper uses an ellipsis while the popup keeps the complete names."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:59
+#: src/print_archive/ui/about_content.py:69
 msgid "The complete selected paper name remains available in a tooltip."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:63
+#: src/print_archive/ui/about_content.py:73
 msgid "Version 0.1.4"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:65
+#: src/print_archive/ui/about_content.py:75
 msgid "The print history is visible immediately after the first CUPS load."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:66
+#: src/print_archive/ui/about_content.py:76
 msgid "Printer selection is populated before GTK evaluates job-row visibility."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:67
+#: src/print_archive/ui/about_content.py:77
 msgid "The list filter is explicitly refreshed after every history rebuild."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:71
+#: src/print_archive/ui/about_content.py:81
 msgid "Version 0.1.3"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:73
+#: src/print_archive/ui/about_content.py:83
 msgid ""
 "Filter history with checkboxes for all printers or any selected combination."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:74
+#: src/print_archive/ui/about_content.py:84
 msgid ""
 "Preview a PDF reprint on the destination paper with fit, fill, actual-size, "
 "and automatic scaling."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:75
+#: src/print_archive/ui/about_content.py:85
 msgid ""
 "Choose paper sizes and scaling advertised by the destination through CUPS "
 "IPP attributes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:76
+#: src/print_archive/ui/about_content.py:86
 msgid ""
 "Check GitHub for validated optional or mandatory updates at startup and on "
 "demand."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:77
+#: src/print_archive/ui/about_content.py:87
 msgid ""
 "Use tabbed Retention, Server, and Maintenance settings for global CUPS "
 "configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:78
+#: src/print_archive/ui/about_content.py:88
 msgid ""
 "Expanded About information, project links, credits, release notes, and "
 "diagnostic details."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:82
+#: src/print_archive/ui/about_content.py:92
 msgid "Version 0.1.2"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:84
+#: src/print_archive/ui/about_content.py:94
 msgid ""
 "Added on-demand CUPS authentication for protected retained files and exact "
 "restarts."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:85
+#: src/print_archive/ui/about_content.py:95
 msgid ""
 "Attempted direct retained-file retrieval even when job-preserved was not "
 "reported."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:86
+#: src/print_archive/ui/about_content.py:96
 msgid ""
 "Added the first printer filter and completed Brazilian Portuguese "
 "installation support."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:90
+#: src/print_archive/ui/about_content.py:100
 msgid "Version 0.1.1"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:92
+#: src/print_archive/ui/about_content.py:102
 msgid "Loaded retention controls from the live CUPS configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:93
+#: src/print_archive/ui/about_content.py:103
 msgid ""
 "Kept installation and application startup free of automatic CUPS changes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:97
+#: src/print_archive/ui/about_content.py:107
 msgid "Version 0.1.0"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:99
+#: src/print_archive/ui/about_content.py:109
 msgid ""
 "Initial release for viewing, exporting, deleting, and reprinting retained "
 "CUPS jobs."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:100
+#: src/print_archive/ui/about_content.py:110
 msgid "Added selected-page extraction for retained PDF documents."
 msgstr ""
 
@@ -553,373 +583,408 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:29
-#: src/print_archive/ui/cups_restart.py:78
-#: src/print_archive/ui/cups_restart.py:132
-#: src/print_archive/ui/onboarding.py:542 src/print_archive/ui/settings.py:441
-#: src/print_archive/ui/settings.py:545
+#: src/print_archive/ui/cups_restart.py:30
+#: src/print_archive/ui/cups_restart.py:79
+#: src/print_archive/ui/cups_restart.py:135
 msgid "Restarting CUPS…"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:43
+#: src/print_archive/ui/cups_restart.py:44
 msgid "CUPS service"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:86
-#: src/print_archive/ui/cups_restart.py:135
+#: src/print_archive/ui/cups_restart.py:87
+#: src/print_archive/ui/cups_restart.py:138
 msgid ""
 "Waiting for the local print service to become available again. PyCUPS will "
 "continue automatically after the connection is confirmed."
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:111
+#: src/print_archive/ui/cups_restart.py:112
 msgid "Try again"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:117
+#: src/print_archive/ui/cups_restart.py:119
 msgid "Close PyCUPS"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:145
+#: src/print_archive/ui/cups_restart.py:148
 msgid "CUPS is still unavailable"
 msgstr ""
 
-#: src/print_archive/ui/cups_restart.py:148
+#: src/print_archive/ui/cups_restart.py:151
 msgid ""
 "PyCUPS remains blocked to avoid showing a false print-history error. It will "
 "try again automatically; you can also retry now or close the application."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:31
+#: src/print_archive/ui/main_window.py:43
 msgid "All jobs"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:32
+#: src/print_archive/ui/main_window.py:44
 msgid "Completed"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:33
+#: src/print_archive/ui/main_window.py:45
 msgid "Active"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:34
+#: src/print_archive/ui/main_window.py:46
 msgid "Canceled or aborted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:35
+#: src/print_archive/ui/main_window.py:47
 msgid "Waiting"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:36
+#: src/print_archive/ui/main_window.py:48
 msgid "Held"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:37
+#: src/print_archive/ui/main_window.py:49
 msgid "Printing"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:38
+#: src/print_archive/ui/main_window.py:50
 msgid "Stopped"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:39
+#: src/print_archive/ui/main_window.py:51
 msgid "Canceled"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:40
+#: src/print_archive/ui/main_window.py:52
 msgid "Aborted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:81
+#: src/print_archive/ui/main_window.py:102
 msgid "Refresh (Ctrl+R)"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:87
+#: src/print_archive/ui/main_window.py:108
 msgid "Settings"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:88
+#: src/print_archive/ui/main_window.py:109
 msgid "Welcome and initial setup"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:89
+#: src/print_archive/ui/main_window.py:110
 msgid "Check for updates"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:90
+#: src/print_archive/ui/main_window.py:111
 #, python-brace-format
 msgid "About {app_name}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:91
+#: src/print_archive/ui/main_window.py:112
 msgid "Quit"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:94
+#: src/print_archive/ui/main_window.py:115
 msgid "Main menu"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:120
+#: src/print_archive/ui/main_window.py:141
 msgid "Search by name, user, printer, or job number"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:129
+#: src/print_archive/ui/main_window.py:150
 msgid "Filter by job state"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:170
+#: src/print_archive/ui/main_window.py:191
 msgid "Loading print history…"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:175
+#: src/print_archive/ui/main_window.py:196
 msgid "No print jobs"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:176
+#: src/print_archive/ui/main_window.py:197
 msgid "Jobs retained by the local CUPS service will appear here."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:187
+#: src/print_archive/ui/main_window.py:208
 msgid "Select a print job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:188
+#: src/print_archive/ui/main_window.py:209
 msgid ""
 "Preview its retained file, export it, or reprint all or selected PDF pages."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:194
-#: src/print_archive/ui/main_window.py:341
+#: src/print_archive/ui/main_window.py:215
+#: src/print_archive/ui/main_window.py:474
 msgid "Print service unavailable"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:221
+#: src/print_archive/ui/main_window.py:242
 msgid "Retrieving the retained file…"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:227
-msgid "Print job preview"
+#: src/print_archive/ui/main_window.py:251
+msgid "Use the mouse wheel to zoom; drag to move an enlarged preview."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:251
-#: src/print_archive/ui/main_window.py:515
-#: src/print_archive/ui/reprint_dialog.py:263
+#: src/print_archive/ui/main_window.py:311
+#: src/print_archive/ui/main_window.py:650
+#: src/print_archive/ui/reprint_dialog.py:268
 msgid "Preview unavailable"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:257
+#: src/print_archive/ui/main_window.py:323
+msgid "Rotate preview left"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:329
+msgid "Rotate preview right"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:341
+msgid "Zoom out"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:357
+msgid "Zoom percentage"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:365
+msgid "Zoom in"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:371
+msgid "Fit preview to window"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:376
+msgid "100%"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:378
+msgid "Show preview at actual pixel size"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:385
 msgid "Previous page"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:260
+#: src/print_archive/ui/main_window.py:388
 msgid "Page 1 of 1"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:262
+#: src/print_archive/ui/main_window.py:390
 msgid "Next page"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:271
+#: src/print_archive/ui/main_window.py:399
 msgid "Permanently delete this retained job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:276
-msgid "Export original…"
+#: src/print_archive/ui/main_window.py:405
+msgid "Export original"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:280
-msgid "Reprint…"
+#: src/print_archive/ui/main_window.py:412
+#: src/print_archive/ui/reprint_dialog.py:92
+msgid "Reprint"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:333
+#: src/print_archive/ui/main_window.py:466
 msgid "Could not load print history"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:351
+#: src/print_archive/ui/main_window.py:484
 #, python-brace-format
 msgid "{count} pages"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:353
+#: src/print_archive/ui/main_window.py:486
 msgid "page count unknown"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:443
+#: src/print_archive/ui/main_window.py:577
 msgid "yes"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:443
+#: src/print_archive/ui/main_window.py:577
 msgid "no"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:444
+#: src/print_archive/ui/main_window.py:578
 msgid "unknown size"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:446
+#: src/print_archive/ui/main_window.py:580
 #, python-brace-format
 msgid ""
 "Job #{job_id} · {state} · {printer} · {user}\n"
 "Created {created} · CUPS retention flag: {preserved} · {size}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:489
+#: src/print_archive/ui/main_window.py:623
 msgid "Could not access the retained file"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:511
+#: src/print_archive/ui/main_window.py:646
 msgid ""
 "The retained format can be reprinted, but this version cannot render it "
 "safely."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:512
+#: src/print_archive/ui/main_window.py:647
 msgid ""
 "This multi-document job contains mixed formats and has no combined preview."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:513
+#: src/print_archive/ui/main_window.py:648
 msgid "CUPS no longer has the spool file. Metadata remains visible."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:517
+#: src/print_archive/ui/main_window.py:652
 msgid "No preview is available for this job."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:529
+#: src/print_archive/ui/main_window.py:664
 #, python-brace-format
 msgid "Page {page} of {total}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:560
+#: src/print_archive/ui/main_window.py:694
 msgid "Could not render this PDF"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:595
+#: src/print_archive/ui/main_window.py:716
+msgid "Could not render this preview"
+msgstr ""
+
+#: src/print_archive/ui/main_window.py:942
 msgid "Could not list printers"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:599
+#: src/print_archive/ui/main_window.py:946
 #, python-brace-format
 msgid "Job #{job_id} was restarted with all pages."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:601
+#: src/print_archive/ui/main_window.py:948
 #, python-brace-format
 msgid "New job #{job_id} was created for pages {pages}."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:613
+#: src/print_archive/ui/main_window.py:960
 msgid "Export retained document"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:624
+#: src/print_archive/ui/main_window.py:971
 #, python-brace-format
 msgid "Exported to {name}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:626
+#: src/print_archive/ui/main_window.py:973
 msgid "Could not export this job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:637
+#: src/print_archive/ui/main_window.py:984
 #, python-brace-format
 msgid "Delete job #{job_id}?"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:638
+#: src/print_archive/ui/main_window.py:985
 msgid ""
 "The retained file and its history metadata will be permanently purged from "
 "CUPS."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:639
+#: src/print_archive/ui/main_window.py:986
 msgid "Delete"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:654
+#: src/print_archive/ui/main_window.py:1001
 #, python-brace-format
 msgid "Job #{job_id} deleted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:661
+#: src/print_archive/ui/main_window.py:1008
 msgid "Could not delete this job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:699
+#: src/print_archive/ui/main_window.py:1046
 msgid "unknown date"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:58 src/print_archive/ui/onboarding.py:82
-#: src/print_archive/ui/onboarding.py:182
+#: src/print_archive/ui/onboarding.py:59 src/print_archive/ui/onboarding.py:83
+#: src/print_archive/ui/onboarding.py:189
 #, python-brace-format
 msgid "Welcome to {app_name}"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:83 src/print_archive/ui/onboarding.py:355
+#: src/print_archive/ui/onboarding.py:84 src/print_archive/ui/onboarding.py:362
 msgid "Step 1 of 3"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:103
+#: src/print_archive/ui/onboarding.py:105
 msgid "Back"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:107
+#: src/print_archive/ui/onboarding.py:112
 msgid "Skip without changes"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:184
+#: src/print_archive/ui/onboarding.py:191
 #, python-brace-format
 msgid ""
 "{tagline} helps you find, preview, export, and reprint documents retained by "
 "CUPS."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:189
+#: src/print_archive/ui/onboarding.py:196
 msgid "Privacy and transparency"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:192
+#: src/print_archive/ui/onboarding.py:199
 msgid "Your print documents stay on this computer"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:194
+#: src/print_archive/ui/onboarding.py:201
 msgid ""
 "PyCUPS never uploads retained print files or job metadata to the internet."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:201
+#: src/print_archive/ui/onboarding.py:208
 msgid "Only automatic internet access: update checks"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:203
+#: src/print_archive/ui/onboarding.py:210
 msgid ""
 "A small version manifest is read from GitHub. No print content is included."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:209
+#: src/print_archive/ui/onboarding.py:216
 msgid "Open-source software"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:210
+#: src/print_archive/ui/onboarding.py:217
 msgid "Inspect the complete source code and report issues on GitHub."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:222
+#: src/print_archive/ui/onboarding.py:229
 msgid "CUPS remains in control"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:224
+#: src/print_archive/ui/onboarding.py:231
 msgid ""
 "The next step only proposes retention values. Nothing changes without your "
 "explicit approval and administrator authorization."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:236
+#: src/print_archive/ui/onboarding.py:243
 msgid "A balanced retention starting point"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:238
+#: src/print_archive/ui/onboarding.py:245
 msgid ""
 "Thirty days of print files keeps recent documents reprintable. Ninety days "
 "of history preserves useful metadata, while both time limits avoid retaining "
@@ -927,234 +992,228 @@ msgid ""
 "shorten those periods."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:243
+#: src/print_archive/ui/onboarding.py:250
 msgid "Suggested: files 30 days · history 90 days · job count unlimited"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:245
+#: src/print_archive/ui/onboarding.py:252
 msgid ""
 "These are editable suggestions, not defaults applied by installation or "
 "startup."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:252
+#: src/print_archive/ui/onboarding.py:259
 msgid "Current CUPS configuration"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:254 src/print_archive/ui/settings.py:171
+#: src/print_archive/ui/onboarding.py:261 src/print_archive/ui/settings.py:173
 msgid "Retained print files"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:255
-#: src/print_archive/ui/onboarding.py:259
-#: src/print_archive/ui/onboarding.py:263
-#: src/print_archive/ui/onboarding.py:434
-#: src/print_archive/ui/onboarding.py:435
-#: src/print_archive/ui/onboarding.py:436
+#: src/print_archive/ui/onboarding.py:262
+#: src/print_archive/ui/onboarding.py:266
+#: src/print_archive/ui/onboarding.py:270
+#: src/print_archive/ui/onboarding.py:451
+#: src/print_archive/ui/onboarding.py:452
+#: src/print_archive/ui/onboarding.py:453
 msgid "Loading…"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:258 src/print_archive/ui/settings.py:190
+#: src/print_archive/ui/onboarding.py:265 src/print_archive/ui/settings.py:192
 msgid "Job history"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:262
+#: src/print_archive/ui/onboarding.py:269
 msgid "Job-count limit"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:271
+#: src/print_archive/ui/onboarding.py:278
 msgid "Proposed configuration"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:272
+#: src/print_archive/ui/onboarding.py:279
 msgid "Edit any value before applying it to the global CUPS service."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:275 src/print_archive/ui/settings.py:179
+#: src/print_archive/ui/onboarding.py:282 src/print_archive/ui/settings.py:181
 msgid "No time limit for retained files"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:280 src/print_archive/ui/settings.py:185
+#: src/print_archive/ui/onboarding.py:287 src/print_archive/ui/settings.py:187
 msgid "Otherwise keep files for (days)"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:284 src/print_archive/ui/settings.py:197
+#: src/print_archive/ui/onboarding.py:291 src/print_archive/ui/settings.py:199
 msgid "No time limit for history"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:289 src/print_archive/ui/settings.py:203
+#: src/print_archive/ui/onboarding.py:296 src/print_archive/ui/settings.py:205
 msgid "Otherwise keep history for (days)"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:293 src/print_archive/ui/settings.py:215
+#: src/print_archive/ui/onboarding.py:300 src/print_archive/ui/settings.py:217
 msgid "Unlimited number of jobs"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:298 src/print_archive/ui/settings.py:221
+#: src/print_archive/ui/onboarding.py:305 src/print_archive/ui/settings.py:223
 msgid "Otherwise keep at most"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:304
+#: src/print_archive/ui/onboarding.py:311
 msgid "Restore the suggested values"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:305
+#: src/print_archive/ui/onboarding.py:312
 msgid "Files: 30 days · History: 90 days · MaxJobs: unlimited"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:312
+#: src/print_archive/ui/onboarding.py:319
 msgid "Reload current CUPS values"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:313
+#: src/print_archive/ui/onboarding.py:320
 msgid "The proposed fields are not changed."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:326
+#: src/print_archive/ui/onboarding.py:333
 msgid "Setup complete"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:328
+#: src/print_archive/ui/onboarding.py:335
 msgid ""
 "PyCUPS is ready. No CUPS setting is changed until you explicitly apply it."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:332
+#: src/print_archive/ui/onboarding.py:339
 msgid "What happens next"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:334
+#: src/print_archive/ui/onboarding.py:341
 msgid "No retention changes were made"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:335
+#: src/print_archive/ui/onboarding.py:342
 msgid "You can configure them later in Settings › Retention."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:341
+#: src/print_archive/ui/onboarding.py:348
 msgid "Your print history will now open"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:343
+#: src/print_archive/ui/onboarding.py:350
 msgid "The welcome setup can be opened again at any time from the main menu."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:358
+#: src/print_archive/ui/onboarding.py:367
 msgid "Continue"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:361
+#: src/print_archive/ui/onboarding.py:372
 msgid "Step 2 of 3"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:364
-#: src/print_archive/ui/onboarding.py:566
+#: src/print_archive/ui/onboarding.py:377
 msgid "Apply and continue"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:367
+#: src/print_archive/ui/onboarding.py:382
 msgid "Step 3 of 3"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:371
+#: src/print_archive/ui/onboarding.py:387
 #, python-brace-format
 msgid "Start using {app_name}"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:392
+#: src/print_archive/ui/onboarding.py:409
 msgid ""
 "No CUPS settings were changed. You can adjust retention later in Settings."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:394
+#: src/print_archive/ui/onboarding.py:411
 msgid "Retention configuration was skipped"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:396
+#: src/print_archive/ui/onboarding.py:413
 msgid "The current CUPS values remain exactly as they were."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:464
+#: src/print_archive/ui/onboarding.py:481
 msgid "Unlimited (MaxJobs=0)"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:466
+#: src/print_archive/ui/onboarding.py:483
 #, python-brace-format
 msgid "{count} jobs"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:474
+#: src/print_archive/ui/onboarding.py:491
 msgid "Could not read the current value"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:483
+#: src/print_archive/ui/onboarding.py:500
 msgid "Could not load the current CUPS values"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:490
+#: src/print_archive/ui/onboarding.py:507
 msgid "No time limit"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:492
+#: src/print_archive/ui/onboarding.py:509
 msgid "Not retained"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:494
+#: src/print_archive/ui/onboarding.py:511
 msgid "1 day"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:496
-#: src/print_archive/ui/onboarding.py:579
-#: src/print_archive/ui/onboarding.py:584
+#: src/print_archive/ui/onboarding.py:513
+#: src/print_archive/ui/onboarding.py:593
+#: src/print_archive/ui/onboarding.py:598
 #, python-brace-format
 msgid "{days} days"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:504 src/print_archive/ui/settings.py:413
-#: src/print_archive/ui/settings.py:533
-msgid "Applying…"
-msgstr ""
-
-#: src/print_archive/ui/onboarding.py:537
+#: src/print_archive/ui/onboarding.py:553
 msgid ""
 "The retention values were saved. Waiting for CUPS to become available again."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:539
+#: src/print_archive/ui/onboarding.py:555
 msgid "Retention configuration saved"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:555
+#: src/print_archive/ui/onboarding.py:570
 msgid "The selected retention values were applied to CUPS successfully."
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:557
+#: src/print_archive/ui/onboarding.py:572
 msgid "Retention configuration applied"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:570 src/print_archive/ui/settings.py:469
+#: src/print_archive/ui/onboarding.py:584 src/print_archive/ui/settings.py:467
 msgid "Could not apply retention settings"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:577
-#: src/print_archive/ui/onboarding.py:582
+#: src/print_archive/ui/onboarding.py:591
+#: src/print_archive/ui/onboarding.py:596
 msgid "no time limit"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:587
+#: src/print_archive/ui/onboarding.py:601
 msgid "unlimited"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:591
+#: src/print_archive/ui/onboarding.py:605
 #, python-brace-format
 msgid "Files: {files} · History: {history} · MaxJobs: {jobs}"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:603
+#: src/print_archive/ui/onboarding.py:617
 msgid "Could not save the welcome status"
 msgstr ""
 
-#: src/print_archive/ui/onboarding.py:614
+#: src/print_archive/ui/onboarding.py:628
 msgid "Could not open the project website"
 msgstr ""
 
@@ -1177,495 +1236,489 @@ msgstr ""
 msgid "{count} printers"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:72
+#: src/print_archive/ui/reprint_dialog.py:73
 msgid "Automatic"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:73
+#: src/print_archive/ui/reprint_dialog.py:74
 msgid "Automatic fit"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:74
-#: src/print_archive/ui/reprint_dialog.py:175
+#: src/print_archive/ui/reprint_dialog.py:75
+#: src/print_archive/ui/reprint_dialog.py:180
 msgid "Fit to printable area"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:75
+#: src/print_archive/ui/reprint_dialog.py:76
 msgid "Fill printable area"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:76
+#: src/print_archive/ui/reprint_dialog.py:77
 msgid "Actual size"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:91
-msgid "Reprint"
-msgstr ""
-
-#: src/print_archive/ui/reprint_dialog.py:112
-#: src/print_archive/ui/reprint_dialog.py:539
+#: src/print_archive/ui/reprint_dialog.py:114
+#: src/print_archive/ui/reprint_dialog.py:550
 msgid "Print"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:136
+#: src/print_archive/ui/reprint_dialog.py:141
 msgid "Reprint mode"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:138
+#: src/print_archive/ui/reprint_dialog.py:143
 msgid ""
 "Exact restart asks CUPS to reuse the retained job and its original options. "
 "Turn it off to choose another printer, paper, scale, copies, or pages."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:143
+#: src/print_archive/ui/reprint_dialog.py:148
 msgid "Restart the original job exactly"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:144
+#: src/print_archive/ui/reprint_dialog.py:149
 msgid "Available only for the original printer, all pages, and one copy."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:152
+#: src/print_archive/ui/reprint_dialog.py:157
 msgid "Destination"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:153
+#: src/print_archive/ui/reprint_dialog.py:158
 msgid "Printer"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:161
+#: src/print_archive/ui/reprint_dialog.py:166
 msgid "Target paper"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:162
+#: src/print_archive/ui/reprint_dialog.py:167
 msgid "Paper sizes reported by the selected destination."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:164
+#: src/print_archive/ui/reprint_dialog.py:169
 msgid "Printer default"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:172
+#: src/print_archive/ui/reprint_dialog.py:177
 msgid "Scale"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:173
+#: src/print_archive/ui/reprint_dialog.py:178
 msgid "The same print-scaling option is sent to CUPS."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:184
+#: src/print_archive/ui/reprint_dialog.py:189
 msgid "Copies"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:189
+#: src/print_archive/ui/reprint_dialog.py:194
 msgid "Pages"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:190
+#: src/print_archive/ui/reprint_dialog.py:195
 msgid "Print all pages"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:196
+#: src/print_archive/ui/reprint_dialog.py:201
 #, python-brace-format
 msgid "Examples: 3, 2-5, or 1,4,7-10 · {total} pages available"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:198
+#: src/print_archive/ui/reprint_dialog.py:203
 msgid ""
 "Page selection is available only when the retained document is a readable "
 "PDF."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:200
+#: src/print_archive/ui/reprint_dialog.py:205
 msgid "Page range"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:202
+#: src/print_archive/ui/reprint_dialog.py:207
 msgid "Example: 1,4,7-10"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:216
+#: src/print_archive/ui/reprint_dialog.py:221
 msgid "Preview is an approximation"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:218
+#: src/print_archive/ui/reprint_dialog.py:223
 msgid ""
 "It uses the paper dimensions, printable margins, and scaling advertised by "
 "CUPS. The printer driver may still apply finishing or hardware-specific "
 "adjustments."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:237
+#: src/print_archive/ui/reprint_dialog.py:242
 msgid "Reprint preview"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:249
+#: src/print_archive/ui/reprint_dialog.py:254
 msgid "Composing target sheet…"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:255
+#: src/print_archive/ui/reprint_dialog.py:260
 msgid "Target-sheet reprint preview"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:270
+#: src/print_archive/ui/reprint_dialog.py:275
 msgid "Previous selected page"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:274
+#: src/print_archive/ui/reprint_dialog.py:279
 msgid "Page 1"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:277
+#: src/print_archive/ui/reprint_dialog.py:282
 msgid "Next selected page"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:310
+#: src/print_archive/ui/reprint_dialog.py:315
 msgid "Printer default (size unavailable)"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:378
+#: src/print_archive/ui/reprint_dialog.py:383
 msgid ""
 "Original destination and retained CUPS options; the source page is shown "
 "unchanged."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:385
+#: src/print_archive/ui/reprint_dialog.py:390
 msgid "printer default paper"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:388
+#: src/print_archive/ui/reprint_dialog.py:393
 #, python-brace-format
 msgid "{printer} · {paper} · {scaling}"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:389
+#: src/print_archive/ui/reprint_dialog.py:394
 msgid "no printer"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:433
+#: src/print_archive/ui/reprint_dialog.py:438
 msgid "Target-sheet preview unavailable"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:435
+#: src/print_archive/ui/reprint_dialog.py:440
 msgid ""
 "The retained job is not a readable PDF. Exact restart may still be available."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:444
+#: src/print_archive/ui/reprint_dialog.py:449
 msgid "Enter a valid page range"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:473
+#: src/print_archive/ui/reprint_dialog.py:478
 #, python-brace-format
 msgid "Page {page} · {position} of {count} selected"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:499
+#: src/print_archive/ui/reprint_dialog.py:504
 msgid "Could not compose the preview"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:506
+#: src/print_archive/ui/reprint_dialog.py:511
 msgid "No printer selected"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:506
+#: src/print_archive/ui/reprint_dialog.py:511
 msgid "Choose a printer before continuing."
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:511
+#: src/print_archive/ui/reprint_dialog.py:516
 msgid "Invalid page range"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:518
+#: src/print_archive/ui/reprint_dialog.py:525
 msgid "Preparing…"
 msgstr ""
 
-#: src/print_archive/ui/reprint_dialog.py:540
+#: src/print_archive/ui/reprint_dialog.py:553
 msgid "Could not reprint this job"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:45
+#: src/print_archive/ui/settings.py:46
 #, python-brace-format
 msgid "{app_name} Settings"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:63 src/print_archive/ui/settings.py:155
+#: src/print_archive/ui/settings.py:64 src/print_archive/ui/settings.py:157
 msgid "Retention"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:69 src/print_archive/ui/settings.py:238
+#: src/print_archive/ui/settings.py:70 src/print_archive/ui/settings.py:240
 msgid "Server"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:75 src/print_archive/ui/settings.py:294
+#: src/print_archive/ui/settings.py:76 src/print_archive/ui/settings.py:296
 msgid "Maintenance"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:115 src/print_archive/ui/settings.py:341
-#: src/print_archive/ui/settings.py:345
+#: src/print_archive/ui/settings.py:116 src/print_archive/ui/settings.py:343
+#: src/print_archive/ui/settings.py:347
 msgid "Loading current CUPS values…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:123 src/print_archive/ui/settings.py:449
-#: src/print_archive/ui/settings.py:462 src/print_archive/ui/settings.py:553
-#: src/print_archive/ui/settings.py:566
+#: src/print_archive/ui/settings.py:124
 msgid "Apply"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:160
+#: src/print_archive/ui/settings.py:162
 msgid "No automatic configuration changes"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:162
+#: src/print_archive/ui/settings.py:164
 #, python-brace-format
 msgid ""
 "Installing or opening {app_name} does not change CUPS. Live values are "
 "loaded here and only Apply saves edits."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:173
+#: src/print_archive/ui/settings.py:175
 msgid ""
 "CUPS needs the spool file for preview, export, and reprinting. Its standard "
 "default is 1 day (86,400 seconds). No time limit still depends on MaxJobs "
 "and can use substantial disk space."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:192
+#: src/print_archive/ui/settings.py:194
 msgid ""
 "History is metadata such as job name, user, printer, and status. CUPS "
 "normally keeps it without a time limit, capped by MaxJobs 500."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:208
+#: src/print_archive/ui/settings.py:210
 msgid "Capacity"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:210
+#: src/print_archive/ui/settings.py:212
 msgid ""
 "MaxJobs limits the number of retained jobs. Zero means unlimited; disk usage "
 "then depends on the file and history limits."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:225
+#: src/print_archive/ui/settings.py:227
 msgid "Defaults"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:227
+#: src/print_archive/ui/settings.py:229
 msgid "Load CUPS standard defaults into the form"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:228
+#: src/print_archive/ui/settings.py:230
 msgid "Files: 1 day · History: no time limit · MaxJobs: 500"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:242
+#: src/print_archive/ui/settings.py:244
 msgid "Global CUPS settings only"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:244
+#: src/print_archive/ui/settings.py:246
 msgid ""
 "These switches apply to the print server as a whole. Printers, drivers, "
 "queues, defaults, and per-printer options are not managed here."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:253
+#: src/print_archive/ui/settings.py:255
 msgid "Access and sharing"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:254
+#: src/print_archive/ui/settings.py:256
 msgid ""
 "Changing network access can expose print administration or queues to other "
 "devices."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:257
+#: src/print_archive/ui/settings.py:259
 msgid "Enable CUPS web interface"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:262
+#: src/print_archive/ui/settings.py:264
 msgid "Share local printers"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:267
+#: src/print_archive/ui/settings.py:269
 msgid "Allow remote administration"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:272
+#: src/print_archive/ui/settings.py:274
 msgid "Allow connections from any network"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:273
+#: src/print_archive/ui/settings.py:275
 msgid "High-risk option: removes the local-subnet access restriction."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:277
+#: src/print_archive/ui/settings.py:279
 msgid "Allow users to cancel any job"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:283
+#: src/print_archive/ui/settings.py:285
 msgid "Diagnostics"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:285
+#: src/print_archive/ui/settings.py:287
 msgid "Enable debug logging"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:286
+#: src/print_archive/ui/settings.py:288
 msgid "Produces more CUPS log data and should normally remain off."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:295
+#: src/print_archive/ui/settings.py:297
 msgid "Local print service"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:297 src/print_archive/ui/settings.py:347
+#: src/print_archive/ui/settings.py:299 src/print_archive/ui/settings.py:349
 msgid "Reading CUPS information…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:298
+#: src/print_archive/ui/settings.py:300
 msgid "Server, user, version, default destination, and queue count."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:304
+#: src/print_archive/ui/settings.py:306
 msgid "Tools"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:306
+#: src/print_archive/ui/settings.py:308
 msgid "Open CUPS web interface"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:314
+#: src/print_archive/ui/settings.py:316
 msgid "Refresh all live values"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:315
+#: src/print_archive/ui/settings.py:317
 msgid "Reload retention, global server settings, and service information."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:323
+#: src/print_archive/ui/settings.py:325
 msgid "History data"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:325
+#: src/print_archive/ui/settings.py:327
 msgid "Delete all job history now"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:326
+#: src/print_archive/ui/settings.py:328
 msgid "Purges retained files and metadata for every job visible to CUPS."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:398 src/print_archive/ui/settings.py:492
+#: src/print_archive/ui/settings.py:400 src/print_archive/ui/settings.py:490
 msgid "Current CUPS values loaded. Only Apply saves changes."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:405 src/print_archive/ui/settings.py:499
+#: src/print_archive/ui/settings.py:407 src/print_archive/ui/settings.py:497
 msgid "Could not load the current CUPS values."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:416
+#: src/print_archive/ui/settings.py:417
 msgid "Applying retention settings…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:444 src/print_archive/ui/settings.py:548
+#: src/print_archive/ui/settings.py:444 src/print_archive/ui/settings.py:544
 msgid "Restarting CUPS and confirming the connection…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:450
+#: src/print_archive/ui/settings.py:449
 msgid "Retention settings applied"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:450
+#: src/print_archive/ui/settings.py:449
 msgid "CUPS is now using the selected values."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:453 src/print_archive/ui/settings.py:557
+#: src/print_archive/ui/settings.py:452 src/print_archive/ui/settings.py:552
 msgid "Reloading current CUPS values…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:466
+#: src/print_archive/ui/settings.py:464
 msgid "Could not apply the retention settings."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:520
+#: src/print_archive/ui/settings.py:518
 msgid "Allow CUPS connections from any network?"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:522
+#: src/print_archive/ui/settings.py:520
 msgid ""
 "This can expose shared printers or administration beyond the local subnet. "
 "Continue only when the computer firewall and CUPS access policy are "
 "understood."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:525
+#: src/print_archive/ui/settings.py:523
 msgid "Apply risky setting"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:536
+#: src/print_archive/ui/settings.py:533
 msgid "Applying global server settings…"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:554
+#: src/print_archive/ui/settings.py:549
 msgid "Global CUPS settings applied"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:554
+#: src/print_archive/ui/settings.py:549
 msgid "The print server is now using the selected switches."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:570
+#: src/print_archive/ui/settings.py:564
 msgid "Could not apply the global server settings."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:573
+#: src/print_archive/ui/settings.py:567
 msgid "Could not apply global server settings"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:589
+#: src/print_archive/ui/settings.py:583
 msgid "none"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:590
+#: src/print_archive/ui/settings.py:584
 #, python-brace-format
 msgid "CUPS {version} on {server}"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:592
+#: src/print_archive/ui/settings.py:586
 #, python-brace-format
 msgid "User: {user} · Default: {default} · {count} destinations"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:600
+#: src/print_archive/ui/settings.py:594
 msgid "Could not read CUPS service information"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:607
+#: src/print_archive/ui/settings.py:601
 msgid "Could not open the CUPS web interface"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:612
+#: src/print_archive/ui/settings.py:606
 msgid "Delete all print history?"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:613
+#: src/print_archive/ui/settings.py:607
 msgid ""
 "This permanently removes retained spool files and job metadata. It cannot be "
 "undone."
 msgstr ""
 
-#: src/print_archive/ui/settings.py:614
+#: src/print_archive/ui/settings.py:608
 msgid "Delete all"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:622
+#: src/print_archive/ui/settings.py:616
 msgid "Could not delete all history"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:628
+#: src/print_archive/ui/settings.py:622
 msgid "Print history deleted"
 msgstr ""
 
-#: src/print_archive/ui/settings.py:629
+#: src/print_archive/ui/settings.py:623
 #, python-brace-format
 msgid "{count} jobs were permanently removed."
 msgstr ""

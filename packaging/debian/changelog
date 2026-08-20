@@ -1,3 +1,14 @@
+print-archive (0.1.11) stable; urgency=medium
+
+  * Add zoom, mouse-wheel control, rotation, and panning to the main preview.
+  * Keep the reprint preview physically faithful and without manual rotation.
+  * Keep action labels stable while the CUPS restart dialog blocks the app.
+  * Add icons and remove ellipses from the main export and reprint actions.
+  * Add bilingual GitHub documentation and a complete screenshot gallery.
+  * Include documentation assets in the reproducible source ZIP.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Thu, 20 Aug 2026 09:21:19 -0300
+
 print-archive (0.1.10) stable; urgency=medium
 
   * Block all PyCUPS actions while CUPS restarts after global changes.

@@ -43,6 +43,28 @@
   <url type="homepage">https://github.com/ehstbr/PyCUPS</url>
   <url type="bugtracker">https://github.com/ehstbr/PyCUPS/issues</url>
   <url type="vcs-browser">https://github.com/ehstbr/PyCUPS</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/ehstbr/PyCUPS/main/docs/screenshots/main-window.png</image>
+      <caption>Browse retained CUPS jobs and preview their documents</caption>
+      <caption xml:lang="pt-BR">Consulte jobs retidos pelo CUPS e visualize seus documentos</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/ehstbr/PyCUPS/main/docs/screenshots/reprint-preview.png</image>
+      <caption>Reprint with destination paper, scaling, copies, and page selection</caption>
+      <caption xml:lang="pt-BR">Reimprima escolhendo papel, escala, cópias e páginas</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/ehstbr/PyCUPS/main/docs/screenshots/onboarding-retention.png</image>
+      <caption>Compare live CUPS retention with an editable suggestion</caption>
+      <caption xml:lang="pt-BR">Compare a retenção real do CUPS com uma sugestão editável</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/ehstbr/PyCUPS/main/docs/screenshots/settings-retention.png</image>
+      <caption>Manage bounded global retention settings explicitly</caption>
+      <caption xml:lang="pt-BR">Gerencie explicitamente configurações globais e limitadas de retenção</caption>
+    </screenshot>
+  </screenshots>
   <provides>
     <binary>print-archive</binary>
   </provides>
@@ -50,6 +72,11 @@
     <display_length compare="ge">768</display_length>
   </requires>
   <releases>
+    <release version="0.1.11" date="2026-08-20">
+      <description>
+        <p>Add zoom, rotation, wheel control, and panning to the main preview; stabilize action labels; and publish complete bilingual GitHub documentation with screenshots.</p>
+      </description>
+    </release>
     <release version="0.1.10" date="2026-08-19">
       <description>
         <p>Block the interface after global CUPS changes until fresh, stable IPP connections confirm the restarted scheduler is ready.</p>

@@ -13,6 +13,7 @@ from ..models import CupsServerSettings, CupsSystemInfo, RetentionSettings
 from ..util.async_runner import AsyncRunner
 from ..util.i18n import _
 from .dialogs import confirm, show_message
+from .widgets import labeled_button
 
 
 def _spin_row(title: str, lower: int, upper: int, value: int) -> Adw.SpinRow:
@@ -119,8 +120,9 @@ class SettingsWindow(Adw.ApplicationWindow):
             css_classes=["dim-label"],
         )
         footer.append(status)
-        button = Gtk.Button(
-            label=_("Apply"),
+        button = labeled_button(
+            _("Apply"),
+            "document-save-symbolic",
             valign=Gtk.Align.CENTER,
             css_classes=["suggested-action"],
         )
@@ -410,7 +412,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         if not self._retention_editor_enabled:
             return
         self._set_retention_sensitive(False)
-        self.retention_apply_button.set_label(_("Applying…"))
         self._set_footer_status(
             self.retention_footer_status,
             _("Applying retention settings…"),
@@ -438,7 +439,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         )
 
     def _retention_applied(self, _result: object) -> None:
-        self.retention_apply_button.set_label(_("Restarting CUPS…"))
         self._set_footer_status(
             self.retention_footer_status,
             _("Restarting CUPS and confirming the connection…"),
@@ -446,7 +446,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         self.wait_for_cups_restart(self, self._retention_restart_ready)
 
     def _retention_restart_ready(self) -> None:
-        self.retention_apply_button.set_label(_("Apply"))
         show_message(self, _("Retention settings applied"), _("CUPS is now using the selected values."))
         self._set_footer_status(
             self.retention_footer_status,
@@ -459,7 +458,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         )
 
     def _retention_apply_failed(self, error: BaseException) -> None:
-        self.retention_apply_button.set_label(_("Apply"))
         self._set_retention_sensitive(True)
         self._set_footer_status(
             self.retention_footer_status,
@@ -530,7 +528,6 @@ class SettingsWindow(Adw.ApplicationWindow):
 
     def _submit_server_settings(self, settings: CupsServerSettings) -> None:
         self._set_server_sensitive(False)
-        self.server_apply_button.set_label(_("Applying…"))
         self._set_footer_status(
             self.server_footer_status,
             _("Applying global server settings…"),
@@ -542,7 +539,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         )
 
     def _server_applied(self, _result: object) -> None:
-        self.server_apply_button.set_label(_("Restarting CUPS…"))
         self._set_footer_status(
             self.server_footer_status,
             _("Restarting CUPS and confirming the connection…"),
@@ -550,7 +546,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         self.wait_for_cups_restart(self, self._server_restart_ready)
 
     def _server_restart_ready(self) -> None:
-        self.server_apply_button.set_label(_("Apply"))
         show_message(self, _("Global CUPS settings applied"), _("The print server is now using the selected switches."))
         self._set_footer_status(
             self.server_footer_status,
@@ -563,7 +558,6 @@ class SettingsWindow(Adw.ApplicationWindow):
         )
 
     def _server_apply_failed(self, error: BaseException) -> None:
-        self.server_apply_button.set_label(_("Apply"))
         self._set_server_sensitive(True)
         self._set_footer_status(
             self.server_footer_status,

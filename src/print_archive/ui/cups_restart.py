@@ -9,6 +9,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk
 
 from ..util.i18n import _
+from .widgets import labeled_button
 
 
 class CupsRestartWindow(Adw.Window):
@@ -107,14 +108,16 @@ class CupsRestartWindow(Adw.Window):
             halign=Gtk.Align.CENTER,
             visible=False,
         )
-        retry = Gtk.Button(
-            label=_("Try again"),
+        retry = labeled_button(
+            _("Try again"),
+            "view-refresh-symbolic",
             css_classes=["suggested-action"],
         )
         retry.connect("clicked", lambda _button: self._retry())
         self.actions.append(retry)
-        close_app = Gtk.Button(
-            label=_("Close PyCUPS"),
+        close_app = labeled_button(
+            _("Close PyCUPS"),
+            "window-close-symbolic",
             css_classes=["destructive-action"],
         )
         close_app.connect("clicked", lambda _button: self._on_quit())

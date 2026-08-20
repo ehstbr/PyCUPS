@@ -8,6 +8,16 @@ from ..util.i18n import _
 def release_notes_markup() -> str:
     sections = [
         (
+            _("Version 0.1.11"),
+            [
+                _("The main preview now supports zoom controls, mouse-wheel zoom, and drag-to-pan."),
+                _("Pages can be rotated visually without changing the retained file or reprint orientation."),
+                _("Primary actions now use symbolic icons and concise labels."),
+                _("Apply and onboarding completion labels stay stable while CUPS restarts."),
+                _("The GitHub source package now includes bilingual documentation and a complete screenshot gallery."),
+            ],
+        ),
+        (
             _("Version 0.1.10"),
             [
                 _("A blocking progress dialog now waits for CUPS after global settings are saved."),

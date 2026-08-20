@@ -4,13 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "print-archive"
-version = "0.1.10"
+version = "0.1.11"
 description = "PyCUPS — CUPS Archive for retained print jobs"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "GPL-3.0-or-later"}
 authors = [{name = "EduhCommerce"}]
-keywords = ["cups", "printing", "history", "gtk4", "libadwaita", "gnome"]
+keywords = [
+  "cups",
+  "printing",
+  "print-history",
+  "retained-jobs",
+  "spool-files",
+  "reprint",
+  "pdf-preview",
+  "gtk4",
+  "libadwaita",
+  "gnome",
+  "linux",
+]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Environment :: X11 Applications :: GTK",

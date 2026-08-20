@@ -1,15 +1,16 @@
 {
   "schema_version": 1,
-  "version": "0.1.10",
+  "version": "0.1.11",
   "mandatory": false,
-  "released_at": "2026-08-19T16:45:49Z",
-  "summary": "A blocking CUPS restart dialog now verifies fresh IPP connections before the app resumes after global configuration changes.",
+  "released_at": "2026-08-20T12:21:19Z",
+  "summary": "The main preview now adds zoom, mouse-wheel control, rotation, and panning, alongside a complete bilingual GitHub presentation.",
   "changelog": [
-    "Shows a non-dismissible Restarting CUPS dialog after retention or global server settings are saved, including during onboarding.",
-    "Blocks every PyCUPS window and application action until fresh IPP connections answer consistently.",
-    "Pauses automatic job-history refresh and suppresses transient connection errors while the scheduler is restarting.",
-    "Replaces the pre-restart PyCUPS connection with the newly verified connection before reloading jobs and settings.",
-    "Keeps the application blocked and automatically starts another probe if CUPS remains unavailable; Try again and Close PyCUPS remain available.",
-    "Adds readiness, timeout, shutdown-cancellation, and application-wide blocking regression coverage."
+    "Adds zoom out, zoom in, editable 1–500% control, fit-to-window, actual size, left/right rotation, scrollbars, and drag-to-pan to the main document preview.",
+    "Lets the mouse wheel change zoom while the pointer is over the main preview, while keeping the reprint preview physically faithful and free of manual rotation.",
+    "Keeps Apply and Start using PyCUPS labels stable while the blocking CUPS restart dialog communicates progress.",
+    "Adds symbolic icons to primary actions and removes unnecessary ellipses from Export original and Reprint.",
+    "Rebuilds the English and Brazilian Portuguese GitHub documentation with screenshots, use cases, privacy guidance, installation steps, translations, and search-friendly descriptions.",
+    "Adds GitHub Actions CI and package builds, Dependabot, issue forms, a pull-request template, security and support policies, editor defaults, attributes, and ignore rules.",
+    "Includes the complete screenshot gallery and documentation in the reproducible GitHub source ZIP and extends regression coverage for preview geometry and packaging."
   ]
 }

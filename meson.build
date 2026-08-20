@@ -1,6 +1,6 @@
 project(
   'print-archive',
-  version: '0.1.10',
+  version: '0.1.11',
   meson_version: '>= 1.0.0',
 )
 
@@ -26,6 +26,7 @@ python.install_sources(
     'src/print_archive/core/onboarding.py',
     'src/print_archive/core/page_ranges.py',
     'src/print_archive/core/preview.py',
+    'src/print_archive/core/preview_view.py',
     'src/print_archive/core/print_preview.py',
     'src/print_archive/core/printer_capabilities.py',
     'src/print_archive/core/printer_selection.py',
@@ -50,6 +51,7 @@ python.install_sources(
     'src/print_archive/ui/reprint_dialog.py',
     'src/print_archive/ui/settings.py',
     'src/print_archive/ui/update_window.py',
+    'src/print_archive/ui/widgets.py',
   ),
   subdir: 'print_archive/ui',
   pure: true,

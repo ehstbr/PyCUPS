@@ -14,6 +14,7 @@ from ..models import MediaOption, PreparedJob, PrinterCapabilities, ReprintResul
 from ..util.async_runner import AsyncRunner
 from ..util.i18n import _
 from .dialogs import show_message
+from .widgets import labeled_button, set_button_content
 
 
 _SCALING_LABELS = {
@@ -109,7 +110,11 @@ class ReprintDialog(Adw.Dialog):
         toolbar = Adw.ToolbarView()
         header = Adw.HeaderBar()
         toolbar.add_top_bar(header)
-        self.print_button = Gtk.Button(label=_("Print"), css_classes=["suggested-action"])
+        self.print_button = labeled_button(
+            _("Print"),
+            "document-print-symbolic",
+            css_classes=["suggested-action"],
+        )
         self.print_button.connect("clicked", self._print)
         header.pack_end(self.print_button)
 
@@ -515,7 +520,11 @@ class ReprintDialog(Adw.Dialog):
         media = None if exact else self._selected_media()
         scaling = None if exact else self._selected_scaling()
         self.print_button.set_sensitive(False)
-        self.print_button.set_label(_("Preparing…"))
+        set_button_content(
+            self.print_button,
+            _("Preparing…"),
+            "document-print-symbolic",
+        )
         self.runner.submit(
             lambda: self.service.reprint(
                 self.prepared,
@@ -536,5 +545,9 @@ class ReprintDialog(Adw.Dialog):
 
     def _failed(self, error: BaseException) -> None:
         self.print_button.set_sensitive(True)
-        self.print_button.set_label(_("Print"))
+        set_button_content(
+            self.print_button,
+            _("Print"),
+            "document-print-symbolic",
+        )
         show_message(self, _("Could not reprint this job"), str(error))

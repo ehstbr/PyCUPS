@@ -2,6 +2,30 @@
 
 All notable changes to PyCUPS are documented here.
 
+## 0.1.11 — 2026-08-20
+
+- Add a dedicated main-preview toolbar with zoom out, an editable 1–500%
+  value, zoom in, fit-to-window, actual 100% size, and visual rotation in both
+  directions.
+- Let the mouse wheel zoom whenever the pointer is over the main preview;
+  preserve the viewport center, expose scrollbars, and support drag-to-pan when
+  a magnified page exceeds the available space.
+- Keep visual rotation strictly inside the history viewer. The reprint preview
+  remains a physically faithful approximation based on destination media,
+  printable margins, orientation, and scale.
+- Keep **Apply** and **Start using PyCUPS** labels stable while settings are
+  saved and CUPS readiness is verified by the existing blocking dialog.
+- Add symbolic icons to primary actions and remove unnecessary ellipses from
+  **Export original** and **Reprint**.
+- Rebuild the English and Brazilian Portuguese GitHub documentation with a
+  complete screenshot gallery, practical use cases, privacy and retention
+  guidance, translation links, installation paths, and natural search terms.
+- Add GitHub Actions CI/package builds, Dependabot, structured bug and feature
+  forms, a pull-request checklist, support and security policies, repository
+  attributes, editor defaults, and ignore rules.
+- Include all documentation and screenshot assets in the reproducible GitHub
+  source ZIP and extend tests for preview geometry and packaging contracts.
+
 ## 0.1.10 — 2026-08-19
 
 - Show a non-dismissible **Restarting CUPS…** mini dialog after saving

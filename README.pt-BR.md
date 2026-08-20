@@ -1,192 +1,329 @@
-# PyCUPS
+<div align="center">
+  <img src="data/icons/com.eduhcommerce.PrintArchive.svg" width="120" alt="Ícone do PyCUPS CUPS Archive">
+  <h1>PyCUPS</h1>
+  <p><strong>Seu histórico local de impressões do CUPS, pronto para visualizar, exportar e reimprimir.</strong></p>
+  <p>Um aplicativo GTK 4 e Libadwaita para Linux, voltado à privacidade e aos trabalhos de impressão retidos.</p>
+  <p>
+    <a href="README.md">English</a>
+    ·
+    <a href="https://github.com/ehstbr/PyCUPS/releases/latest">Versão mais recente</a>
+    ·
+    <a href="https://github.com/ehstbr/PyCUPS/issues">Relatar um problema</a>
+    ·
+    <a href="CHANGELOG.md">Histórico de alterações</a>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/versão-0.1.11-e95420?style=flat-square" alt="PyCUPS versão 0.1.11">
+    <img src="https://github.com/ehstbr/PyCUPS/actions/workflows/ci.yml/badge.svg" alt="Status da integração contínua do PyCUPS">
+    <img src="https://img.shields.io/badge/plataforma-Linux-f0c674?style=flat-square&logo=linux&logoColor=111" alt="Linux">
+    <img src="https://img.shields.io/badge/desktop-GNOME-4a86cf?style=flat-square&logo=gnome&logoColor=white" alt="Desktop GNOME">
+    <img src="https://img.shields.io/badge/GTK-4-4a86cf?style=flat-square&logo=gtk&logoColor=white" alt="GTK 4">
+    <img src="https://img.shields.io/badge/impressão-CUPS-6b7280?style=flat-square" alt="Impressão pelo CUPS">
+    <img src="https://img.shields.io/badge/licença-GPLv3%2B-2da44e?style=flat-square" alt="GNU GPL versão 3 ou posterior">
+  </p>
+</div>
 
-**CUPS Archive para trabalhos de impressão retidos.**
+<p align="center">
+  <img src="docs/screenshots/main-window.png" width="940" alt="PyCUPS mostrando histórico de impressões do CUPS no Linux e preview de documento retido">
+</p>
 
-PyCUPS é um aplicativo leve em GTK 4 e Libadwaita para Ubuntu e outros
-sistemas GNOME baseados em Debian. Ele usa o serviço CUPS local para consultar
-o histórico, obter os documentos de impressão retidos, pré-visualizá-los,
-exportá-los e reimprimir o trabalho inteiro ou páginas selecionadas de um PDF.
+## Um arquivo de impressões do CUPS integrado ao desktop Linux
 
-O projeto segue os moldes do PyNextCloud Sync: aplicativo nativo de
-instância única, núcleo Python pequeno e testável, projeto Meson, pacote `.deb`,
-ZIP com o código-fonte, tradução para português do Brasil e nenhuma senha
-administrativa armazenada pelo aplicativo.
+O **PyCUPS — CUPS Archive** transforma os jobs já retidos pelo serviço CUPS
+local em um histórico prático no desktop. Pesquise impressões anteriores,
+consulte seus metadados, visualize documentos preservados, exporte o arquivo
+original, reinicie exatamente o mesmo job ou crie uma nova reimpressão de PDF
+com páginas selecionadas.
 
-Repositório do projeto: <https://github.com/ehstbr/PyCUPS>
+Ele foi pensado para Ubuntu e outros sistemas GNOME baseados em Debian e usa os
+componentes da própria plataforma: Python, GTK 4, Libadwaita, bindings PyCUPS
+do sistema, IPP, Poppler e PolicyKit. O aplicativo não cria um arquivo na nuvem
+e não lê diretamente a pasta privada de spool do CUPS.
+
+> [!IMPORTANT]
+> O PyCUPS só consegue visualizar, exportar ou reimprimir enquanto o CUPS ainda
+> possuir o arquivo retido daquele job. Instalar o aplicativo não recupera
+> arquivos que o CUPS já expirou ou eliminou.
+
+## Em quais situações o PyCUPS pode ser útil
+
+O PyCUPS é especialmente útil para:
+
+- **Reimprimir nota fiscal, recibo, etiqueta de envio, relatório ou formulário**
+  depois que o programa ou a aba do navegador original já foi fechada.
+- **Recuperar uma impressão recente após atolamento, folha danificada, bandeja
+  errada ou interrupção**, desde que o arquivo tenha sido retido pelo CUPS.
+- **Descobrir quem imprimiu, o que foi impresso e em qual impressora**,
+  pesquisando título, usuário, destino, estado, data ou número do job.
+- **Exportar o documento de origem retido** antes que ele expire no serviço de
+  impressão.
+- **Reimprimir apenas algumas páginas de um PDF**, como `1,4,7-10`, sem reabrir
+  ou recriar o documento original.
+- **Enviar um PDF antigo para outra impressora, papel, escala ou quantidade de
+  cópias** e conferir antes um preview da folha calculado a partir do IPP.
+- **Reiniciar exatamente dados brutos ou de impressora térmica** como foram
+  recebidos pelo CUPS, quando o job original ainda estiver disponível.
+- **Manter um histórico local e controlado em lojas, expedições, logística,
+  áreas administrativas, escolas, laboratórios, suporte e pequenos escritórios**
+  sem enviar documentos a terceiros.
+- **Equilibrar recuperação e privacidade**, definindo prazos separados para os
+  arquivos de impressão e seus metadados.
 
 ## Principais recursos
 
-- Busca no histórico e filtro por estado, todas as impressoras ou qualquer
-  combinação de impressoras marcada por checkboxes.
-- Atualização automática do histórico a cada 10 segundos para que jobs novos
-  apareçam sem reabrir o aplicativo.
-- Pré-visualização paginada de PDF e visualização de imagens e textos comuns.
-- Reinício exato do job ao escolher todas as páginas, uma cópia e a impressora
-  original.
-- Reimpressão de páginas de PDF usando expressões como `3`, `2-5` ou
-  `1,4,7-10`. O aplicativo cria temporariamente um novo PDF contendo apenas as
-  páginas pedidas e o envia como um novo job.
-- Escolha de outra impressora, papel, escala e número de cópias, com preview da
-  folha de destino baseado nas capacidades informadas pelo CUPS.
-- Exportação do documento retido sem acessar `/var/spool/cups` diretamente.
-- Exclusão permanente de um job ou de todo o histórico, sempre com confirmação.
-- Abas Retenção, Servidor e Manutenção para retenção e opções globais limitadas
-  do CUPS, sempre por uma solicitação administrativa nativa do PolicyKit.
-- Assistente inicial em três etapas para apresentar a privacidade e comparar os
-  valores atuais do CUPS com uma sugestão de retenção editável.
-- Verificação de um manifesto validado no GitHub ao iniciar ou sob demanda,
-  com o mesmo comportamento opcional/obrigatório do PyNextCloud Sync.
+| Área | O que o PyCUPS oferece |
+| --- | --- |
+| Histórico | Lista atualizada do CUPS, busca, filtros por estado e seleção de todas, uma ou várias impressoras |
+| Preview | Páginas de PDF, imagens e textos; zoom, roda do mouse, 100%, ajustar à janela, rotação, barras e arraste |
+| Reimpressão | Reinício exato do CUPS ou novo PDF com intervalos de páginas, destino, papel, escala e cópias |
+| Exportação | Salva o documento original retido por meio da API autorizada do CUPS |
+| Retenção | Valores editáveis para arquivos, histórico e `MaxJobs`, com autorização explícita pelo PolicyKit |
+| Servidor | Pequeno conjunto limitado de opções globais do CUPS, sem gerenciar impressoras ou drivers |
+| Segurança | Confirmação para ações destrutivas e verificação bloqueante após o reinício do CUPS |
+| Privacidade | Documentos locais, sem telemetria, analytics, nuvem ou armazenamento da senha do CUPS |
+| Atualizações | Manifesto validado no GitHub, com atualizações opcionais e obrigatórias |
+| Idiomas | Interface-base em inglês e tradução completa para português do Brasil |
 
-## Boas-vindas e privacidade na primeira execução
+## Capturas de tela
 
-A primeira execução apresenta três páginas: introdução sobre privacidade e
-código aberto, proposta editável de retenção e resumo de conclusão. O PyCUPS não
-envia documentos retidos nem metadados de jobs para a internet. Sua única
-requisição automática lê no GitHub o pequeno manifesto de versões; nenhum
-conteúdo de impressão faz parte dessa comunicação.
+### Reimpressão com preview realista do papel de destino
 
-A página da proposta lê a configuração real do CUPS antes de habilitar
-**Aplicar e continuar**. **Pular sem alterar** mantém todos os valores atuais.
-O fluxo pode ser aberto novamente em **Boas-vindas e configuração inicial** no
-menu principal.
+<p align="center">
+  <img src="docs/screenshots/reprint-preview.png" width="940" alt="Diálogo do PyCUPS para reimprimir com impressora, papel, escala, cópias, páginas e preview">
+</p>
 
-Somente um indicador de conclusão é salvo na pasta de configuração XDG do
-usuário, normalmente em `~/.config/pycups/state.json`. Esse arquivo não contém
-valores do CUPS, nomes de documentos, metadados, credenciais ou impressões.
+O preview da reimpressão é propositalmente diferente do visualizador principal.
+Na tela principal, uma página pode ser girada e ampliada para facilitar a
+leitura. No diálogo de reimpressão, o preview representa o resultado físico
+calculado para impressora, papel, margens imprimíveis, orientação e escala.
 
-## A configuração de retenção nunca é automática
+<details>
+<summary><strong>Assistente inicial de privacidade e retenção</strong></summary>
+<br>
+<table>
+  <tr>
+    <td width="33%" align="center"><strong>Privacidade primeiro</strong><br><img src="docs/screenshots/onboarding-welcome.png" alt="Boas-vindas do PyCUPS explicando privacidade local e código aberto"></td>
+    <td width="33%" align="center"><strong>Proposta editável</strong><br><img src="docs/screenshots/onboarding-retention.png" alt="Onboarding do PyCUPS mostrando retenção atual do CUPS e valores sugeridos editáveis"></td>
+    <td width="33%" align="center"><strong>Conclusão clara</strong><br><img src="docs/screenshots/onboarding-complete.png" alt="Conclusão da configuração inicial do PyCUPS"></td>
+  </tr>
+</table>
+</details>
 
-Instalar, atualizar ou abrir o PyCUPS não altera a configuração do
-CUPS. A tela de configurações primeiro lê os valores que estão sendo usados
-pelo computador. Se essa leitura falhar, os controles permanecem desativados,
-evitando que uma configuração desconhecida seja sobrescrita por acidente.
+<details>
+<summary><strong>Configurações globais do CUPS e manutenção</strong></summary>
+<br>
+<table>
+  <tr>
+    <td width="33%" align="center"><strong>Retenção</strong><br><img src="docs/screenshots/settings-retention.png" alt="Configurações do PyCUPS para arquivos retidos, histórico e MaxJobs"></td>
+    <td width="33%" align="center"><strong>Servidor</strong><br><img src="docs/screenshots/settings-server.png" alt="Configurações globais do PyCUPS para acesso, compartilhamento e diagnóstico do CUPS"></td>
+    <td width="33%" align="center"><strong>Manutenção</strong><br><img src="docs/screenshots/settings-maintenance.png" alt="Informações do serviço local e ferramentas de manutenção do histórico no PyCUPS"></td>
+  </tr>
+</table>
+</details>
 
-Uma mudança só acontece depois que o usuário edita os campos, pressiona
-**Aplicar** e autoriza a operação pelo PolicyKit. O assistente inicial oferece
-o seguinte equilíbrio editável:
+## Como funciona
 
-| Diretiva do CUPS | Valor | Resultado |
-|---|---:|---|
-| `PreserveJobFiles` | `2592000` | Mantém arquivos reimprimíveis por 30 dias. |
-| `PreserveJobHistory` | `7776000` | Mantém os metadados por 90 dias. |
-| `MaxJobs` | `0` | Não impõe limite pela quantidade de jobs. |
-
-Depois de salvar configurações de retenção ou do servidor global, o PyCUPS
-mostra o diálogo bloqueante **Reiniciando CUPS…**. Ele pausa a atualização do
-histórico, cria novas conexões IPP até obter várias respostas consecutivas e só
-então libera a interface e recarrega os jobs. Se o serviço continuar
-indisponível, o diálogo mantém o aplicativo bloqueado e inicia outra sondagem
-automaticamente. **Tentar novamente** solicita uma tentativa imediata, enquanto
-**Fechar o PyCUPS** oferece uma saída segura se o serviço não se recuperar.
-
-Esses são valores sugeridos no formulário, não padrões do pacote ou da
-inicialização. Os prazos finitos equilibram a recuperação de impressões recentes
-com a privacidade; `MaxJobs=0` evita que um limite por quantidade encurte esses
-prazos. Os padrões documentados do CUPS são diferentes: arquivo retido por 86.400
-segundos (um dia), histórico de metadados ativado sem prazo e `MaxJobs=500`.
-Portanto, um `MaxJobs` finito pode eliminar entradas antigas antes de vencer um
-prazo longo em dias.
-
-A aba Retenção também oferece **Sem limite de tempo para os arquivos**, que
-envia `PreserveJobFiles=Yes`. Isso continua sujeito à remoção de jobs pelo
-`MaxJobs`; combine com `MaxJobs=0` somente acompanhando o uso do disco.
-
-## Instalação no Ubuntu
-
-Instale o pacote Debian fornecido:
-
-```bash
-sudo apt install ./print-archive_0.1.10_all.deb
+```mermaid
+flowchart LR
+    A["Aplicativos imprimem"] --> C["Serviço CUPS local"]
+    C --> J["Jobs retidos"]
+    J --> P["PyCUPS"]
+    P --> R["Visualizar · Exportar · Reimprimir"]
 ```
 
-Depois, abra **PyCUPS** na grade de aplicativos ou execute:
+O PyCUPS solicita metadados e documentos retidos por operações PyCUPS/IPP. O
+CUPS continua sendo a fonte de verdade e controla permissões, disponibilidade
+dos arquivos, retenção e o comportamento do reinício exato.
+
+### Histórico não é a mesma coisa que documento retido
+
+| Dado do CUPS | O que permite exibir | É necessário para preview/exportação/reimpressão |
+| --- | --- | --- |
+| Histórico do job | Nome, usuário, impressora, estado, data, tamanho e número | Não |
+| Arquivo de spool retido | O documento imprimível preservado pelo CUPS | Sim |
+
+Por isso, um job pode continuar visível depois que seu arquivo imprimível
+expirar. O PyCUPS mostra essa diferença em vez de prometer uma recuperação
+quando restarem apenas metadados.
+
+## Instalação
+
+### Pacote Debian — recomendado
+
+Baixe o `.deb` na
+[versão mais recente](https://github.com/ehstbr/PyCUPS/releases/latest) e use o
+APT para resolver automaticamente as dependências do sistema:
+
+```bash
+cd ~/Downloads
+sudo apt update
+sudo apt install ./print-archive_0.1.11_all.deb
+```
+
+Abra **PyCUPS** na grade de aplicativos ou execute:
 
 ```bash
 print-archive
 ```
 
-Para executar diretamente pelo código-fonte:
+O pacote Debian e o comando internos conservam o nome histórico
+`print-archive`. Assim, a atualização das versões anteriores mantém o mesmo
+aplicativo instalado, as preferências e a identidade do lançador.
+
+### ZIP do código-fonte
+
+Instale primeiro as dependências:
 
 ```bash
-sudo apt install python3 python3-gi python3-cups python3-pypdf \
-  gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gdkpixbuf-2.0 gir1.2-soup-3.0 \
-  poppler-utils cups-client cups-daemon pkexec gettext
+sudo apt update
+sudo apt install \
+  python3 python3-gi python3-cups python3-pypdf \
+  gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gdkpixbuf-2.0 \
+  gir1.2-soup-3.0 poppler-utils cups-client cups-daemon \
+  pkexec gettext
+```
+
+Depois, extraia e execute o pacote-fonte publicado no GitHub:
+
+```bash
+unzip PyCUPS-0.1.11.zip
+cd PyCUPS-0.1.11
 ./run.sh
 ```
 
-## Como reimprimir somente uma página de dez
+O `run.sh` usa o Python e os pacotes GI da distribuição. Ele não cria ambiente
+virtual nem baixa dependências da internet.
 
-Supondo que o job 42 tenha 10 páginas:
+## Primeira execução e retenção sugerida para o CUPS
 
-1. Selecione o job 42 e aguarde a pré-visualização.
-2. Clique em **Reimprimir…**.
+O assistente em três etapas explica a privacidade, lê os valores reais do CUPS
+e oferece um ponto de partida editável:
+
+| Diretiva do CUPS | Valor sugerido | Finalidade |
+| --- | ---: | --- |
+| `PreserveJobFiles` | `2592000` | Mantém os arquivos reimprimíveis por 30 dias |
+| `PreserveJobHistory` | `7776000` | Mantém os metadados dos jobs por 90 dias |
+| `MaxJobs` | `0` | Evita que um limite por quantidade encurte os dois prazos |
+
+Esses valores **nunca são aplicados pela instalação, atualização,
+inicialização ou simples navegação**. É necessário pressionar **Aplicar e
+continuar** e autorizar a alteração pelo PolicyKit. **Pular sem alterar**
+preserva exatamente a configuração existente do CUPS.
+
+Somente um indicador de onboarding concluído é salvo na pasta de configuração
+XDG do usuário, normalmente `~/.config/pycups/state.json`. Esse arquivo não
+contém documentos, metadados, valores do CUPS, usuário ou senha.
+
+Após salvar a retenção ou as opções de servidor, todo o aplicativo permanece
+bloqueado pelo diálogo **Reiniciando CUPS…**. O PyCUPS cria novas conexões IPP
+e exige respostas consecutivas antes de liberar a interface e recarregar o
+histórico. Os botões ao fundo conservam seus textos normais; o diálogo modal é
+a única fonte de informação sobre o andamento.
+
+## Controles do preview
+
+O visualizador principal possui:
+
+- botões para reduzir e ampliar;
+- controle editável de 1% a 500%;
+- zoom pela roda do mouse enquanto o ponteiro estiver sobre o preview;
+- ajuste à janela e tamanho real de 100%;
+- rotação visual para esquerda ou direita em intervalos de 90 graus;
+- barras de rolagem e navegação por arraste quando a página ultrapassar a área.
+
+A rotação altera somente o que aparece na tela. Ela não modifica o arquivo
+retido nem a orientação física de uma reimpressão.
+
+## Reinício exato e reimpressão flexível de PDF
+
+- **Reinício exato:** o CUPS reinicia todas as páginas, uma cópia, na impressora
+  original e reutiliza os atributos retidos.
+- **Reimpressão flexível:** o PyCUPS cria um novo job para páginas selecionadas,
+  outra impressora, papel, escala ou número de cópias.
+- **Preview da folha:** o aplicativo monta uma aproximação usando dimensões de
+  mídia, margens imprimíveis e `print-scaling` informados pelo IPP. O driver ou
+  o equipamento ainda podem realizar transformações próprias.
+- **Formatos brutos e térmicos:** quando retidos, podem ser reiniciados
+  exatamente, mas não são renderizados nem divididos em páginas.
+- **Vários documentos:** jobs compostos somente por PDFs são unidos na ordem.
+  Formatos mistos permanecem limitados ao reinício exato.
+
+Exemplo para um PDF retido com dez páginas:
+
+1. Selecione o job e aguarde seu preview.
+2. Clique em **Reimprimir**.
 3. Desative **Reiniciar exatamente o job original** e **Imprimir todas as páginas**.
-4. Digite `4` para imprimir apenas a página 4. Também é possível usar
-   `1,4,7-10`, por exemplo.
-5. Escolha impressora, papel, escala e cópias, confira o preview e clique em
+4. Digite `4` para uma página ou `1,4,7-10` para seis páginas.
+5. Escolha destino, papel, escala e cópias, confira o preview e clique em
    **Imprimir**.
 
-O job de origem não é modificado. O PDF extraído e as imagens de
-pré-visualização ficam em um diretório temporário privado, com permissão `0700`;
-os arquivos usam `0600` e tudo é removido ao fechar o aplicativo.
+Os subconjuntos de páginas e as imagens de preview ficam em um diretório
+temporário privado por processo (`0700`); os arquivos usam modo `0600` e tudo é
+removido quando o PyCUPS é encerrado.
 
-## Reinício exato e reimpressão flexível
+## Permissões, segurança e privacidade
 
-- **Reinício exato:** ative o seletor de reinício exato. O CUPS reinicia todas
-  as páginas, uma cópia, na impressora original e conserva as opções retidas.
-- **Reimpressão flexível:** páginas selecionadas, várias cópias ou outra
-  impressora. Um novo job é criado com cópias, palavra-chave do papel e
-  `print-scaling`. Frente e verso, acabamento, cor e outras opções do job antigo
-  não são clonados.
-- **Preview da folha de destino:** para PDF, o aplicativo monta uma aproximação
-  com dimensões, margens imprimíveis e escala informadas via IPP. O driver ainda
-  pode fazer ajustes próprios do equipamento.
-- **Formatos crus/térmicos:** podem ser reiniciados integralmente caso tenham
-  sido retidos, mas não podem ser visualizados nem divididos nesta versão.
-- **Vários documentos:** se todos forem PDF, eles são combinados para a
-  visualização e seleção. Formatos mistos permitem apenas o reinício exato.
+- Documentos retidos e metadados permanecem no computador que executa o CUPS.
+- Não há telemetria, publicidade, analytics, arquivo na nuvem ou envio
+  automático de falhas.
+- A única requisição automática à internet lê o pequeno manifesto
+  `version.json` deste repositório no GitHub.
+- O PyCUPS usa operações autorizadas do CUPS, sem enfraquecer as permissões de
+  `/var/spool/cups`.
+- Quando o CUPS solicita usuário e senha, a senha é limpa depois da requisição
+  e nunca é persistida pelo aplicativo.
+- Alterações globais usam o auxiliar limitado e protegido
+  `/usr/lib/print-archive/apply-settings` com uma solicitação nativa do PolicyKit.
+- A exclusão individual ou completa do histórico sempre exige confirmação.
 
-## Permissões e privacidade
+Documentos impressos podem conter informações confidenciais. Prazos longos e
+`MaxJobs=0` também podem consumir bastante espaço em computadores movimentados.
+Escolha valores adequados à máquina e monitore o armazenamento de spool do CUPS.
 
-O PyCUPS usa os bindings Python PyCUPS do sistema e operações IPP em vez de ler
-a pasta privada de spool. Conforme a política do servidor, o CUPS pode permitir a obtenção,
-reimpressão ou exclusão apenas ao proprietário do job ou a um administrador de
-impressão. Quando uma dessas operações exige autenticação, o PyCUPS
-solicita o usuário e a senha do Ubuntu/CUPS, entrega-os ao callback do PyCUPS,
-limpa o campo da senha e não salva a credencial.
+## Compatibilidade e limitações
 
-Para mudar retenção ou opções globais, o pacote instala o auxiliar protegido
-`/usr/lib/print-archive/apply-settings`. Ele aceita somente três valores de
-retenção validados ou seis opções globais `sim/não` e executa `cupsctl`. O
-PolicyKit pede a autenticação administrativa;
-essa senha de configuração permanece dentro do PolicyKit e o aplicativo não a
-recebe nem a guarda.
+- Desenvolvido para Ubuntu 24.04 ou posterior e sistemas GNOME semelhantes
+  baseados em Debian, com Python 3.12, GTK 4, Libadwaita 1.5, CUPS e PolicyKit.
+- O preview de PDF exige `pdftoppm`, fornecido por `poppler-utils`.
+- Arquivos criptografados, malformados ou incompatíveis podem não ter preview.
+- As permissões dependem da política local do CUPS e do proprietário do job.
+- O PyCUPS gerencia um conjunto limitado de valores **globais** do CUPS; ele
+  propositalmente não adiciona impressoras, instala drivers, edita filas ou
+  muda opções individuais de impressão.
+- O produto é separado dos bindings Python do sistema também conhecidos como
+  **PyCUPS**, embora seja construído sobre eles.
 
-Arquivos impressos podem conter informações confidenciais. Reter os arquivos
-por 30 dias, o histórico por 90 dias e usar `MaxJobs=0` ainda pode consumir
-bastante espaço em sistemas movimentados. Monitore o armazenamento do spool e
-personalize a proposta quando o computador tiver pouco espaço.
+## Traduções
 
-## Limitações importantes
+- [Read this documentation in English](README.md)
+- [Catálogo da interface em português do Brasil](po/pt_BR.po)
+- [Modelo para criação de novos idiomas](po/print-archive.pot)
+- [Como contribuir com uma tradução](CONTRIBUTING.md#translations)
 
-- Não é possível recuperar arquivos que o CUPS já expirou ou eliminou.
-- Um item pode continuar no histórico depois que seu arquivo reimprimível
-  expirar.
-- A pré-visualização de PDF requer `pdftoppm`, do pacote `poppler-utils`.
-- PDFs criptografados ou danificados podem não ser visualizados ou divididos.
-- A versão 0.1.10 trabalha com o CUPS local. As configurações são globais para
-  esse serviço; o aplicativo propositalmente não gerencia impressoras individuais.
-- O preview depende das capacidades IPP informadas pelo destino e não consegue
-  prever todo ajuste específico do driver ou do equipamento.
+O inglês é o idioma-base. Novas traduções são bem-vindas desde que o catálogo
+permaneça completo e os marcadores de formatação sejam preservados.
 
 ## Desenvolvimento e testes
 
 ```bash
-./tools/run-tests.sh
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+python3 -m compileall -q src tests
 meson setup build
 meson compile -C build
 ```
 
+O núcleo em Python puro não importa GTK. Intervalos de páginas, transformações
+de PDF, normalização do CUPS, validação de retenção, isolamento de temporários,
+SemVer e geometria do preview são testados separadamente da interface.
+
+Contribuições focadas são bem-vindas. Leia [CONTRIBUTING.md](CONTRIBUTING.md) e
+preserve o modelo de privacidade local e o escopo deliberadamente limitado do
+CUPS. Para dúvidas, consulte [SUPPORT.md](SUPPORT.md); problemas sensíveis devem
+seguir o processo privado descrito em [SECURITY.md](SECURITY.md).
+
 ## Licença
 
-Copyright © 2026 EduhCommerce. GNU GPL versão 3 ou posterior.
+Copyright © 2026 EduhCommerce.
+
+O PyCUPS é um software livre e de código aberto licenciado sob a
+[GNU General Public License versão 3 ou posterior](LICENSE).

@@ -79,7 +79,7 @@ class PackagingContractTests(unittest.TestCase):
         self.assertIn('self.pages.add_named(self._build_welcome_page(), "welcome")', onboarding)
         self.assertIn('self.pages.add_named(self._build_retention_page(), "retention")', onboarding)
         self.assertIn('self.pages.add_named(self._build_finish_page(), "finish")', onboarding)
-        self.assertIn('label=_("Skip without changes")', onboarding)
+        self.assertIn('_("Skip without changes")', onboarding)
         self.assertIn('_("Apply and continue")', onboarding)
         self.assertIn("self.state_store.mark_complete()", onboarding)
 
@@ -247,6 +247,100 @@ class PackagingContractTests(unittest.TestCase):
         )
         self.assertIn("dropdown.set_list_factory(popup_factory)", source)
         self.assertIn("self.media_dropdown.set_tooltip_text(text)", source)
+
+    def test_cups_restart_keeps_background_action_labels_stable(self) -> None:
+        settings = (PROJECT_ROOT / "src/print_archive/ui/settings.py").read_text(
+            encoding="utf-8"
+        )
+        onboarding = (
+            PROJECT_ROOT / "src/print_archive/ui/onboarding.py"
+        ).read_text(encoding="utf-8")
+
+        self.assertNotIn("retention_apply_button.set_label", settings)
+        self.assertNotIn("server_apply_button.set_label", settings)
+        self.assertNotIn("next_button.set_label", onboarding)
+        self.assertIn('_("Apply")', settings)
+        self.assertIn('_("Start using {app_name}")', onboarding)
+        self.assertIn("self.next_button.set_sensitive(False)", onboarding)
+
+    def test_main_preview_has_visual_controls_only_in_the_history_viewer(self) -> None:
+        main_window = (
+            PROJECT_ROOT / "src/print_archive/ui/main_window.py"
+        ).read_text(encoding="utf-8")
+        reprint = (
+            PROJECT_ROOT / "src/print_archive/ui/reprint_dialog.py"
+        ).read_text(encoding="utf-8")
+        meson = (PROJECT_ROOT / "meson.build").read_text(encoding="utf-8")
+
+        for token in (
+            "object-rotate-left-symbolic",
+            "object-rotate-right-symbolic",
+            "zoom-out-symbolic",
+            "zoom-in-symbolic",
+            "zoom-fit-best-symbolic",
+            "zoom-original-symbolic",
+            "Gtk.EventControllerScroll.new",
+            "Gtk.GestureDrag.new",
+            "Gtk.DrawingArea(",
+            'connect("resize", self._preview_view_resized)',
+            "def _preview_scrolled(",
+            "def _preview_drag_update(",
+        ):
+            self.assertIn(token, main_window)
+        self.assertNotIn("object-rotate-left-symbolic", reprint)
+        self.assertNotIn("zoom-fit-best-symbolic", reprint)
+        self.assertIn("src/print_archive/core/preview_view.py", meson)
+
+    def test_primary_job_actions_have_icons_and_concise_labels(self) -> None:
+        source = (PROJECT_ROOT / "src/print_archive/ui/main_window.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('_("Export original")', source)
+        self.assertIn('_("Reprint")', source)
+        self.assertIn('"document-save-symbolic"', source)
+        self.assertIn('"document-print-symbolic"', source)
+        self.assertNotIn('_("Export original…")', source)
+        self.assertNotIn('_("Reprint…")', source)
+
+    def test_github_readmes_link_translations_and_packaged_screenshots(self) -> None:
+        english = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
+        portuguese = (PROJECT_ROOT / "README.pt-BR.md").read_text(encoding="utf-8")
+        screenshots = (
+            "main-window.png",
+            "reprint-preview.png",
+            "onboarding-welcome.png",
+            "onboarding-retention.png",
+            "onboarding-complete.png",
+            "settings-retention.png",
+            "settings-server.png",
+            "settings-maintenance.png",
+        )
+
+        self.assertIn('href="README.pt-BR.md"', english)
+        self.assertIn('href="README.md"', portuguese)
+        self.assertIn("## When PyCUPS can be useful", english)
+        self.assertIn("## Em quais situações o PyCUPS pode ser útil", portuguese)
+        self.assertIn("CONTRIBUTING.md#translations", english)
+        self.assertIn("CONTRIBUTING.md#translations", portuguese)
+        for filename in screenshots:
+            path = PROJECT_ROOT / "docs/screenshots" / filename
+            self.assertTrue(path.is_file(), filename)
+            self.assertTrue(path.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"), filename)
+            self.assertIn(f"docs/screenshots/{filename}", english)
+            self.assertIn(f"docs/screenshots/{filename}", portuguese)
+        for relative_path in (
+            ".github/workflows/ci.yml",
+            ".github/dependabot.yml",
+            ".github/ISSUE_TEMPLATE/bug_report.yml",
+            ".github/ISSUE_TEMPLATE/feature_request.yml",
+            ".github/PULL_REQUEST_TEMPLATE.md",
+            ".editorconfig",
+            ".gitattributes",
+            ".gitignore",
+            "SECURITY.md",
+            "SUPPORT.md",
+        ):
+            self.assertTrue((PROJECT_ROOT / relative_path).is_file(), relative_path)
 
 
 if __name__ == "__main__":

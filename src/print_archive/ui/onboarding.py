@@ -17,6 +17,7 @@ from ..models import RetentionSettings
 from ..util.async_runner import AsyncRunner
 from ..util.i18n import _
 from .dialogs import show_message
+from .widgets import labeled_button, set_button_content
 
 
 PROJECT_URL = "https://github.com/ehstbr/PyCUPS"
@@ -100,11 +101,17 @@ class OnboardingWindow(Adw.ApplicationWindow):
         footer.set_margin_bottom(10)
         footer.set_margin_start(12)
         footer.set_margin_end(12)
-        self.back_button = Gtk.Button(label=_("Back"))
+        self.back_button = labeled_button(
+            _("Back"),
+            "go-previous-symbolic",
+        )
         self.back_button.connect("clicked", self._go_back)
         footer.append(self.back_button)
         footer.append(Gtk.Box(hexpand=True))
-        self.skip_button = Gtk.Button(label=_("Skip without changes"))
+        self.skip_button = labeled_button(
+            _("Skip without changes"),
+            "go-next-symbolic",
+        )
         self.skip_button.connect("clicked", self._skip_retention)
         footer.append(self.skip_button)
         self.next_button = Gtk.Button(css_classes=["suggested-action"])
@@ -355,20 +362,30 @@ class OnboardingWindow(Adw.ApplicationWindow):
             self.window_title.set_subtitle(_("Step 1 of 3"))
             self.back_button.set_visible(False)
             self.skip_button.set_visible(False)
-            self.next_button.set_label(_("Continue"))
+            set_button_content(
+                self.next_button,
+                _("Continue"),
+                "go-next-symbolic",
+            )
             self.next_button.set_sensitive(True)
         elif name == "retention":
             self.window_title.set_subtitle(_("Step 2 of 3"))
             self.back_button.set_visible(True)
             self.skip_button.set_visible(True)
-            self.next_button.set_label(_("Apply and continue"))
+            set_button_content(
+                self.next_button,
+                _("Apply and continue"),
+                "document-save-symbolic",
+            )
             self.next_button.set_sensitive(self._retention_loaded and not self._applying)
         else:
             self.window_title.set_subtitle(_("Step 3 of 3"))
             self.back_button.set_visible(False)
             self.skip_button.set_visible(False)
-            self.next_button.set_label(
-                _("Start using {app_name}").format(app_name=APP_NAME)
+            set_button_content(
+                self.next_button,
+                _("Start using {app_name}").format(app_name=APP_NAME),
+                "go-next-symbolic",
             )
             self.next_button.set_sensitive(True)
 
@@ -501,7 +518,6 @@ class OnboardingWindow(Adw.ApplicationWindow):
             return
         self._applying = True
         self.set_deletable(False)
-        self.next_button.set_label(_("Applying…"))
         self._set_editor_sensitive(False)
         values = self._proposed_values()
         self.runner.submit(
@@ -539,7 +555,6 @@ class OnboardingWindow(Adw.ApplicationWindow):
         self.finish_summary.set_title(_("Retention configuration saved"))
         self.finish_summary.set_subtitle(self._proposal_summary(values))
         self._set_page("finish")
-        self.next_button.set_label(_("Restarting CUPS…"))
         self.next_button.set_sensitive(False)
         self.wait_for_cups_restart(
             self,
@@ -563,7 +578,6 @@ class OnboardingWindow(Adw.ApplicationWindow):
             return
         self._applying = False
         self.set_deletable(True)
-        self.next_button.set_label(_("Apply and continue"))
         self._set_editor_sensitive(True)
         show_message(
             self,

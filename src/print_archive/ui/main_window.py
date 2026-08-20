@@ -7,10 +7,21 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, GLib, Gtk
+gi.require_version("Gdk", "4.0")
+gi.require_version("GdkPixbuf", "2.0")
+from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from .. import APP_NAME
 from ..core.preview import render_pdf_page
+from ..core.preview_view import (
+    MAX_ZOOM_PERCENT,
+    MIN_ZOOM_PERCENT,
+    ZOOM_STEP_PERCENT,
+    fit_zoom_percent,
+    normalize_rotation,
+    stepped_zoom,
+    zoomed_dimensions,
+)
 from ..models import PreparedJob, PrintJob, ReprintResult
 from ..util.async_runner import AsyncRunner
 from ..util.i18n import _
@@ -20,6 +31,7 @@ from .dialogs import confirm, show_message
 from .printer_filter import PrinterFilterMenu
 from .reprint_dialog import ReprintDialog
 from .settings import SettingsWindow
+from .widgets import labeled_button
 
 
 FILTERS = ("All jobs", "Completed", "Active", "Canceled or aborted")
@@ -65,6 +77,15 @@ class MainWindow(Adw.ApplicationWindow):
         self._refresh_in_progress = False
         self._cups_restart_in_progress = False
         self._refresh_timer: int | None = None
+        self._preview_source_pixbuf: GdkPixbuf.Pixbuf | None = None
+        self._preview_rotated_pixbuf: GdkPixbuf.Pixbuf | None = None
+        self._preview_rotation = 0
+        self._preview_zoom_percent = 100.0
+        self._preview_fit = True
+        self._preview_zoom_updating = False
+        self._preview_resize_source: int | None = None
+        self._preview_viewport_size = (0, 0)
+        self._preview_drag_start = (0.0, 0.0)
         self.authentication: CupsAuthenticationDialog | None = None
         if self.service is not None:
             self.authentication = CupsAuthenticationDialog(self)
@@ -221,14 +242,53 @@ class MainWindow(Adw.ApplicationWindow):
         preview_loading.append(Gtk.Label(label=_("Retrieving the retained file…"), css_classes=["dim-label"]))
         self.preview_stack.add_named(preview_loading, "loading")
 
-        self.preview_picture = Gtk.Picture(
-            can_shrink=True,
-            content_fit=Gtk.ContentFit.CONTAIN,
-            alternative_text=_("Print job preview"),
+        self.preview_picture = Gtk.DrawingArea(
+            content_width=1,
+            content_height=1,
+            halign=Gtk.Align.CENTER,
+            valign=Gtk.Align.CENTER,
+            tooltip_text=_(
+                "Use the mouse wheel to zoom; drag to move an enlarged preview."
+            ),
         )
-        picture_scroller = Gtk.ScrolledWindow(vexpand=True, hexpand=True)
-        picture_scroller.set_child(self.preview_picture)
-        self.preview_stack.add_named(picture_scroller, "picture")
+        self.preview_picture.set_draw_func(self._draw_preview)
+        self.preview_canvas = Gtk.Box(
+            halign=Gtk.Align.CENTER,
+            valign=Gtk.Align.CENTER,
+            hexpand=True,
+            vexpand=True,
+        )
+        self.preview_canvas.set_margin_top(12)
+        self.preview_canvas.set_margin_bottom(12)
+        self.preview_canvas.set_margin_start(12)
+        self.preview_canvas.set_margin_end(12)
+        self.preview_canvas.append(self.preview_picture)
+        self.preview_scroller = Gtk.ScrolledWindow(vexpand=True, hexpand=True)
+        self.preview_scroller.set_child(self.preview_canvas)
+
+        scroll_zoom = Gtk.EventControllerScroll.new(
+            Gtk.EventControllerScrollFlags.VERTICAL
+            | Gtk.EventControllerScrollFlags.DISCRETE
+        )
+        scroll_zoom.connect("scroll", self._preview_scrolled)
+        self.preview_scroller.add_controller(scroll_zoom)
+
+        drag = Gtk.GestureDrag.new()
+        drag.connect("drag-begin", self._preview_drag_begin)
+        drag.connect("drag-update", self._preview_drag_update)
+        drag.connect("drag-end", self._preview_drag_end)
+        self.preview_picture.add_controller(drag)
+
+        preview_container = Gtk.Overlay(vexpand=True, hexpand=True)
+        preview_container.set_child(self.preview_scroller)
+        resize_observer = Gtk.DrawingArea(
+            can_target=False,
+            hexpand=True,
+            vexpand=True,
+        )
+        resize_observer.connect("resize", self._preview_view_resized)
+        preview_container.add_overlay(resize_observer)
+        self.preview_stack.add_named(preview_container, "picture")
 
         self.text_buffer = Gtk.TextBuffer()
         text_view = Gtk.TextView(
@@ -253,6 +313,74 @@ class MainWindow(Adw.ApplicationWindow):
         self.preview_stack.add_named(self.preview_status, "status")
         content.append(self.preview_stack)
 
+        self.preview_controls = Gtk.Box(
+            spacing=6,
+            halign=Gtk.Align.CENTER,
+            visible=False,
+        )
+        rotate_left = Gtk.Button(
+            icon_name="object-rotate-left-symbolic",
+            tooltip_text=_("Rotate preview left"),
+        )
+        rotate_left.connect("clicked", lambda _button: self._rotate_preview(-90))
+        self.preview_controls.append(rotate_left)
+        rotate_right = Gtk.Button(
+            icon_name="object-rotate-right-symbolic",
+            tooltip_text=_("Rotate preview right"),
+        )
+        rotate_right.connect("clicked", lambda _button: self._rotate_preview(90))
+        self.preview_controls.append(rotate_right)
+
+        separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
+        separator.set_margin_top(6)
+        separator.set_margin_bottom(6)
+        self.preview_controls.append(separator)
+
+        zoom_out = Gtk.Button(
+            icon_name="zoom-out-symbolic",
+            tooltip_text=_("Zoom out"),
+        )
+        zoom_out.connect("clicked", lambda _button: self._step_preview_zoom(-1))
+        self.preview_controls.append(zoom_out)
+        zoom_adjustment = Gtk.Adjustment(
+            value=100,
+            lower=MIN_ZOOM_PERCENT,
+            upper=MAX_ZOOM_PERCENT,
+            step_increment=ZOOM_STEP_PERCENT,
+            page_increment=25,
+        )
+        self.preview_zoom = Gtk.SpinButton(
+            adjustment=zoom_adjustment,
+            digits=0,
+            numeric=True,
+            width_chars=4,
+            tooltip_text=_("Zoom percentage"),
+        )
+        self.preview_zoom.set_update_policy(Gtk.SpinButtonUpdatePolicy.IF_VALID)
+        self.preview_zoom.connect("value-changed", self._preview_zoom_changed)
+        self.preview_controls.append(self.preview_zoom)
+        self.preview_controls.append(Gtk.Label(label="%", css_classes=["dim-label"]))
+        zoom_in = Gtk.Button(
+            icon_name="zoom-in-symbolic",
+            tooltip_text=_("Zoom in"),
+        )
+        zoom_in.connect("clicked", lambda _button: self._step_preview_zoom(1))
+        self.preview_controls.append(zoom_in)
+        fit = Gtk.Button(
+            icon_name="zoom-fit-best-symbolic",
+            tooltip_text=_("Fit preview to window"),
+        )
+        fit.connect("clicked", lambda _button: self._fit_preview())
+        self.preview_controls.append(fit)
+        actual_size = labeled_button(
+            _("100%"),
+            "zoom-original-symbolic",
+            tooltip_text=_("Show preview at actual pixel size"),
+        )
+        actual_size.connect("clicked", lambda _button: self._set_actual_preview_size())
+        self.preview_controls.append(actual_size)
+        content.append(self.preview_controls)
+
         self.page_controls = Gtk.Box(spacing=8, halign=Gtk.Align.CENTER)
         self.previous_page = Gtk.Button(icon_name="go-previous-symbolic", tooltip_text=_("Previous page"))
         self.previous_page.connect("clicked", lambda _button: self._show_pdf_page(self.current_page - 1))
@@ -273,11 +401,16 @@ class MainWindow(Adw.ApplicationWindow):
         )
         self.delete_button.connect("clicked", self._confirm_delete)
         actions.append(self.delete_button)
-        self.export_button = Gtk.Button(label=_("Export original…"), sensitive=False)
+        self.export_button = labeled_button(
+            _("Export original"),
+            "document-save-symbolic",
+            sensitive=False,
+        )
         self.export_button.connect("clicked", self._export)
         actions.append(self.export_button)
-        self.reprint_button = Gtk.Button(
-            label=_("Reprint…"),
+        self.reprint_button = labeled_button(
+            _("Reprint"),
+            "document-print-symbolic",
             sensitive=False,
             css_classes=["suggested-action"],
         )
@@ -439,6 +572,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.current_job = job
         self.current_prepared = None
         self.current_page = 1
+        self._reset_preview_view()
         self.detail_title.set_text(job.title)
         preserved = _("yes") if job.preserved is True else _("no") if job.preserved is False else _("unknown")
         size = f"{job.size_kib} KiB" if job.size_kib is not None else _("unknown size")
@@ -497,9 +631,9 @@ class MainWindow(Adw.ApplicationWindow):
             self.page_controls.set_visible(True)
             self._show_pdf_page(1)
         elif prepared.preview_kind == "image" and prepared.printable_path:
-            self.preview_picture.set_filename(str(prepared.printable_path))
-            self.preview_stack.set_visible_child_name("picture")
+            self._show_visual_preview(prepared.printable_path)
         elif prepared.preview_kind == "text" and prepared.printable_path:
+            self.preview_controls.set_visible(False)
             data = prepared.printable_path.read_bytes()[:262_144]
             text = data.decode("utf-8", errors="replace")
             if prepared.printable_path.stat().st_size > len(data):
@@ -507,6 +641,7 @@ class MainWindow(Adw.ApplicationWindow):
             self.text_buffer.set_text(text)
             self.preview_stack.set_visible_child_name("text")
         else:
+            self.preview_controls.set_visible(False)
             descriptions = {
                 "raw": _("The retained format can be reprinted, but this version cannot render it safely."),
                 "mixed": _("This multi-document job contains mixed formats and has no combined preview."),
@@ -547,8 +682,7 @@ class MainWindow(Adw.ApplicationWindow):
             or self.current_page != page
         ):
             return
-        self.preview_picture.set_filename(str(path))
-        self.preview_stack.set_visible_child_name("picture")
+        self._show_visual_preview(path)
 
     def _pdf_render_failed(self, error: BaseException, job_id: int, generation: int) -> None:
         if (
@@ -560,7 +694,220 @@ class MainWindow(Adw.ApplicationWindow):
         self.preview_status.set_title(_("Could not render this PDF"))
         self.preview_status.set_description(str(error))
         self.preview_status.set_icon_name("dialog-warning-symbolic")
+        self.preview_controls.set_visible(False)
         self.preview_stack.set_visible_child_name("status")
+
+    def _reset_preview_view(self) -> None:
+        self._preview_source_pixbuf = None
+        self._preview_rotated_pixbuf = None
+        self._preview_rotation = 0
+        self._preview_zoom_percent = 100.0
+        self._preview_fit = True
+        self.preview_picture.set_content_width(1)
+        self.preview_picture.set_content_height(1)
+        self.preview_picture.queue_draw()
+        self.preview_controls.set_visible(False)
+        self._update_zoom_control(100.0)
+
+    def _show_visual_preview(self, path: Path) -> None:
+        try:
+            source = GdkPixbuf.Pixbuf.new_from_file(str(path))
+        except Exception as error:
+            self.preview_status.set_title(_("Could not render this preview"))
+            self.preview_status.set_description(str(error))
+            self.preview_status.set_icon_name("dialog-warning-symbolic")
+            self.preview_controls.set_visible(False)
+            self.preview_stack.set_visible_child_name("status")
+            return
+        self._preview_source_pixbuf = source
+        self._preview_rotated_pixbuf = None
+        self._apply_preview_transform()
+        self.preview_controls.set_visible(True)
+        self.preview_stack.set_visible_child_name("picture")
+
+    def _rotated_preview(self) -> GdkPixbuf.Pixbuf | None:
+        source = self._preview_source_pixbuf
+        if source is None:
+            return None
+        if self._preview_rotated_pixbuf is not None:
+            return self._preview_rotated_pixbuf
+        rotations = {
+            90: GdkPixbuf.PixbufRotation.CLOCKWISE,
+            180: GdkPixbuf.PixbufRotation.UPSIDEDOWN,
+            270: GdkPixbuf.PixbufRotation.COUNTERCLOCKWISE,
+        }
+        rotation = rotations.get(self._preview_rotation)
+        rotated = source if rotation is None else source.rotate_simple(rotation)
+        self._preview_rotated_pixbuf = rotated or source
+        return self._preview_rotated_pixbuf
+
+    def _apply_preview_transform(self) -> bool:
+        pixbuf = self._rotated_preview()
+        if pixbuf is None:
+            return GLib.SOURCE_REMOVE
+        center = self._preview_scroll_center()
+        if self._preview_fit:
+            self._preview_zoom_percent = fit_zoom_percent(
+                pixbuf.get_width(),
+                pixbuf.get_height(),
+                self._preview_viewport_size[0],
+                self._preview_viewport_size[1],
+            )
+        width, height = zoomed_dimensions(
+            pixbuf.get_width(),
+            pixbuf.get_height(),
+            self._preview_zoom_percent,
+        )
+        self.preview_picture.set_content_width(width)
+        self.preview_picture.set_content_height(height)
+        self.preview_picture.queue_draw()
+        self._update_zoom_control(self._preview_zoom_percent)
+        GLib.idle_add(self._restore_preview_scroll_center, center)
+        return GLib.SOURCE_REMOVE
+
+    def _draw_preview(
+        self,
+        _area: Gtk.DrawingArea,
+        context: object,
+        width: int,
+        height: int,
+    ) -> None:
+        pixbuf = self._rotated_preview()
+        if pixbuf is None or width <= 0 or height <= 0:
+            return
+        context.save()
+        context.scale(
+            width / pixbuf.get_width(),
+            height / pixbuf.get_height(),
+        )
+        Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)
+        context.paint()
+        context.restore()
+
+    def _update_zoom_control(self, percent: float) -> None:
+        self._preview_zoom_updating = True
+        self.preview_zoom.set_value(round(percent))
+        self._preview_zoom_updating = False
+
+    def _preview_zoom_changed(self, _spin: Gtk.SpinButton) -> None:
+        if self._preview_zoom_updating or self._preview_source_pixbuf is None:
+            return
+        self._preview_fit = False
+        self._preview_zoom_percent = self.preview_zoom.get_value()
+        self._apply_preview_transform()
+
+    def _step_preview_zoom(self, steps: int) -> None:
+        if self._preview_source_pixbuf is None:
+            return
+        self._preview_fit = False
+        self._preview_zoom_percent = stepped_zoom(self._preview_zoom_percent, steps)
+        self._apply_preview_transform()
+
+    def _preview_scrolled(
+        self,
+        _controller: Gtk.EventControllerScroll,
+        _delta_x: float,
+        delta_y: float,
+    ) -> bool:
+        if self._preview_source_pixbuf is None or delta_y == 0:
+            return False
+        self._step_preview_zoom(1 if delta_y < 0 else -1)
+        return True
+
+    def _fit_preview(self) -> None:
+        if self._preview_source_pixbuf is None:
+            return
+        self._preview_fit = True
+        self._apply_preview_transform()
+
+    def _set_actual_preview_size(self) -> None:
+        if self._preview_source_pixbuf is None:
+            return
+        self._preview_fit = False
+        self._preview_zoom_percent = 100.0
+        self._apply_preview_transform()
+
+    def _rotate_preview(self, degrees: int) -> None:
+        if self._preview_source_pixbuf is None:
+            return
+        self._preview_rotation = normalize_rotation(self._preview_rotation + degrees)
+        self._preview_rotated_pixbuf = None
+        self._apply_preview_transform()
+
+    def _preview_view_resized(
+        self,
+        _observer: Gtk.DrawingArea,
+        width: int,
+        height: int,
+    ) -> None:
+        self._preview_viewport_size = (width, height)
+        if (
+            not self._preview_fit
+            or self._preview_source_pixbuf is None
+            or self._preview_resize_source is not None
+        ):
+            return
+        self._preview_resize_source = GLib.idle_add(self._fit_preview_after_resize)
+
+    def _fit_preview_after_resize(self) -> bool:
+        self._preview_resize_source = None
+        if self._preview_fit:
+            self._apply_preview_transform()
+        return GLib.SOURCE_REMOVE
+
+    def _preview_scroll_center(self) -> tuple[float, float]:
+        horizontal = self.preview_scroller.get_hadjustment()
+        vertical = self.preview_scroller.get_vadjustment()
+        return (
+            (horizontal.get_value() + horizontal.get_page_size() / 2)
+            / max(1.0, horizontal.get_upper()),
+            (vertical.get_value() + vertical.get_page_size() / 2)
+            / max(1.0, vertical.get_upper()),
+        )
+
+    def _restore_preview_scroll_center(self, center: tuple[float, float]) -> bool:
+        for adjustment, position in zip(
+            (
+                self.preview_scroller.get_hadjustment(),
+                self.preview_scroller.get_vadjustment(),
+            ),
+            center,
+        ):
+            value = position * adjustment.get_upper() - adjustment.get_page_size() / 2
+            maximum = max(adjustment.get_lower(), adjustment.get_upper() - adjustment.get_page_size())
+            adjustment.set_value(max(adjustment.get_lower(), min(maximum, value)))
+        return GLib.SOURCE_REMOVE
+
+    def _preview_drag_begin(
+        self,
+        _gesture: Gtk.GestureDrag,
+        _start_x: float,
+        _start_y: float,
+    ) -> None:
+        self._preview_drag_start = (
+            self.preview_scroller.get_hadjustment().get_value(),
+            self.preview_scroller.get_vadjustment().get_value(),
+        )
+        self.preview_picture.set_cursor_from_name("grabbing")
+
+    def _preview_drag_update(
+        self,
+        _gesture: Gtk.GestureDrag,
+        offset_x: float,
+        offset_y: float,
+    ) -> None:
+        horizontal = self.preview_scroller.get_hadjustment()
+        vertical = self.preview_scroller.get_vadjustment()
+        horizontal.set_value(self._preview_drag_start[0] - offset_x)
+        vertical.set_value(self._preview_drag_start[1] - offset_y)
+
+    def _preview_drag_end(
+        self,
+        _gesture: Gtk.GestureDrag,
+        _offset_x: float,
+        _offset_y: float,
+    ) -> None:
+        self.preview_picture.set_cursor_from_name("grab")
 
     def _open_reprint(self, _button: Gtk.Button) -> None:
         if self.current_prepared is None:

@@ -16,6 +16,27 @@ run:
 The CUPS and PDF logic belongs under `src/print_archive/core` and must remain
 usable without importing GTK. UI code belongs under `src/print_archive/ui`.
 
+## Translations
+
+English strings in the Python source are the translation source. The template
+is stored in [`po/print-archive.pot`](po/print-archive.pot), and every supported
+locale is listed in [`po/LINGUAS`](po/LINGUAS).
+
+To add or update a language:
+
+1. Copy or merge the POT template into `po/<locale>.po`.
+2. Preserve Python brace placeholders such as `{app_name}` and `{count}`.
+3. Add a new locale code to `po/LINGUAS` and to
+   `tools/compile-translations.sh` when required.
+4. Run `msgfmt --check --check-format` for every edited catalog.
+5. Keep the translated catalog complete—without fuzzy or empty messages—before
+   proposing it as an officially supported language.
+
+The current Brazilian Portuguese catalog is available at
+[`po/pt_BR.po`](po/pt_BR.po). Documentation translations should link back to
+the English [`README.md`](README.md), and the English README must link to every
+complete documentation translation.
+
 ## Safety requirements
 
 - Never read `/var/spool/cups` directly or weaken its filesystem permissions.
