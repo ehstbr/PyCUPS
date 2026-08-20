@@ -14,7 +14,6 @@
   </p>
   <p>
     <img src="https://img.shields.io/badge/version-0.1.13-e95420?style=flat-square" alt="PyCUPS version 0.1.13">
-    <img src="https://github.com/ehstbr/PyCUPS/actions/workflows/ci.yml/badge.svg" alt="PyCUPS continuous integration status">
     <img src="https://img.shields.io/badge/platform-Linux-f0c674?style=flat-square&logo=linux&logoColor=111" alt="Linux">
     <img src="https://img.shields.io/badge/desktop-GNOME-4a86cf?style=flat-square&logo=gnome&logoColor=white" alt="GNOME desktop">
     <img src="https://img.shields.io/badge/GTK-4-4a86cf?style=flat-square&logo=gtk&logoColor=white" alt="GTK 4">
