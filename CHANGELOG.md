@@ -2,6 +2,20 @@
 
 All notable changes to PyCUPS are documented here.
 
+## 0.1.13 — 2026-08-20
+
+- Register PyGObject's Cairo foreign-type converter before the main preview's
+  drawing callback receives its `cairo.Context`.
+- Add `python3-gi-cairo` to the Debian dependencies, source-launcher preflight,
+  and English and Brazilian Portuguese installation documentation.
+- Treat CUPS job titles, printers, users, and remote update text as literal
+  content rather than Pango markup, so ampersands and angle brackets cannot
+  cause parsing warnings or alter what is displayed.
+- Combine rotation, zoom, fit, actual-size, and PDF page navigation controls
+  into one compact horizontal row, reclaiming vertical preview space.
+- Retain the 0.1.12 automatic update-window centering correction and extend
+  packaging regression coverage for both fixes.
+
 ## 0.1.12 — 2026-08-20
 
 - Wait until the newly presented main window is both mapped and active before

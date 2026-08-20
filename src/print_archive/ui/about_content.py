@@ -8,6 +8,15 @@ from ..util.i18n import _
 def release_notes_markup() -> str:
     sections = [
         (
+            _("Version 0.1.13"),
+            [
+                _("The main preview now loads the PyGObject Cairo integration explicitly."),
+                _("The Debian package now installs the required Cairo bridge automatically."),
+                _("Job and update titles with markup characters are displayed as literal text."),
+                _("Preview and PDF page controls now share one compact horizontal toolbar."),
+            ],
+        ),
+        (
             _("Version 0.1.12"),
             [
                 _("Automatic update notices now wait until the main window is mapped and active."),

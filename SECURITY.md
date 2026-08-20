@@ -7,7 +7,7 @@ problem so the result reflects the current code.
 
 | Version | Supported |
 | --- | --- |
-| 0.1.12 | Yes |
+| 0.1.13 | Yes |
 | Older releases | No |
 
 ## Reporting a vulnerability

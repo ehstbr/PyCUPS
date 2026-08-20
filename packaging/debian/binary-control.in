@@ -6,7 +6,7 @@ Architecture: all
 Installed-Size: @INSTALLED_SIZE@
 Maintainer: EduhCommerce <eduhcommerce@users.noreply.github.com>
 Homepage: https://github.com/ehstbr/PyCUPS
-Depends: python3 (>= 3.12), python3-gi, python3-cups, python3-pypdf, gir1.2-gtk-4.0, gir1.2-adw-1 (>= 1.5), gir1.2-gdkpixbuf-2.0, gir1.2-soup-3.0, poppler-utils, cups-client, cups-daemon, pkexec, libglib2.0-bin
+Depends: python3 (>= 3.12), python3-gi, python3-gi-cairo, python3-cups, python3-pypdf, gir1.2-gtk-4.0, gir1.2-adw-1 (>= 1.5), gir1.2-gdkpixbuf-2.0, gir1.2-soup-3.0, poppler-utils, cups-client, cups-daemon, pkexec, libglib2.0-bin
 Description: PyCUPS CUPS Archive for retained print jobs
  PyCUPS browses the local CUPS job history, retrieves and previews
  retained documents, exports originals, and reprints complete jobs or selected

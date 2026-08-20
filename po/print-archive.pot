@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PyCUPS 0.1.12\n"
+"Project-Id-Version: PyCUPS 0.1.13\n"
 "Report-Msgid-Bugs-To: eduhcommerce@users.noreply.github.com\n"
-"POT-Creation-Date: 2026-08-20 09:43-0300\n"
+"POT-Creation-Date: 2026-08-20 09:56-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,7 +166,7 @@ msgid "{message} Last connection error: {detail}"
 msgstr ""
 
 #: src/print_archive/core/cups_service.py:516
-#: src/print_archive/ui/main_window.py:577 src/print_archive/ui/settings.py:587
+#: src/print_archive/ui/main_window.py:589 src/print_archive/ui/settings.py:587
 msgid "unknown"
 msgstr ""
 
@@ -293,286 +293,308 @@ msgid "Languages"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:11
-msgid "Version 0.1.12"
+msgid "Version 0.1.13"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:13
+msgid "The main preview now loads the PyGObject Cairo integration explicitly."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:14
+msgid ""
+"The Debian package now installs the required Cairo bridge automatically."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:15
+msgid ""
+"Job and update titles with markup characters are displayed as literal text."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:16
+msgid "Preview and PDF page controls now share one compact horizontal toolbar."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:20
+msgid "Version 0.1.12"
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:22
 msgid ""
 "Automatic update notices now wait until the main window is mapped and active."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:14
+#: src/print_archive/ui/about_content.py:23
 msgid ""
 "The desktop compositor can now center the startup update window over PyCUPS "
 "reliably."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:15
+#: src/print_archive/ui/about_content.py:24
 msgid "Manual update checks keep their existing centered behavior."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:19
+#: src/print_archive/ui/about_content.py:28
 msgid "Version 0.1.11"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:21
+#: src/print_archive/ui/about_content.py:30
 msgid ""
 "The main preview now supports zoom controls, mouse-wheel zoom, and drag-to-"
 "pan."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:22
+#: src/print_archive/ui/about_content.py:31
 msgid ""
 "Pages can be rotated visually without changing the retained file or reprint "
 "orientation."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:23
+#: src/print_archive/ui/about_content.py:32
 msgid "Primary actions now use symbolic icons and concise labels."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:24
+#: src/print_archive/ui/about_content.py:33
 msgid "Apply and onboarding completion labels stay stable while CUPS restarts."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:25
+#: src/print_archive/ui/about_content.py:34
 msgid ""
 "The GitHub source package now includes bilingual documentation and a "
 "complete screenshot gallery."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:29
+#: src/print_archive/ui/about_content.py:38
 msgid "Version 0.1.10"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:31
+#: src/print_archive/ui/about_content.py:40
 msgid ""
 "A blocking progress dialog now waits for CUPS after global settings are "
 "saved."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:32
+#: src/print_archive/ui/about_content.py:41
 msgid "Fresh IPP connections must answer consistently before PyCUPS resumes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:33
+#: src/print_archive/ui/about_content.py:42
 msgid ""
 "History refresh is paused so a scheduler restart cannot appear as an "
 "application error."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:34
+#: src/print_archive/ui/about_content.py:43
 msgid ""
 "If CUPS stays unavailable, PyCUPS keeps retrying automatically while the app "
 "remains blocked."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:38
+#: src/print_archive/ui/about_content.py:47
 msgid "Version 0.1.9"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:40
+#: src/print_archive/ui/about_content.py:49
 msgid ""
 "Welcome and completion headers no longer create isolated internal scrollbars."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:41
+#: src/print_archive/ui/about_content.py:50
 msgid ""
 "More compact spacing keeps onboarding information visible in the standard "
 "window size."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:42
+#: src/print_archive/ui/about_content.py:51
 msgid ""
 "The longer retention form uses only one page-level scrolling fallback when "
 "needed."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:46
+#: src/print_archive/ui/about_content.py:55
 msgid "Version 0.1.8"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:48
+#: src/print_archive/ui/about_content.py:57
 msgid ""
 "A three-step welcome flow explains privacy, updates, and open-source access."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:49
+#: src/print_archive/ui/about_content.py:58
 msgid ""
 "Current CUPS retention values are shown beside an editable 30/90-day "
 "suggestion."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:50
+#: src/print_archive/ui/about_content.py:59
 msgid ""
 "The suggested job-count limit is unlimited so time-based retention is not "
 "shortened."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:51
+#: src/print_archive/ui/about_content.py:60
 msgid ""
 "Applying remains explicit and protected by administrator authorization; "
 "skipping changes nothing."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:52
+#: src/print_archive/ui/about_content.py:61
 msgid "The welcome setup can be reopened from the main menu."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:56
+#: src/print_archive/ui/about_content.py:65
 msgid "Version 0.1.7"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:58
+#: src/print_archive/ui/about_content.py:67
 msgid "PyCUPS is now the consistent application name throughout the interface."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:59
+#: src/print_archive/ui/about_content.py:68
 msgid "CUPS Archive is retained as the product description."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:60
+#: src/print_archive/ui/about_content.py:69
 msgid "Technical identifiers remain compatible with previous installations."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:64
+#: src/print_archive/ui/about_content.py:73
 msgid "Version 0.1.6"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:66
+#: src/print_archive/ui/about_content.py:75
 msgid "Apply stays fixed below the scrolling Retention and Server forms."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:67
+#: src/print_archive/ui/about_content.py:76
 msgid "Retained print files can now be kept without a time limit."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:68
+#: src/print_archive/ui/about_content.py:77
 msgid "The reprint preview is displayed on the left of its options."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:69
+#: src/print_archive/ui/about_content.py:78
 msgid "Per-job spool isolation fixes cached multi-page preview navigation."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:73
+#: src/print_archive/ui/about_content.py:82
 msgid "Version 0.1.5"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:75
+#: src/print_archive/ui/about_content.py:84
 msgid "Long destination-paper names no longer compress the Target paper row."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:76
+#: src/print_archive/ui/about_content.py:85
 msgid ""
 "The selected paper uses an ellipsis while the popup keeps the complete names."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:77
+#: src/print_archive/ui/about_content.py:86
 msgid "The complete selected paper name remains available in a tooltip."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:81
+#: src/print_archive/ui/about_content.py:90
 msgid "Version 0.1.4"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:83
+#: src/print_archive/ui/about_content.py:92
 msgid "The print history is visible immediately after the first CUPS load."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:84
+#: src/print_archive/ui/about_content.py:93
 msgid "Printer selection is populated before GTK evaluates job-row visibility."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:85
+#: src/print_archive/ui/about_content.py:94
 msgid "The list filter is explicitly refreshed after every history rebuild."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:89
+#: src/print_archive/ui/about_content.py:98
 msgid "Version 0.1.3"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:91
+#: src/print_archive/ui/about_content.py:100
 msgid ""
 "Filter history with checkboxes for all printers or any selected combination."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:92
+#: src/print_archive/ui/about_content.py:101
 msgid ""
 "Preview a PDF reprint on the destination paper with fit, fill, actual-size, "
 "and automatic scaling."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:93
+#: src/print_archive/ui/about_content.py:102
 msgid ""
 "Choose paper sizes and scaling advertised by the destination through CUPS "
 "IPP attributes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:94
+#: src/print_archive/ui/about_content.py:103
 msgid ""
 "Check GitHub for validated optional or mandatory updates at startup and on "
 "demand."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:95
+#: src/print_archive/ui/about_content.py:104
 msgid ""
 "Use tabbed Retention, Server, and Maintenance settings for global CUPS "
 "configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:96
+#: src/print_archive/ui/about_content.py:105
 msgid ""
 "Expanded About information, project links, credits, release notes, and "
 "diagnostic details."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:100
+#: src/print_archive/ui/about_content.py:109
 msgid "Version 0.1.2"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:102
+#: src/print_archive/ui/about_content.py:111
 msgid ""
 "Added on-demand CUPS authentication for protected retained files and exact "
 "restarts."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:103
+#: src/print_archive/ui/about_content.py:112
 msgid ""
 "Attempted direct retained-file retrieval even when job-preserved was not "
 "reported."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:104
+#: src/print_archive/ui/about_content.py:113
 msgid ""
 "Added the first printer filter and completed Brazilian Portuguese "
 "installation support."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:108
+#: src/print_archive/ui/about_content.py:117
 msgid "Version 0.1.1"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:110
+#: src/print_archive/ui/about_content.py:119
 msgid "Loaded retention controls from the live CUPS configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:111
+#: src/print_archive/ui/about_content.py:120
 msgid ""
 "Kept installation and application startup free of automatic CUPS changes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:115
+#: src/print_archive/ui/about_content.py:124
 msgid "Version 0.1.0"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:117
+#: src/print_archive/ui/about_content.py:126
 msgid ""
 "Initial release for viewing, exporting, deleting, and reprinting retained "
 "CUPS jobs."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:118
+#: src/print_archive/ui/about_content.py:127
 msgid "Added selected-page extraction for retained PDF documents."
 msgstr ""
 
@@ -637,300 +659,300 @@ msgid ""
 "try again automatically; you can also retry now or close the application."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:43
+#: src/print_archive/ui/main_window.py:44
 msgid "All jobs"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:44
+#: src/print_archive/ui/main_window.py:45
 msgid "Completed"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:45
+#: src/print_archive/ui/main_window.py:46
 msgid "Active"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:46
+#: src/print_archive/ui/main_window.py:47
 msgid "Canceled or aborted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:47
+#: src/print_archive/ui/main_window.py:48
 msgid "Waiting"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:48
+#: src/print_archive/ui/main_window.py:49
 msgid "Held"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:49
+#: src/print_archive/ui/main_window.py:50
 msgid "Printing"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:50
+#: src/print_archive/ui/main_window.py:51
 msgid "Stopped"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:51
+#: src/print_archive/ui/main_window.py:52
 msgid "Canceled"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:52
+#: src/print_archive/ui/main_window.py:53
 msgid "Aborted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:102
+#: src/print_archive/ui/main_window.py:103
 msgid "Refresh (Ctrl+R)"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:108
+#: src/print_archive/ui/main_window.py:109
 msgid "Settings"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:109
+#: src/print_archive/ui/main_window.py:110
 msgid "Welcome and initial setup"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:110
+#: src/print_archive/ui/main_window.py:111
 msgid "Check for updates"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:111
+#: src/print_archive/ui/main_window.py:112
 #, python-brace-format
 msgid "About {app_name}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:112
+#: src/print_archive/ui/main_window.py:113
 msgid "Quit"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:115
+#: src/print_archive/ui/main_window.py:116
 msgid "Main menu"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:141
+#: src/print_archive/ui/main_window.py:142
 msgid "Search by name, user, printer, or job number"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:150
+#: src/print_archive/ui/main_window.py:151
 msgid "Filter by job state"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:191
+#: src/print_archive/ui/main_window.py:192
 msgid "Loading print history…"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:196
+#: src/print_archive/ui/main_window.py:197
 msgid "No print jobs"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:197
+#: src/print_archive/ui/main_window.py:198
 msgid "Jobs retained by the local CUPS service will appear here."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:208
+#: src/print_archive/ui/main_window.py:209
 msgid "Select a print job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:209
+#: src/print_archive/ui/main_window.py:210
 msgid ""
 "Preview its retained file, export it, or reprint all or selected PDF pages."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:215
-#: src/print_archive/ui/main_window.py:474
+#: src/print_archive/ui/main_window.py:216
+#: src/print_archive/ui/main_window.py:483
 msgid "Print service unavailable"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:242
+#: src/print_archive/ui/main_window.py:243
 msgid "Retrieving the retained file…"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:251
+#: src/print_archive/ui/main_window.py:252
 msgid "Use the mouse wheel to zoom; drag to move an enlarged preview."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:311
-#: src/print_archive/ui/main_window.py:650
+#: src/print_archive/ui/main_window.py:312
+#: src/print_archive/ui/main_window.py:662
 #: src/print_archive/ui/reprint_dialog.py:268
 msgid "Preview unavailable"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:323
+#: src/print_archive/ui/main_window.py:324
 msgid "Rotate preview left"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:329
+#: src/print_archive/ui/main_window.py:330
 msgid "Rotate preview right"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:341
+#: src/print_archive/ui/main_window.py:342
 msgid "Zoom out"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:357
+#: src/print_archive/ui/main_window.py:358
 msgid "Zoom percentage"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:365
+#: src/print_archive/ui/main_window.py:366
 msgid "Zoom in"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:371
+#: src/print_archive/ui/main_window.py:372
 msgid "Fit preview to window"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:376
+#: src/print_archive/ui/main_window.py:377
 msgid "100%"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:378
+#: src/print_archive/ui/main_window.py:379
 msgid "Show preview at actual pixel size"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:385
+#: src/print_archive/ui/main_window.py:393
 msgid "Previous page"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:388
+#: src/print_archive/ui/main_window.py:396
 msgid "Page 1 of 1"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:390
+#: src/print_archive/ui/main_window.py:398
 msgid "Next page"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:399
+#: src/print_archive/ui/main_window.py:408
 msgid "Permanently delete this retained job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:405
+#: src/print_archive/ui/main_window.py:414
 msgid "Export original"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:412
+#: src/print_archive/ui/main_window.py:421
 #: src/print_archive/ui/reprint_dialog.py:92
 msgid "Reprint"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:466
+#: src/print_archive/ui/main_window.py:475
 msgid "Could not load print history"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:484
+#: src/print_archive/ui/main_window.py:493
 #, python-brace-format
 msgid "{count} pages"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:486
+#: src/print_archive/ui/main_window.py:495
 msgid "page count unknown"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:577
+#: src/print_archive/ui/main_window.py:589
 msgid "yes"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:577
+#: src/print_archive/ui/main_window.py:589
 msgid "no"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:578
+#: src/print_archive/ui/main_window.py:590
 msgid "unknown size"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:580
+#: src/print_archive/ui/main_window.py:592
 #, python-brace-format
 msgid ""
 "Job #{job_id} · {state} · {printer} · {user}\n"
 "Created {created} · CUPS retention flag: {preserved} · {size}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:623
+#: src/print_archive/ui/main_window.py:635
 msgid "Could not access the retained file"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:646
+#: src/print_archive/ui/main_window.py:658
 msgid ""
 "The retained format can be reprinted, but this version cannot render it "
 "safely."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:647
+#: src/print_archive/ui/main_window.py:659
 msgid ""
 "This multi-document job contains mixed formats and has no combined preview."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:648
+#: src/print_archive/ui/main_window.py:660
 msgid "CUPS no longer has the spool file. Metadata remains visible."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:652
+#: src/print_archive/ui/main_window.py:664
 msgid "No preview is available for this job."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:664
+#: src/print_archive/ui/main_window.py:680
 #, python-brace-format
 msgid "Page {page} of {total}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:694
+#: src/print_archive/ui/main_window.py:710
 msgid "Could not render this PDF"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:716
+#: src/print_archive/ui/main_window.py:732
 msgid "Could not render this preview"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:942
+#: src/print_archive/ui/main_window.py:958
 msgid "Could not list printers"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:946
+#: src/print_archive/ui/main_window.py:962
 #, python-brace-format
 msgid "Job #{job_id} was restarted with all pages."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:948
+#: src/print_archive/ui/main_window.py:964
 #, python-brace-format
 msgid "New job #{job_id} was created for pages {pages}."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:960
+#: src/print_archive/ui/main_window.py:976
 msgid "Export retained document"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:971
+#: src/print_archive/ui/main_window.py:987
 #, python-brace-format
 msgid "Exported to {name}"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:973
+#: src/print_archive/ui/main_window.py:989
 msgid "Could not export this job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:984
+#: src/print_archive/ui/main_window.py:1000
 #, python-brace-format
 msgid "Delete job #{job_id}?"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:985
+#: src/print_archive/ui/main_window.py:1001
 msgid ""
 "The retained file and its history metadata will be permanently purged from "
 "CUPS."
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:986
+#: src/print_archive/ui/main_window.py:1002
 msgid "Delete"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:1001
+#: src/print_archive/ui/main_window.py:1017
 #, python-brace-format
 msgid "Job #{job_id} deleted"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:1008
+#: src/print_archive/ui/main_window.py:1024
 msgid "Could not delete this job"
 msgstr ""
 
-#: src/print_archive/ui/main_window.py:1046
+#: src/print_archive/ui/main_window.py:1062
 msgid "unknown date"
 msgstr ""
 
@@ -1804,11 +1826,11 @@ msgstr ""
 msgid "What's New"
 msgstr ""
 
-#: src/print_archive/ui/update_window.py:142
+#: src/print_archive/ui/update_window.py:143
 msgid "Full Changelog"
 msgstr ""
 
-#: src/print_archive/ui/update_window.py:143
+#: src/print_archive/ui/update_window.py:144
 #, python-brace-format
 msgid "{count} changes in this release"
 msgstr ""

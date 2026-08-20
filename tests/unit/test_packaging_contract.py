@@ -285,8 +285,11 @@ class PackagingContractTests(unittest.TestCase):
             'connect("resize", self._preview_view_resized)',
             "def _preview_scrolled(",
             "def _preview_drag_update(",
+            "self.preview_controls.append(self.page_controls)",
+            "self.page_separator.set_visible(visible)",
         ):
             self.assertIn(token, main_window)
+        self.assertNotIn("content.append(self.page_controls)", main_window)
         self.assertNotIn("object-rotate-left-symbolic", reprint)
         self.assertNotIn("zoom-fit-best-symbolic", reprint)
         self.assertIn("src/print_archive/core/preview_view.py", meson)
@@ -301,6 +304,30 @@ class PackagingContractTests(unittest.TestCase):
         self.assertIn('"document-print-symbolic"', source)
         self.assertNotIn('_("Export original…")', source)
         self.assertNotIn('_("Reprint…")', source)
+
+    def test_main_preview_registers_cairo_and_dynamic_rows_disable_markup(self) -> None:
+        main_window = (
+            PROJECT_ROOT / "src/print_archive/ui/main_window.py"
+        ).read_text(encoding="utf-8")
+        update_window = (
+            PROJECT_ROOT / "src/print_archive/ui/update_window.py"
+        ).read_text(encoding="utf-8")
+        control = (
+            PROJECT_ROOT / "packaging/debian/binary-control.in"
+        ).read_text(encoding="utf-8")
+        launcher = (PROJECT_ROOT / "run.sh").read_text(encoding="utf-8")
+
+        self.assertIn('gi.require_foreign("cairo")', main_window)
+        self.assertIn('gi.require_foreign("cairo")', launcher)
+        self.assertIn("python3-gi-cairo", control)
+        self.assertIn("python3-gi-cairo", launcher)
+
+        job_row = main_window.split("    def _job_row(", 1)[1].split(
+            "    def _filter_job_row(", 1
+        )[0]
+        self.assertIn("use_markup=False", job_row)
+        self.assertIn("row.set_title(job.title)", job_row)
+        self.assertIn("Adw.ActionRow(use_markup=False)", update_window)
 
     def test_github_readmes_link_translations_and_packaged_screenshots(self) -> None:
         english = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")

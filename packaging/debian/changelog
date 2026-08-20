@@ -1,3 +1,13 @@
+print-archive (0.1.13) stable; urgency=medium
+
+  * Register the PyGObject Cairo converter required by the main preview.
+  * Depend on python3-gi-cairo and validate it in the source launcher.
+  * Display CUPS job and update text literally instead of parsing markup.
+  * Combine preview and PDF page controls into one compact row.
+  * Retain the startup update-window centering fix from 0.1.12.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Thu, 20 Aug 2026 09:53:30 -0300
+
 print-archive (0.1.12) stable; urgency=medium
 
   * Wait for the startup main window to be mapped and active.

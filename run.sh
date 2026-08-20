@@ -4,11 +4,11 @@ set -euo pipefail
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 python_bin="${PYTHON:-python3}"
 
-if ! "$python_bin" -c 'import gi, cups, pypdf; gi.require_version("Gtk", "4.0"); gi.require_version("Adw", "1"); gi.require_version("GdkPixbuf", "2.0"); gi.require_version("Soup", "3.0")' 2>/dev/null; then
+if ! "$python_bin" -c 'import gi, cups, pypdf; gi.require_version("Gtk", "4.0"); gi.require_version("Adw", "1"); gi.require_version("GdkPixbuf", "2.0"); gi.require_version("Soup", "3.0"); gi.require_foreign("cairo")' 2>/dev/null; then
     echo "PyCUPS requires the GNOME, CUPS, and PDF Python bindings."
     echo
     echo "On Ubuntu/Debian, install:"
-    echo "  sudo apt install python3 python3-gi python3-cups python3-pypdf gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gdkpixbuf-2.0 gir1.2-soup-3.0 poppler-utils cups-client cups-daemon pkexec"
+    echo "  sudo apt install python3 python3-gi python3-gi-cairo python3-cups python3-pypdf gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gdkpixbuf-2.0 gir1.2-soup-3.0 poppler-utils cups-client cups-daemon pkexec"
     exit 2
 fi
 

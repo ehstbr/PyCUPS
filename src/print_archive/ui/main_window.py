@@ -9,6 +9,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("Gdk", "4.0")
 gi.require_version("GdkPixbuf", "2.0")
+gi.require_foreign("cairo")
 from gi.repository import Adw, Gdk, GdkPixbuf, Gio, GLib, Gtk
 
 from .. import APP_NAME
@@ -379,9 +380,16 @@ class MainWindow(Adw.ApplicationWindow):
         )
         actual_size.connect("clicked", lambda _button: self._set_actual_preview_size())
         self.preview_controls.append(actual_size)
-        content.append(self.preview_controls)
 
-        self.page_controls = Gtk.Box(spacing=8, halign=Gtk.Align.CENTER)
+        self.page_separator = Gtk.Separator(
+            orientation=Gtk.Orientation.VERTICAL,
+            visible=False,
+        )
+        self.page_separator.set_margin_top(6)
+        self.page_separator.set_margin_bottom(6)
+        self.preview_controls.append(self.page_separator)
+
+        self.page_controls = Gtk.Box(spacing=6, halign=Gtk.Align.CENTER)
         self.previous_page = Gtk.Button(icon_name="go-previous-symbolic", tooltip_text=_("Previous page"))
         self.previous_page.connect("clicked", lambda _button: self._show_pdf_page(self.current_page - 1))
         self.page_controls.append(self.previous_page)
@@ -391,7 +399,8 @@ class MainWindow(Adw.ApplicationWindow):
         self.next_page.connect("clicked", lambda _button: self._show_pdf_page(self.current_page + 1))
         self.page_controls.append(self.next_page)
         self.page_controls.set_visible(False)
-        content.append(self.page_controls)
+        self.preview_controls.append(self.page_controls)
+        content.append(self.preview_controls)
 
         actions = Gtk.Box(spacing=8, halign=Gtk.Align.END)
         self.delete_button = Gtk.Button(
@@ -486,9 +495,12 @@ class MainWindow(Adw.ApplicationWindow):
             else _("page count unknown")
         )
         row = Adw.ActionRow(
-            title=job.title,
-            subtitle=f"#{job.job_id} · {date}\n{job.printer} · {job.user} · {pages}",
             icon_name="document-print-symbolic",
+            use_markup=False,
+        )
+        row.set_title(job.title)
+        row.set_subtitle(
+            f"#{job.job_id} · {date}\n{job.printer} · {job.user} · {pages}"
         )
         status = Gtk.Label(label=_(job.state_label), valign=Gtk.Align.CENTER, css_classes=["caption"])
         row.add_suffix(status)
@@ -590,7 +602,7 @@ class MainWindow(Adw.ApplicationWindow):
         )
         self.detail_stack.set_visible_child_name("details")
         self.preview_stack.set_visible_child_name("loading")
-        self.page_controls.set_visible(False)
+        self._set_page_navigation_visible(False)
         self.reprint_button.set_sensitive(False)
         self.export_button.set_sensitive(False)
         self.delete_button.set_sensitive(True)
@@ -626,9 +638,9 @@ class MainWindow(Adw.ApplicationWindow):
         self.preview_stack.set_visible_child_name("status")
 
     def _display_prepared(self, prepared: PreparedJob) -> None:
-        self.page_controls.set_visible(False)
+        self._set_page_navigation_visible(False)
         if prepared.preview_kind == "pdf" and prepared.printable_path and prepared.total_pages:
-            self.page_controls.set_visible(True)
+            self._set_page_navigation_visible(True)
             self._show_pdf_page(1)
         elif prepared.preview_kind == "image" and prepared.printable_path:
             self._show_visual_preview(prepared.printable_path)
@@ -653,6 +665,10 @@ class MainWindow(Adw.ApplicationWindow):
             )
             self.preview_status.set_icon_name("document-print-symbolic")
             self.preview_stack.set_visible_child_name("status")
+
+    def _set_page_navigation_visible(self, visible: bool) -> None:
+        self.page_separator.set_visible(visible)
+        self.page_controls.set_visible(visible)
 
     def _show_pdf_page(self, page: int) -> None:
         prepared = self.current_prepared

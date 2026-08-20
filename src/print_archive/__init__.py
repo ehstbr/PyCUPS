@@ -3,4 +3,4 @@
 APP_ID = "com.eduhcommerce.PrintArchive"
 APP_NAME = "PyCUPS"
 APP_TAGLINE = "CUPS Archive"
-VERSION = "0.1.12"
+VERSION = "0.1.13"

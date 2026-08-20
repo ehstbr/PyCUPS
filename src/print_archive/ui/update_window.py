@@ -131,7 +131,8 @@ class UpdateWindow(Adw.ApplicationWindow):
         details.append(version_group)
 
         changes_group = Adw.PreferencesGroup(title=_("What's New"))
-        summary_row = Adw.ActionRow(title=manifest.summary)
+        summary_row = Adw.ActionRow(use_markup=False)
+        summary_row.set_title(manifest.summary)
         if hasattr(summary_row, "set_title_lines"):
             summary_row.set_title_lines(0)
         changes_group.add(summary_row)
@@ -143,7 +144,8 @@ class UpdateWindow(Adw.ApplicationWindow):
             subtitle=_("{count} changes in this release").format(count=len(manifest.changelog)),
         )
         for index, item in enumerate(manifest.changelog, start=1):
-            row = Adw.ActionRow(title=item)
+            row = Adw.ActionRow(use_markup=False)
+            row.set_title(item)
             row.add_prefix(Gtk.Label(label=str(index), css_classes=["dim-label"]))
             if hasattr(row, "set_title_lines"):
                 row.set_title_lines(0)

@@ -13,7 +13,7 @@
     <a href="CHANGELOG.md">Histórico de alterações</a>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/versão-0.1.12-e95420?style=flat-square" alt="PyCUPS versão 0.1.12">
+    <img src="https://img.shields.io/badge/versão-0.1.13-e95420?style=flat-square" alt="PyCUPS versão 0.1.13">
     <img src="https://github.com/ehstbr/PyCUPS/actions/workflows/ci.yml/badge.svg" alt="Status da integração contínua do PyCUPS">
     <img src="https://img.shields.io/badge/plataforma-Linux-f0c674?style=flat-square&logo=linux&logoColor=111" alt="Linux">
     <img src="https://img.shields.io/badge/desktop-GNOME-4a86cf?style=flat-square&logo=gnome&logoColor=white" alt="Desktop GNOME">
@@ -157,7 +157,7 @@ APT para resolver automaticamente as dependências do sistema:
 ```bash
 cd ~/Downloads
 sudo apt update
-sudo apt install ./print-archive_0.1.12_all.deb
+sudo apt install ./print-archive_0.1.13_all.deb
 ```
 
 Abra **PyCUPS** na grade de aplicativos ou execute:
@@ -177,7 +177,7 @@ Instale primeiro as dependências:
 ```bash
 sudo apt update
 sudo apt install \
-  python3 python3-gi python3-cups python3-pypdf \
+  python3 python3-gi python3-gi-cairo python3-cups python3-pypdf \
   gir1.2-gtk-4.0 gir1.2-adw-1 gir1.2-gdkpixbuf-2.0 \
   gir1.2-soup-3.0 poppler-utils cups-client cups-daemon \
   pkexec gettext
@@ -186,8 +186,8 @@ sudo apt install \
 Depois, extraia e execute o pacote-fonte publicado no GitHub:
 
 ```bash
-unzip PyCUPS-0.1.12.zip
-cd PyCUPS-0.1.12
+unzip PyCUPS-0.1.13.zip
+cd PyCUPS-0.1.13
 ./run.sh
 ```
 

@@ -1,13 +1,15 @@
 {
   "schema_version": 1,
-  "version": "0.1.12",
+  "version": "0.1.13",
   "mandatory": false,
-  "released_at": "2026-08-20T12:42:15Z",
-  "summary": "Automatic update notices now open centered over the fully active PyCUPS main window.",
+  "released_at": "2026-08-20T12:53:30Z",
+  "summary": "The main preview now loads its Cairo integration correctly, displays external CUPS text literally, and uses a compact single-line document toolbar.",
   "changelog": [
-    "Waits until the newly opened main window is both mapped and active before presenting an automatic optional update notice.",
-    "Keeps the update window transient for the main window so the desktop compositor can center it correctly instead of positioning half of it outside the screen.",
-    "Leaves manual update checks and standalone mandatory-update behavior unchanged.",
-    "Adds regression coverage for mapped-but-inactive startup windows and deferred presentation."
+    "Registers PyGObject's Cairo foreign-type converter before the main drawing area receives a cairo.Context.",
+    "Adds python3-gi-cairo as a Debian dependency and to the source launcher preflight and installation documentation.",
+    "Displays CUPS job titles, printers, users, and update-manifest text literally instead of interpreting ampersands or angle brackets as Pango markup.",
+    "Places rotation, zoom, fit, actual size, and PDF page navigation in one compact line to preserve more vertical preview space.",
+    "Retains the 0.1.12 startup update-window centering correction.",
+    "Adds packaging contracts for the Cairo bridge and literal dynamic rows."
   ]
 }
