@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "print-archive"
-version = "0.1.11"
+version = "0.1.12"
 description = "PyCUPS — CUPS Archive for retained print jobs"
 readme = "README.md"
 requires-python = ">=3.12"

@@ -7,7 +7,7 @@ problem so the result reflects the current code.
 
 | Version | Supported |
 | --- | --- |
-| 0.1.11 | Yes |
+| 0.1.12 | Yes |
 | Older releases | No |
 
 ## Reporting a vulnerability
@@ -28,4 +28,3 @@ PyCUPS never needs direct access to `/var/spool/cups`. It retrieves retained
 documents through authorized CUPS operations and limits privileged changes to
 the packaged PolicyKit helper. Installing or opening the application must not
 alter CUPS configuration.
-

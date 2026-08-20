@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PyCUPS 0.1.11\n"
-"Report-Msgid-Bugs-To: https://github.com/ehstbr/PyCUPS/issues\n"
-"POT-Creation-Date: 2026-08-20 09:27-0300\n"
+"Project-Id-Version: PyCUPS 0.1.12\n"
+"Report-Msgid-Bugs-To: eduhcommerce@users.noreply.github.com\n"
+"POT-Creation-Date: 2026-08-20 09:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,267 +293,286 @@ msgid "Languages"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:11
-msgid "Version 0.1.11"
+msgid "Version 0.1.12"
 msgstr ""
 
 #: src/print_archive/ui/about_content.py:13
+msgid ""
+"Automatic update notices now wait until the main window is mapped and active."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:14
+msgid ""
+"The desktop compositor can now center the startup update window over PyCUPS "
+"reliably."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:15
+msgid "Manual update checks keep their existing centered behavior."
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:19
+msgid "Version 0.1.11"
+msgstr ""
+
+#: src/print_archive/ui/about_content.py:21
 msgid ""
 "The main preview now supports zoom controls, mouse-wheel zoom, and drag-to-"
 "pan."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:14
+#: src/print_archive/ui/about_content.py:22
 msgid ""
 "Pages can be rotated visually without changing the retained file or reprint "
 "orientation."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:15
+#: src/print_archive/ui/about_content.py:23
 msgid "Primary actions now use symbolic icons and concise labels."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:16
+#: src/print_archive/ui/about_content.py:24
 msgid "Apply and onboarding completion labels stay stable while CUPS restarts."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:17
+#: src/print_archive/ui/about_content.py:25
 msgid ""
 "The GitHub source package now includes bilingual documentation and a "
 "complete screenshot gallery."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:21
+#: src/print_archive/ui/about_content.py:29
 msgid "Version 0.1.10"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:23
+#: src/print_archive/ui/about_content.py:31
 msgid ""
 "A blocking progress dialog now waits for CUPS after global settings are "
 "saved."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:24
+#: src/print_archive/ui/about_content.py:32
 msgid "Fresh IPP connections must answer consistently before PyCUPS resumes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:25
+#: src/print_archive/ui/about_content.py:33
 msgid ""
 "History refresh is paused so a scheduler restart cannot appear as an "
 "application error."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:26
+#: src/print_archive/ui/about_content.py:34
 msgid ""
 "If CUPS stays unavailable, PyCUPS keeps retrying automatically while the app "
 "remains blocked."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:30
+#: src/print_archive/ui/about_content.py:38
 msgid "Version 0.1.9"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:32
+#: src/print_archive/ui/about_content.py:40
 msgid ""
 "Welcome and completion headers no longer create isolated internal scrollbars."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:33
+#: src/print_archive/ui/about_content.py:41
 msgid ""
 "More compact spacing keeps onboarding information visible in the standard "
 "window size."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:34
+#: src/print_archive/ui/about_content.py:42
 msgid ""
 "The longer retention form uses only one page-level scrolling fallback when "
 "needed."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:38
+#: src/print_archive/ui/about_content.py:46
 msgid "Version 0.1.8"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:40
+#: src/print_archive/ui/about_content.py:48
 msgid ""
 "A three-step welcome flow explains privacy, updates, and open-source access."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:41
+#: src/print_archive/ui/about_content.py:49
 msgid ""
 "Current CUPS retention values are shown beside an editable 30/90-day "
 "suggestion."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:42
+#: src/print_archive/ui/about_content.py:50
 msgid ""
 "The suggested job-count limit is unlimited so time-based retention is not "
 "shortened."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:43
+#: src/print_archive/ui/about_content.py:51
 msgid ""
 "Applying remains explicit and protected by administrator authorization; "
 "skipping changes nothing."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:44
+#: src/print_archive/ui/about_content.py:52
 msgid "The welcome setup can be reopened from the main menu."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:48
+#: src/print_archive/ui/about_content.py:56
 msgid "Version 0.1.7"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:50
+#: src/print_archive/ui/about_content.py:58
 msgid "PyCUPS is now the consistent application name throughout the interface."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:51
+#: src/print_archive/ui/about_content.py:59
 msgid "CUPS Archive is retained as the product description."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:52
+#: src/print_archive/ui/about_content.py:60
 msgid "Technical identifiers remain compatible with previous installations."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:56
+#: src/print_archive/ui/about_content.py:64
 msgid "Version 0.1.6"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:58
+#: src/print_archive/ui/about_content.py:66
 msgid "Apply stays fixed below the scrolling Retention and Server forms."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:59
+#: src/print_archive/ui/about_content.py:67
 msgid "Retained print files can now be kept without a time limit."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:60
+#: src/print_archive/ui/about_content.py:68
 msgid "The reprint preview is displayed on the left of its options."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:61
+#: src/print_archive/ui/about_content.py:69
 msgid "Per-job spool isolation fixes cached multi-page preview navigation."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:65
+#: src/print_archive/ui/about_content.py:73
 msgid "Version 0.1.5"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:67
+#: src/print_archive/ui/about_content.py:75
 msgid "Long destination-paper names no longer compress the Target paper row."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:68
+#: src/print_archive/ui/about_content.py:76
 msgid ""
 "The selected paper uses an ellipsis while the popup keeps the complete names."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:69
+#: src/print_archive/ui/about_content.py:77
 msgid "The complete selected paper name remains available in a tooltip."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:73
+#: src/print_archive/ui/about_content.py:81
 msgid "Version 0.1.4"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:75
+#: src/print_archive/ui/about_content.py:83
 msgid "The print history is visible immediately after the first CUPS load."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:76
+#: src/print_archive/ui/about_content.py:84
 msgid "Printer selection is populated before GTK evaluates job-row visibility."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:77
+#: src/print_archive/ui/about_content.py:85
 msgid "The list filter is explicitly refreshed after every history rebuild."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:81
+#: src/print_archive/ui/about_content.py:89
 msgid "Version 0.1.3"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:83
+#: src/print_archive/ui/about_content.py:91
 msgid ""
 "Filter history with checkboxes for all printers or any selected combination."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:84
+#: src/print_archive/ui/about_content.py:92
 msgid ""
 "Preview a PDF reprint on the destination paper with fit, fill, actual-size, "
 "and automatic scaling."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:85
+#: src/print_archive/ui/about_content.py:93
 msgid ""
 "Choose paper sizes and scaling advertised by the destination through CUPS "
 "IPP attributes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:86
+#: src/print_archive/ui/about_content.py:94
 msgid ""
 "Check GitHub for validated optional or mandatory updates at startup and on "
 "demand."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:87
+#: src/print_archive/ui/about_content.py:95
 msgid ""
 "Use tabbed Retention, Server, and Maintenance settings for global CUPS "
 "configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:88
+#: src/print_archive/ui/about_content.py:96
 msgid ""
 "Expanded About information, project links, credits, release notes, and "
 "diagnostic details."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:92
+#: src/print_archive/ui/about_content.py:100
 msgid "Version 0.1.2"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:94
+#: src/print_archive/ui/about_content.py:102
 msgid ""
 "Added on-demand CUPS authentication for protected retained files and exact "
 "restarts."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:95
+#: src/print_archive/ui/about_content.py:103
 msgid ""
 "Attempted direct retained-file retrieval even when job-preserved was not "
 "reported."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:96
+#: src/print_archive/ui/about_content.py:104
 msgid ""
 "Added the first printer filter and completed Brazilian Portuguese "
 "installation support."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:100
+#: src/print_archive/ui/about_content.py:108
 msgid "Version 0.1.1"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:102
+#: src/print_archive/ui/about_content.py:110
 msgid "Loaded retention controls from the live CUPS configuration."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:103
+#: src/print_archive/ui/about_content.py:111
 msgid ""
 "Kept installation and application startup free of automatic CUPS changes."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:107
+#: src/print_archive/ui/about_content.py:115
 msgid "Version 0.1.0"
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:109
+#: src/print_archive/ui/about_content.py:117
 msgid ""
 "Initial release for viewing, exporting, deleting, and reprinting retained "
 "CUPS jobs."
 msgstr ""
 
-#: src/print_archive/ui/about_content.py:110
+#: src/print_archive/ui/about_content.py:118
 msgid "Added selected-page extraction for retained PDF documents."
 msgstr ""
 

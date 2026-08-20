@@ -1,16 +1,13 @@
 {
   "schema_version": 1,
-  "version": "0.1.11",
+  "version": "0.1.12",
   "mandatory": false,
-  "released_at": "2026-08-20T12:21:19Z",
-  "summary": "The main preview now adds zoom, mouse-wheel control, rotation, and panning, alongside a complete bilingual GitHub presentation.",
+  "released_at": "2026-08-20T12:42:15Z",
+  "summary": "Automatic update notices now open centered over the fully active PyCUPS main window.",
   "changelog": [
-    "Adds zoom out, zoom in, editable 1–500% control, fit-to-window, actual size, left/right rotation, scrollbars, and drag-to-pan to the main document preview.",
-    "Lets the mouse wheel change zoom while the pointer is over the main preview, while keeping the reprint preview physically faithful and free of manual rotation.",
-    "Keeps Apply and Start using PyCUPS labels stable while the blocking CUPS restart dialog communicates progress.",
-    "Adds symbolic icons to primary actions and removes unnecessary ellipses from Export original and Reprint.",
-    "Rebuilds the English and Brazilian Portuguese GitHub documentation with screenshots, use cases, privacy guidance, installation steps, translations, and search-friendly descriptions.",
-    "Adds GitHub Actions CI and package builds, Dependabot, issue forms, a pull-request template, security and support policies, editor defaults, attributes, and ignore rules.",
-    "Includes the complete screenshot gallery and documentation in the reproducible GitHub source ZIP and extends regression coverage for preview geometry and packaging."
+    "Waits until the newly opened main window is both mapped and active before presenting an automatic optional update notice.",
+    "Keeps the update window transient for the main window so the desktop compositor can center it correctly instead of positioning half of it outside the screen.",
+    "Leaves manual update checks and standalone mandatory-update behavior unchanged.",
+    "Adds regression coverage for mapped-but-inactive startup windows and deferred presentation."
   ]
 }

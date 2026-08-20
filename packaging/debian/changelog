@@ -1,3 +1,12 @@
+print-archive (0.1.12) stable; urgency=medium
+
+  * Wait for the startup main window to be mapped and active.
+  * Present optional update notices as correctly centered transient windows.
+  * Keep manual and mandatory update paths unchanged.
+  * Cover inactive-parent and deferred-presentation races.
+
+ -- EduhCommerce <eduhcommerce@users.noreply.github.com>  Thu, 20 Aug 2026 09:42:15 -0300
+
 print-archive (0.1.11) stable; urgency=medium
 
   * Add zoom, mouse-wheel control, rotation, and panning to the main preview.

@@ -8,6 +8,14 @@ from ..util.i18n import _
 def release_notes_markup() -> str:
     sections = [
         (
+            _("Version 0.1.12"),
+            [
+                _("Automatic update notices now wait until the main window is mapped and active."),
+                _("The desktop compositor can now center the startup update window over PyCUPS reliably."),
+                _("Manual update checks keep their existing centered behavior."),
+            ],
+        ),
+        (
             _("Version 0.1.11"),
             [
                 _("The main preview now supports zoom controls, mouse-wheel zoom, and drag-to-pan."),

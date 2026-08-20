@@ -2,6 +2,17 @@
 
 All notable changes to PyCUPS are documented here.
 
+## 0.1.12 — 2026-08-20
+
+- Wait until the newly presented main window is both mapped and active before
+  showing an automatic optional-update notice at startup.
+- Preserve the main window as the update window's transient parent only after
+  the compositor has activated it, allowing reliable parent-relative centering
+  instead of calculating a position from incomplete startup geometry.
+- Keep manual update checks and standalone mandatory updates unchanged.
+- Harden deferred presentation against duplicate callbacks and stale queued
+  work, and add coverage for mapped-but-inactive parent windows.
+
 ## 0.1.11 — 2026-08-20
 
 - Add a dedicated main-preview toolbar with zoom out, an editable 1–500%

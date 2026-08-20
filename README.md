@@ -13,7 +13,7 @@
     <a href="CHANGELOG.md">Changelog</a>
   </p>
   <p>
-    <img src="https://img.shields.io/badge/version-0.1.11-e95420?style=flat-square" alt="PyCUPS version 0.1.11">
+    <img src="https://img.shields.io/badge/version-0.1.12-e95420?style=flat-square" alt="PyCUPS version 0.1.12">
     <img src="https://github.com/ehstbr/PyCUPS/actions/workflows/ci.yml/badge.svg" alt="PyCUPS continuous integration status">
     <img src="https://img.shields.io/badge/platform-Linux-f0c674?style=flat-square&logo=linux&logoColor=111" alt="Linux">
     <img src="https://img.shields.io/badge/desktop-GNOME-4a86cf?style=flat-square&logo=gnome&logoColor=white" alt="GNOME desktop">
@@ -155,7 +155,7 @@ it with APT so system dependencies are resolved automatically:
 ```bash
 cd ~/Downloads
 sudo apt update
-sudo apt install ./print-archive_0.1.11_all.deb
+sudo apt install ./print-archive_0.1.12_all.deb
 ```
 
 Open **PyCUPS** from the application grid or run:
@@ -184,8 +184,8 @@ sudo apt install \
 Then extract and run the GitHub source package:
 
 ```bash
-unzip PyCUPS-0.1.11.zip
-cd PyCUPS-0.1.11
+unzip PyCUPS-0.1.12.zip
+cd PyCUPS-0.1.12
 ./run.sh
 ```
 
